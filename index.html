@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF MARIN</title>
+<meta name="description" content="みんなで作る PDF 編集ソフト。使う人の要望を集めて AI と一緒に作っています。Windows 10 / 11 用。">
+<link rel="icon" href="assets/favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PDF MARIN">
+<meta property="og:description" content="みんなで作る PDF 編集ソフト。Windows 10 / 11 用。">
+<meta property="og:image" content="assets/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#17b8bb">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ocean:#1478c4;
+  --sky:#34a8e8;
+  --aqua:#3fc4d8;
+  --mint:#1eb59f;
+  --sun:#f6a723;
+  --coral:#f4726a;
+
+  --bg:#ffffff;
+  --tint:#f0f7fd;
+  --tint2:#fff8ec;
+  --ink:#12263a;
+  --ink-soft:#3f5568;
+  --muted:#6b8299;
+  --line:#dbe8f3;
+  --card:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ocean:#2f8fd8;
+    --sky:#4cb6ee;
+    --aqua:#4fd0e2;
+    --mint:#2ecdb4;
+    --sun:#f7b74a;
+    --coral:#f8867e;
+
+    --bg:#0d1a26;
+    --tint:#122534;
+    --tint2:#1d2532;
+    --ink:#e9f2f9;
+    --ink-soft:#c3d5e3;
+    --muted:#8ba6bd;
+    --line:#20374b;
+    --card:#152838;
+  }
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Inter","Noto Sans JP","Yu Gothic UI","Hiragino Kaku Gothic ProN","Segoe UI",system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.95;
+  font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%; display:block}
+a{color:inherit}
+
+.wrap{width:min(1020px,90vw); margin-inline:auto}
+.wide{width:min(1300px,94vw); margin-inline:auto}
+.measure{max-width:36em}
+
+/* ────────── 冒頭 ────────── */
+.hero{
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg,#0f6bb4 0%, #1e8fd4 42%, #35b4dd 78%, #45c6cf 100%);
+  color:#fff;
+  padding:80px 0 250px;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(900px 420px at 82% 6%, rgba(255,255,255,.28), transparent 62%),
+    radial-gradient(620px 400px at 6% 92%, rgba(63,196,216,.40), transparent 66%);
+  pointer-events:none;
+}
+.hero .wrap{position:relative; z-index:2}
+
+/* きらめく飾り（お祭り感を出す、控えめに） */
+.confetti{position:absolute; inset:0; z-index:1; pointer-events:none}
+.confetti svg{position:absolute; animation:floaty 6.5s ease-in-out infinite; filter:drop-shadow(0 6px 14px rgba(6,52,89,.22))}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg))} 50%{transform:translateY(-16px) rotate(var(--r,0deg))}}
+
+.mark{display:flex; align-items:center; gap:14px; margin-bottom:46px}
+.mark img{width:52px; height:52px; border-radius:13px; box-shadow:0 6px 16px rgba(0,0,0,.28)}
+.mark span{
+  font-weight:800; font-size:27px; letter-spacing:-.01em; color:#fff;
+  text-shadow:0 2px 10px rgba(6,52,89,.25);
+}
+.hero h1{
+  font-size:clamp(34px,5.6vw,56px);
+  line-height:1.36; font-weight:800; letter-spacing:-.015em;
+  margin:0 0 20px; max-width:16em; text-wrap:balance;
+  text-shadow:0 2px 16px rgba(6,52,89,.24);
+}
+.hero .sub{
+  font-size:clamp(15px,1.7vw,17.5px);
+  color:#e8f6ff; margin:0 0 40px; max-width:30em; line-height:1.9;
+}
+.actions{display:flex; align-items:center; gap:22px; flex-wrap:wrap}
+.btn{
+  display:inline-flex; align-items:center; gap:11px;
+  background:#fff; color:#0f6bb4; text-decoration:none;
+  font-weight:700; font-size:16.5px;
+  padding:16px 32px; border-radius:999px;
+  box-shadow:0 3px 8px rgba(6,52,89,.22), 0 16px 34px -14px rgba(6,52,89,.6);
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn:hover{
+  background:#f2fbff; transform:translateY(-2px);
+  box-shadow:0 4px 10px rgba(6,52,89,.26), 0 22px 42px -14px rgba(6,52,89,.66);
+}
+.btn svg{width:19px; height:19px}
+.meta{color:#d3ecfb; font-size:13.5px; line-height:1.7}
+
+/* 波 */
+.waves{position:absolute; left:0; right:0; bottom:-1px; z-index:0; width:100%; height:110px}
+
+/* 冒頭にかぶせる画面写真 */
+.hero-shot{width:min(1300px,94vw); margin:-200px auto 14px; position:relative; z-index:3}
+.frame{
+  border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 3px 10px rgba(12,60,100,.14), 0 42px 84px -34px rgba(12,60,100,.5);
+  background:var(--card);
+}
+.caption{color:var(--muted); font-size:13.5px; margin:14px 2px 0}
+
+/* ────────── 節 ────────── */
+section{padding:88px 0}
+.tinted{background:var(--tint)}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12px; font-weight:700; letter-spacing:.18em;
+  color:var(--ocean); background:rgba(52,168,232,.15);
+  padding:4px 13px 4px 11px; border-radius:999px;
+  margin:0 0 16px; text-transform:uppercase;
+}
+.eyebrow svg{width:13px; height:13px; stroke:var(--ocean); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex:0 0 auto}
+
+/* 節と節の境目に波を挟む（PDF MARIN らしい雰囲気） */
+.wavecut{height:46px; overflow:hidden}
+.wavecut svg{display:block; width:100%; height:100%}
+.wc-wt{background:var(--bg)}
+.wc-tw{background:var(--tint)}
+@media (prefers-color-scheme: dark){
+  .wc-wt{background:var(--bg)}
+  .wc-tw{background:var(--tint)}
+}
+
+/* 大きな錨の透かし（AI の節の背景に薄く） */
+.anchor-watermark{
+  position:absolute; top:-40px; right:-40px; width:340px; height:340px;
+  opacity:.05; color:var(--ocean); pointer-events:none; z-index:0;
+}
+@media (prefers-color-scheme: dark){ .anchor-watermark{opacity:.07} }
+h2{
+  font-size:clamp(21px,2.6vw,28px);
+  line-height:1.6; font-weight:700; letter-spacing:-.005em;
+  margin:0 0 20px;
+}
+p{margin:0 0 20px; color:var(--ink-soft)}
+p:last-child{margin-bottom:0}
+.note{color:var(--muted); font-size:14px; line-height:1.85}
+
+/* 丸いアイコン章票（できること・AI カードで共用） */
+.ic{
+  flex:0 0 auto; width:38px; height:38px; border-radius:11px;
+  display:grid; place-items:center;
+  box-shadow:0 3px 8px -2px rgba(12,60,100,.35);
+}
+.ic svg{width:19px; height:19px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+
+/* できること */
+.list{
+  margin:34px 0 0; padding:0; list-style:none;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:12px;
+}
+.list li{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:14px 18px 14px 14px; font-size:15.5px; line-height:1.5; color:var(--ink);
+  display:flex; gap:14px; align-items:center;
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.list li:hover{transform:translateY(-2px); box-shadow:0 8px 22px -12px rgba(12,60,100,.45)}
+.list li .ic{background:var(--sky)}
+.list li:nth-child(5n+2) .ic{background:var(--mint)}
+.list li:nth-child(5n+3) .ic{background:var(--sun)}
+.list li:nth-child(5n+4) .ic{background:var(--coral)}
+.list li:nth-child(5n+5) .ic{background:var(--aqua)}
+
+/* AI の節 */
+.points{
+  margin:40px 0 0; padding:0; list-style:none;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;
+}
+.points li{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:22px 22px 26px;
+  box-shadow:0 2px 6px rgba(12,60,100,.05);
+}
+.points li .ic{margin-bottom:16px; background:var(--sun)}
+.points li:nth-child(2) .ic{background:var(--mint)}
+.points li:nth-child(3) .ic{background:var(--sky)}
+.points h3{margin:0 0 8px; font-size:16.5px; font-weight:700; line-height:1.6; color:var(--ink)}
+.points p{margin:0; font-size:14.5px; line-height:1.85; color:var(--ink-soft)}
+
+.wip{
+  display:inline-block; vertical-align:3px; margin-left:12px;
+  font-size:12px; font-weight:700; letter-spacing:.04em;
+  color:#fff; background:var(--sun);
+  padding:3px 11px; border-radius:999px;
+  box-shadow:0 2px 6px -2px rgba(246,167,35,.7);
+}
+
+/* 使い方 */
+.steps{margin:34px 0 0; padding:0; list-style:none; counter-reset:s}
+.steps li{
+  counter-increment:s; position:relative;
+  padding:0 0 26px 60px; font-size:16px; color:var(--ink);
+}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{
+  content:counter(s);
+  position:absolute; left:0; top:2px;
+  font-family:"Inter",sans-serif; font-size:15px; font-weight:700;
+  width:34px; height:34px; border-radius:50%;
+  background:linear-gradient(140deg,var(--sky),var(--ocean)); color:#fff;
+  display:grid; place-items:center; line-height:1;
+  box-shadow:0 4px 10px -3px rgba(20,120,196,.6);
+}
+.steps b{font-weight:700}
+
+.callout{
+  margin-top:32px; background:var(--tint2); border-radius:14px;
+  padding:20px 24px; border:1px solid var(--line);
+}
+.callout p{margin:0}
+
+/* 動作環境 */
+.rows{margin:30px 0 0; border-top:1px solid var(--line)}
+.rows div{
+  display:grid; grid-template-columns:11em 1fr; gap:8px 24px;
+  padding:17px 2px; border-bottom:1px solid var(--line);
+  font-size:15.5px; line-height:1.75;
+}
+.rows dt{color:var(--muted); margin:0; font-size:14.5px}
+.rows dd{margin:0; color:var(--ink)}
+
+/* 更新履歴 */
+.rel{display:flex; gap:16px; align-items:center; margin-top:30px; flex-wrap:wrap}
+.rel h3{
+  margin:0; font-family:"Inter",sans-serif; font-size:15px; font-weight:700; color:#fff;
+  background:linear-gradient(140deg,var(--sky),var(--ocean));
+  padding:4px 15px; border-radius:999px;
+}
+.rel time{color:var(--muted); font-size:13.5px}
+.rel ul{margin:6px 0 0; padding-left:1.15em; color:var(--ink-soft); font-size:15.5px; width:100%}
+
+footer{
+  background:linear-gradient(135deg,#0f6bb4,#35b4dd);
+  color:#dceffb; padding:40px 0 56px; font-size:13.5px; line-height:1.9;
+}
+.foot-mark{display:flex; align-items:center; gap:9px; margin-bottom:18px}
+.foot-mark img{width:22px; height:22px; border-radius:6px}
+.support{
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.14); color:#fff; text-decoration:none;
+  font-weight:700; font-size:14px;
+  padding:10px 18px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.28);
+  cursor:default; pointer-events:none;
+}
+.support svg{width:16px; height:16px; stroke:#fff; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.support .wip{margin-left:2px; background:#fff; color:#0f6bb4; box-shadow:none}
+.support.is-ready{
+  background:#fff; color:#0f6bb4; border-color:transparent; cursor:pointer; pointer-events:auto;
+}
+.support.is-ready svg{stroke:#0f6bb4}
+.support.is-ready:hover{background:#eaf6ff}
+.footlinks{margin:20px 0 0}
+.footlinks a{color:#cfe8fb; text-decoration:none; border-bottom:1px solid rgba(207,232,251,.4); padding-bottom:1px}
+.footlinks a:hover{color:#fff; border-bottom-color:#fff}
+footer strong{color:#fff; font-size:15px}
+
+@media (max-width:640px){
+  section{padding:60px 0}
+  .hero{padding:56px 0 186px}
+  .hero-shot{margin-top:-140px}
+  .hero-shot, .wide{width:94vw}
+  .rows div{grid-template-columns:1fr}
+  .rows dt{font-size:13px; letter-spacing:.06em}
+  .confetti svg:nth-child(n+5){display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  .confetti svg{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="confetti" aria-hidden="true">
+    <svg style="top:9%; right:11%; width:38px; height:38px; --r:-8deg" viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4Z" fill="#f6a723" opacity=".92"/></svg>
+    <svg style="top:5%; right:27%; width:24px; height:24px; --r:14deg; animation-delay:.6s" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.8 2.8M15.2 15.2 18 18M18 6l-2.8 2.8M8.8 15.2 6 18" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity=".85"/></svg>
+    <svg style="top:32%; right:4.5%; width:52px; height:52px; --r:0deg; animation-delay:1.2s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#1eb59f" stroke-width="2.2" fill="none" opacity=".55"/></svg>
+    <svg style="top:16%; left:2%; width:20px; height:20px; --r:-16deg; animation-delay:.3s" viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4Z" fill="#f4726a" opacity=".7"/></svg>
+    <svg style="top:56%; right:16%; width:30px; height:30px; --r:10deg; animation-delay:1.8s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1eb59f" opacity=".9"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg style="top:2%; left:32%; width:16px; height:16px; --r:6deg; animation-delay:2.4s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffffff" opacity=".55"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="mark"><img src="assets/icon-256.png" alt=""><span>PDF MARIN</span></div>
+    <h1>みんなで作る、PDF 編集ソフト</h1>
+    <p class="sub">
+      使う人の「こうしてほしい」を集めて、AI と一緒に作っています。
+    </p>
+    <div class="actions">
+      <a class="btn" id="dlbtn" href="#tsukaikata">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+        ダウンロード
+      </a>
+      <p class="meta" id="dlmeta">v0.1.0 ・ Windows 10 / 11（64bit）<br>インストーラー形式</p>
+    </div>
+  </div>
+  <svg class="waves" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,52 C220,104 470,4 720,40 C960,74 1200,106 1440,58 L1440,110 L0,110 Z" fill="#ffffff" opacity=".20"/>
+    <path d="M0,74 C240,32 480,110 720,80 C960,50 1220,20 1440,62 L1440,110 L0,110 Z" fill="#ffffff" opacity=".32"/>
+  </svg>
+</div>
+
+<div class="hero-shot">
+  <div class="frame">
+    <img src="assets/shots/home.jpg" width="1440" height="900" alt="PDF を開いた画面。上にリボン、左にページ一覧、右にプロパティ。">
+  </div>
+  <p class="caption">ボタンの並びは Word や Excel に寄せてあります。写っている書類は、紹介のために作った架空の見本です。</p>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Features</p>
+    <h2>できること</h2>
+    <ul class="list">
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 3H3v6"/><path d="M15 21h6v-6"/><path d="M21 3l-8 8"/><path d="M3 21l8-8"/></svg></span>
+        PDF の圧縮（ファイルを軽くする）
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="13" height="15" rx="1.6"/><path d="M8 4h11a1 1 0 0 1 1 1v13"/></svg></span>
+        ページの回転・削除・並べ替え・結合・分割
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+        ハイライト・コメント・図形などの書き込み
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5-5 5-3-3-3 3"/></svg></span>
+        文字や画像の差し込み、印鑑、ページ番号
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 10.5h10"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg></span>
+        墨消し（文字も画像の中身も本当に取り除きます）
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+        すでにある文字の書き換え、文字の検索
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.6"/><path d="M7 8v3M11 8v3M15 8v3"/></svg></span>
+        図面の寸法を測る（縮尺を合わせてから）
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
+        画像 / Excel / Word / PowerPoint から PDF に変換
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        パスワードの設定と解除、印刷
+      </li>
+    </ul>
+  </div>
+</section>
+<div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--tint)"/></svg></div>
+<section class="tinted" style="position:relative; overflow:hidden">
+  <svg class="anchor-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>AI</p>
+    <h2>AI と一緒に作り、AI と一緒に育ちます</h2>
+    <div class="measure">
+      <p>
+        このソフトは AI と一緒に作っています。
+        だから直すのも作り足すのも速く、いまは無料でお出しできています。
+        「ここが使いにくい」と言われた所を、そのまま次の版で直していく作り方です。
+      </p>
+    </div>
+    <ul class="points">
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+        <h3>要望から作ります</h3>
+        <p>アプリの右上に「改善要望・問い合わせ」の入口を用意しています。届いた声から順に作ります。メールでも受け付けています。</p>
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
+        <h3>直りが速い</h3>
+        <p>作り手が AI と組んでいるので、直しも作り足しも早く出せます。困ったまま何か月も待たせません。</p>
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+        <h3>できることが増え続ける</h3>
+        <p>操作は全部が同じひとつの入口を通り、AI も同じ入口から動かします。AI が賢くなるほど、作り直さなくても頼めることが増えます。</p>
+      </li>
+    </ul>
+  </div>
+</section>
+<div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Screen</p>
+    <h2>ページ整理</h2>
+    <div class="measure"><p>札をドラッグして順番を入れ替え、最後に「適用」を押すと PDF に反映されます。</p></div>
+  </div>
+  <div class="wide" style="margin-top:34px">
+    <div class="frame">
+      <img src="assets/shots/organize.jpg" width="1440" height="504" loading="lazy" alt="ページ整理の画面。大きなサムネイルが並んでいる。">
+    </div>
+  </div>
+
+  <div class="wrap" style="margin-top:80px">
+    <h2>AI に相談しながら、高度な操作を <span class="wip">開発中</span></h2>
+    <div class="measure">
+      <p>
+        「ここを消して」「もっとこうしたい」のように、AI と話しながら
+        細かい操作を進められる仕組みを育てています。
+        いまは墨消しから、少しずつ形にしているところです。
+      </p>
+    </div>
+  </div>
+  <div class="wide" style="margin-top:34px">
+    <div class="frame">
+      <img src="assets/shots/redact-ai.jpg" width="1440" height="900" loading="lazy" alt="AI アシスタントの画面。表紙の会社名が黒く塗られた書類が表示されている。">
+    </div>
+    <p class="caption">
+      墨消しでの見本です。この仕組み自体はまだ開発中で、できることは少しずつ増えていきます。
+    </p>
+  </div>
+</section>
+<div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--tint)"/></svg></div>
+<section class="tinted" id="tsukaikata">
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Setup</p>
+    <h2>使い方</h2>
+    <ol class="steps">
+      <li>上のボタンからインストーラーをダウンロードする</li>
+      <li>ダウンロードしたファイルを<b>ダブルクリック</b>する</li>
+      <li>案内どおりに進めると、スタートメニューに <b>PDF MARIN</b> が入ります</li>
+    </ol>
+    <div class="callout">
+      <p class="note">
+        管理者のパスワードは要りません。自分のパソコンのユーザー領域に入ります。<br>
+        途中で「WindowsによってPCが保護されました」と出たら、「詳細情報」→「実行」を押してください。
+      </p>
+    </div>
+  </div>
+</section>
+<div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Requirements</p>
+    <h2>動作環境</h2>
+    <dl class="rows">
+      <div><dt>OS</dt><dd>Windows 10 / 11（64bit）</dd></div>
+      <div><dt>ディスク</dt><dd>約 400MB</dd></div>
+    </dl>
+  </div>
+</section>
+<div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--tint)"/></svg></div>
+<section class="tinted">
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Releases</p>
+    <h2>更新履歴</h2>
+    <div class="rel">
+      <h3>v0.1.0</h3>
+      <time>2026-09-03</time>
+      <ul><li>初版を公開しました。</li></ul>
+    </div>
+  </div>
+</section>
+<div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="#0f6bb4"/></svg></div>
+<footer>
+  <div class="wrap">
+    <div class="foot-mark"><img src="assets/icon-256.png" alt=""><strong>PDF MARIN</strong></div>
+    <a class="support" id="supportBtn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+      応援する
+      <span class="wip" id="supportWip">準備中</span>
+    </a>
+    <p class="footlinks"><a href="terms.html">利用について</a>　・　<a class="js-mail" href="terms.html#contact">メールで問い合わせる</a></p>
+  </div>
+</footer>
+
+<script>
+// 新しい版を出すときは version.json だけ直せば、ここに反映されます。
+fetch('version.json', {cache:'no-store'})
+  .then(function(r){ return r.ok ? r.json() : null; })
+  .then(function(v){
+    if (!v) return;
+    if (v.url && v.url.indexOf('USERNAME') < 0) {
+      document.getElementById('dlbtn').href = v.url;
+      document.getElementById('dlmeta').innerHTML =
+        'v' + v.version + ' ・ Windows 10 / 11（64bit）<br>インストーラー形式' + (v.size ? ' ・ ' + v.size : '');
+    } else {
+      // まだ配布ファイルを置いていないので、押しても404にならないようにする
+      document.getElementById('dlmeta').innerHTML =
+        '<strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式';
+    }
+    if (v.sponsorUrl) {
+      var btn = document.getElementById('supportBtn');
+      btn.href = v.sponsorUrl;
+      btn.classList.add('is-ready');
+      document.getElementById('supportWip').remove();
+    }
+  })
+  .catch(function(){});
+
+// 問い合わせ先のメールアドレスは、迷惑メール集めの機械に拾われないよう
+// 平文では書かず、ここで組み立てて差し込みます（逆さに書いてあります）。
+// 直すときは下の2つの文字列を逆から読んでください。
+(function(){
+  var name = 'niramfdp', host = 'moc.liamg';
+  var rev = function(s){ return s.split('').reverse().join(''); };
+  var to = rev(name) + '@' + rev(host);
+  var subject = encodeURIComponent('PDF MARIN お問い合わせ');
+  var links = document.querySelectorAll('a.js-mail');
+  for (var i = 0; i < links.length; i++) {
+    links[i].href = 'mailto:' + to + '?subject=' + subject;
+  }
+})();
+</script>
+
+</body>
+</html>
