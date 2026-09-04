@@ -88,7 +88,7 @@ a{color:inherit}
   position:relative; overflow:hidden;
   background:linear-gradient(135deg,#0f6bb4 0%, #1e8fd4 42%, #35b4dd 78%, #45c6cf 100%);
   color:#fff;
-  padding:80px 0 250px;
+  padding:64px 0 70px;
 }
 .hero::before{
   content:""; position:absolute; inset:0; z-index:0;
@@ -161,8 +161,15 @@ a{color:inherit}
   padding-left:13px; border-left:4px solid var(--sky); border-radius:2px;
 }
 .actions{
-  display:flex; flex-direction:column; align-items:center; text-align:center;
-  gap:16px; width:100%; margin-top:14px;
+  display:flex; flex-direction:column; align-items:flex-start; text-align:left;
+  gap:16px; margin-top:22px;
+}
+.hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:center; margin-top:34px}
+.hero-visual .frame{border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.35); box-shadow:0 20px 50px -18px rgba(6,40,70,.55)}
+.hero-visual img{display:block; width:100%; height:auto}
+@media (max-width:880px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{order:-1; max-width:480px; margin-inline:auto}
 }
 .btn.is-wait{
   background:rgba(255,255,255,.22); color:#eaf6ff;
@@ -313,6 +320,11 @@ p:last-child{margin-bottom:0}
 
 .split2{display:grid; grid-template-columns:1fr 1fr; gap:16px 56px; align-items:start}
 @media (max-width:720px){ .split2{grid-template-columns:1fr; gap:44px} }
+.points-stack{display:flex; flex-direction:column; gap:18px}
+.points-stack li{display:flex; align-items:flex-start; gap:14px}
+.points-stack li .ic{margin-bottom:0; flex:none}
+.points-stack li h3{margin:0 0 4px}
+.points-stack li p{margin:0}
 
 /* 動作環境 */
 .rows{margin:30px 0 0; border-top:1px solid var(--line)}
@@ -400,6 +412,10 @@ footer strong{color:#fff; font-size:15px}
         <a href="#report">問い合わせ</a>
       </nav>
     </div>
+  </div>
+  <div class="wide">
+    <div class="hero-grid">
+      <div class="hero-text">
     <h1>使いやすさとロマン。<br>みんなで作る PDF アプリ</h1>
     <p class="sub">
       <strong>あなたの声で、PDF が進化します。</strong>
@@ -412,17 +428,18 @@ footer strong{color:#fff; font-size:15px}
       </a>
       <p class="meta" id="dlmeta">v0.1.0 ・ Windows 10 / 11（64bit）<br>インストーラー形式</p>
     </div>
+      </div>
+      <div class="hero-visual">
+        <div class="frame">
+          <img src="assets/shots/home.jpg" width="1440" height="900" alt="PDF を開いた画面。上にリボン、左にページ一覧、右にプロパティ。">
+        </div>
+      </div>
+    </div>
   </div>
   <svg class="waves" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0,52 C220,104 470,4 720,40 C960,74 1200,106 1440,58 L1440,110 L0,110 Z" fill="#ffffff" opacity=".20"/>
     <path d="M0,74 C240,32 480,110 720,80 C960,50 1220,20 1440,62 L1440,110 L0,110 Z" fill="#ffffff" opacity=".32"/>
   </svg>
-</div>
-
-<div class="hero-shot">
-  <div class="frame">
-    <img src="assets/shots/home.jpg" width="1440" height="900" alt="PDF を開いた画面。上にリボン、左にページ一覧、右にプロパティ。">
-  </div>
 </div>
 
 <section>
@@ -474,36 +491,46 @@ footer strong{color:#fff; font-size:15px}
   <svg class="anchor-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>
   <div class="wrap">
     <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>AI</p>
-    <h2>あなたの声が、そのまま次の版になります</h2>
-    <div class="measure">
-      <p>
-        このアプリは AI と一緒に作っています。
-        だから直すのも作り足すのも速く、いまは無料でお出しできています。
-        「ここが使いにくい」と言われた所を、そのまま次の版で直していく作り方です。
-      </p>
-      <p>
-        使いやすさは当たり前として、そこにもう少しだけ足したい。
-        <strong>「PDF でこんなことまでできるのか」</strong>と思ってもらえる所まで、
-        一緒に育てていきたいと思っています。
-      </p>
+    <div class="split2 split2-ai">
+      <div>
+        <h2>あなたの声が、そのまま次の版になります</h2>
+        <div class="measure">
+          <p>
+            このアプリは AI と一緒に作っています。
+            だから直すのも作り足すのも速く、いまは無料でお出しできています。
+            「ここが使いにくい」と言われた所を、そのまま次の版で直していく作り方です。
+          </p>
+          <p>
+            使いやすさは当たり前として、そこにもう少しだけ足したい。
+            <strong>「PDF でこんなことまでできるのか」</strong>と思ってもらえる所まで、
+            一緒に育てていきたいと思っています。
+          </p>
+        </div>
+      </div>
+      <ul class="points points-stack">
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <div>
+            <h3>要望から作ります</h3>
+            <p>アプリの右上に「改善要望・問い合わせ」の入口があります。<a href="#report">このページからも送れます</a>。届いた声から順に作ります。</p>
+          </div>
+        </li>
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
+          <div>
+            <h3>直りが速い</h3>
+            <p>作り手が AI と組んでいるので、直しも作り足しも早く出せます。困ったまま何か月も待たせません。</p>
+          </div>
+        </li>
+        <li>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+          <div>
+            <h3>できることが増え続ける</h3>
+            <p>操作は全部が同じひとつの入口を通り、AI も同じ入口から動かします。AI が賢くなるほど、作り直さなくても頼めることが増えます。</p>
+          </div>
+        </li>
+      </ul>
     </div>
-    <ul class="points">
-      <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
-        <h3>要望から作ります</h3>
-        <p>アプリの右上に「改善要望・問い合わせ」の入口があります。<a href="#report">このページからも送れます</a>。届いた声から順に作ります。</p>
-      </li>
-      <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
-        <h3>直りが速い</h3>
-        <p>作り手が AI と組んでいるので、直しも作り足しも早く出せます。困ったまま何か月も待たせません。</p>
-      </li>
-      <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
-        <h3>できることが増え続ける</h3>
-        <p>操作は全部が同じひとつの入口を通り、AI も同じ入口から動かします。AI が賢くなるほど、作り直さなくても頼めることが増えます。</p>
-      </li>
-    </ul>
   </div>
 </section>
 <div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
