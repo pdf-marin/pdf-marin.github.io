@@ -311,6 +311,9 @@ p:last-child{margin-bottom:0}
 }
 .callout p{margin:0}
 
+.split2{display:grid; grid-template-columns:1fr 1fr; gap:16px 56px; align-items:start}
+@media (max-width:720px){ .split2{grid-template-columns:1fr; gap:44px} }
+
 /* 動作環境 */
 .rows{margin:30px 0 0; border-top:1px solid var(--line)}
 .rows div{
@@ -508,8 +511,14 @@ footer strong{color:#fff; font-size:15px}
 <section>
   <div class="wrap">
     <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Screen</p>
-    <h2>まっさきに効くのは、墨消しと圧縮</h2>
-    <div class="measure"><p>出す前の書類でよくある2つの手間を、まず楽にします。</p></div>
+    <h2>AI に相談しながら、高度な操作を <span class="wip">開発中</span></h2>
+    <div class="measure">
+      <p>
+        「ここを消して」「もっとこうしたい」のように、AI と話しながら
+        細かい操作を進められる仕組みを育てています。
+        いまは墨消しから、少しずつ形にしているところです。
+      </p>
+    </div>
   </div>
 
   <div class="wide" style="margin-top:34px">
@@ -522,36 +531,7 @@ footer strong{color:#fff; font-size:15px}
     </p>
   </div>
 
-  <div class="wrap" style="margin-top:64px">
-    <ul class="points">
-      <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 10.5h10"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg></span>
-        <h3>墨消し</h3>
-        <p>
-          客先に出す前の会社名や個人名を、確実に消します。
-          出す前は、ご自身の目でも消え方を確かめてください。
-        </p>
-      </li>
-      <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 3H3v6"/><path d="M15 21h6v-6"/><path d="M21 3l-8 8"/><path d="M3 21l8-8"/></svg></span>
-        <h3>圧縮</h3>
-        <p>
-          画像を多く含む書類ほど、大きく軽くなります。
-          メールに添付できないほど大きい PDF は、まずここから。
-        </p>
-      </li>
-    </ul>
-  </div>
-
-  <div class="wrap" style="margin-top:64px">
-    <h2>AI に相談しながら、高度な操作を <span class="wip">開発中</span></h2>
-    <div class="measure">
-      <p>
-        「ここを消して」「もっとこうしたい」のように、AI と話しながら
-        細かい操作を進められる仕組みを育てています。
-        いまは墨消しから、少しずつ形にしているところです。
-      </p>
-    </div>
+  <div class="wrap" style="margin-top:34px">
     <div class="callout" style="margin-top:26px">
       <p class="note">
         <strong>AI の機能を使うには、お手持ちの Claude Code が必要です。</strong>
@@ -599,25 +579,26 @@ footer strong{color:#fff; font-size:15px}
   </div>
 </section>
 <div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
-<section>
-  <div class="wrap">
-    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Requirements</p>
-    <h2>動作環境</h2>
-    <dl class="rows">
-      <div><dt>OS</dt><dd>Windows 10 / 11（64bit）</dd></div>
-      <div><dt>ディスク</dt><dd>約 400MB</dd></div>
-    </dl>
-  </div>
-</section>
-<div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--tint)"/></svg></div>
 <section class="tinted">
   <div class="wrap">
-    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Releases</p>
-    <h2>更新履歴</h2>
-    <div class="rel">
-      <h3>v0.1.0</h3>
-      <time>2026-09-03</time>
-      <ul><li>初版を公開しました。</li></ul>
+    <div class="split2">
+      <div>
+        <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Requirements</p>
+        <h2>動作環境</h2>
+        <dl class="rows">
+          <div><dt>OS</dt><dd>Windows 10 / 11（64bit）</dd></div>
+          <div><dt>ディスク</dt><dd>約 400MB</dd></div>
+        </dl>
+      </div>
+      <div>
+        <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Releases</p>
+        <h2>更新履歴</h2>
+        <div class="rel">
+          <h3>v0.1.0</h3>
+          <time>2026-09-03</time>
+          <ul><li>初版を公開しました。</li></ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
