@@ -104,17 +104,16 @@ a{color:inherit}
 .confetti svg{position:absolute; animation:floaty 6.5s ease-in-out infinite; filter:drop-shadow(0 6px 14px rgba(6,52,89,.22))}
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg))} 50%{transform:translateY(-16px) rotate(var(--r,0deg))}}
 
-.topbar{position:relative; margin-bottom:46px}
+.topbar{display:flex; align-items:flex-start; flex-wrap:wrap; justify-content:space-between; row-gap:18px; margin-bottom:46px}
 .topbar .mark{margin-bottom:0}
 .topnav{
-  position:absolute; top:2px; right:0;
   display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end;
-  gap:8px 18px; font-size:13.5px; max-width:min(560px,60vw);
+  gap:8px 18px; font-size:13.5px; padding-top:2px;
 }
 .topnav a{color:#cfe8fb; text-decoration:none; border-bottom:1px solid rgba(207,232,251,.4); padding-bottom:1px; white-space:nowrap}
 .topnav a:hover{color:#fff; border-bottom-color:#fff}
 .topnav .support{border-bottom:0; padding-bottom:10px}
-.mark{display:flex; align-items:center; gap:14px; margin-bottom:46px}
+.mark{display:flex; align-items:center; flex-wrap:wrap; row-gap:8px; gap:14px; margin-bottom:46px}
 .mark img{width:52px; height:52px; border-radius:13px; box-shadow:0 6px 16px rgba(0,0,0,.28)}
 .mark span{
   font-weight:800; font-size:27px; letter-spacing:-.01em; color:#fff;
@@ -292,6 +291,13 @@ p:last-child{margin-bottom:0}
   padding:3px 11px; border-radius:999px;
   box-shadow:0 2px 6px -2px rgba(246,167,35,.7);
 }
+.beta{
+  display:inline-block; vertical-align:4px; margin-left:12px;
+  font-size:12.5px; font-weight:700; letter-spacing:.02em;
+  color:#fff; background:var(--mint);
+  padding:4px 13px; border-radius:999px;
+  box-shadow:0 2px 6px -2px rgba(30,181,159,.7);
+}
 
 /* 使い方 */
 .steps{margin:34px 0 0; padding:0; list-style:none; counter-reset:s}
@@ -398,7 +404,7 @@ footer strong{color:#fff; font-size:15px}
   </div>
   <div class="wrap">
     <div class="topbar">
-      <div class="mark"><img src="assets/icon-256.png" alt=""><span>PDF MARIN</span></div>
+      <div class="mark"><img src="assets/icon-256.png" alt=""><span>PDF MARIN</span><span class="beta">ベータ版（無料）</span></div>
       <nav class="topnav">
         <a class="support" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">
           <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
