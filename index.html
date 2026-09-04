@@ -104,6 +104,12 @@ a{color:inherit}
 .confetti svg{position:absolute; animation:floaty 6.5s ease-in-out infinite; filter:drop-shadow(0 6px 14px rgba(6,52,89,.22))}
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg))} 50%{transform:translateY(-16px) rotate(var(--r,0deg))}}
 
+.topbar{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px 28px; margin-bottom:46px}
+.topbar .mark{margin-bottom:0}
+.topnav{display:flex; align-items:center; flex-wrap:wrap; gap:10px 22px; font-size:13.5px}
+.topnav a{color:#cfe8fb; text-decoration:none; border-bottom:1px solid rgba(207,232,251,.4); padding-bottom:1px; white-space:nowrap}
+.topnav a:hover{color:#fff; border-bottom-color:#fff}
+.topnav .support{border-bottom:0; padding-bottom:0}
 .mark{display:flex; align-items:center; gap:14px; margin-bottom:46px}
 .mark img{width:52px; height:52px; border-radius:13px; box-shadow:0 6px 16px rgba(0,0,0,.28)}
 .mark span{
@@ -370,7 +376,19 @@ footer strong{color:#fff; font-size:15px}
     <svg style="top:2%; left:32%; width:16px; height:16px; --r:6deg; animation-delay:2.4s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffffff" opacity=".55"/></svg>
   </div>
   <div class="wrap">
-    <div class="mark"><img src="assets/icon-256.png" alt=""><span>PDF MARIN</span></div>
+    <div class="topbar">
+      <div class="mark"><img src="assets/icon-256.png" alt=""><span>PDF MARIN</span></div>
+      <nav class="topnav">
+        <a class="support" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+          応援する
+          <span class="wip">準備中</span>
+        </a>
+        <a href="#report">不具合の報告・ご要望</a>
+        <a href="terms.html">利用について</a>
+        <a class="js-mail" href="terms.html#contact">メールで問い合わせる</a>
+      </nav>
+    </div>
     <h1>使いやすさとロマン。<br>みんなで作る PDF アプリ</h1>
     <p class="sub">
       <strong>あなたの声で、PDF が進化します。</strong>
@@ -656,10 +674,10 @@ footer strong{color:#fff; font-size:15px}
 <footer>
   <div class="wrap">
     <div class="foot-mark"><img src="assets/icon-256.png" alt=""><strong>PDF MARIN</strong></div>
-    <a class="support" id="supportBtn" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">
+    <a class="support" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">
       <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
       応援する
-      <span class="wip" id="supportWip">準備中</span>
+      <span class="wip">準備中</span>
     </a>
     <p class="footlinks"><a href="#report">不具合の報告・ご要望</a>　・　<a href="terms.html">利用について</a>　・　<a class="js-mail" href="terms.html#contact">メールで問い合わせる</a></p>
   </div>
@@ -702,14 +720,13 @@ footer strong{color:#fff; font-size:15px}
         setWaiting();
       }
       if (v.sponsorUrl) {
-        var sb = byId('supportBtn'), wip = byId('supportWip');
-        if (sb) {
+        document.querySelectorAll('a.support').forEach(function(sb){
           sb.href = v.sponsorUrl;
           sb.classList.add('is-ready');
           sb.removeAttribute('aria-disabled');
           sb.removeAttribute('tabindex');
-        }
-        if (wip) { wip.remove(); }
+        });
+        document.querySelectorAll('a.support .wip').forEach(function(wip){ wip.remove(); });
       }
     })
     .catch(function(e){
