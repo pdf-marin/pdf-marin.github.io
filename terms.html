@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>利用について — PDF MARIN</title>
 <meta name="description" content="PDF MARIN の利用条件・免責事項・情報の取り扱いについて。">
-<meta name="robots" content="noindex">
 <link rel="icon" href="assets/favicon.ico">
 <meta name="theme-color" content="#17b8bb">
 
@@ -17,7 +16,8 @@
 :root{
   --ocean:#1478c4; --sky:#34a8e8;
   --bg:#ffffff; --tint:#f0f7fd;
-  --ink:#12263a; --ink-soft:#3f5568; --muted:#6b8299; --line:#dbe8f3;
+  /* --muted は #6b8299 だと白地で 4.0:1 しかなく読みにくい人が出る（index.html と同じ濃さに揃える） */
+  --ink:#12263a; --ink-soft:#3f5568; --muted:#5c7387; --line:#dbe8f3;
 }
 @media (prefers-color-scheme: dark){
   :root{
@@ -155,8 +155,12 @@ footer a{text-decoration:none; font-weight:600}
         <strong>不具合の報告・ご要望を送ったとき</strong>：
         あなたが自分で送信の操作をしたときだけ、
         <strong>書いていただいた文章・種類（不具合／要望など）・お使いの版・OS の種類</strong>を送ります。
-        書類の中身やファイル名、お名前は送りません。返信先のアドレスは、
+        お名前は聞いていません。返信先のアドレスは、
         書いていただいたときだけ送ります（書かなければ匿名です）。送るかどうかは任意です。
+        <br>
+        <strong>ファイルを添えたときは、そのファイルの中身とファイル名も一緒に送られます。</strong>
+        添えるかどうかはあなたが選べます。何も添えなければ、ファイルは送られません。
+        見せたくない部分がある書類は、<strong>先に墨消ししてから</strong>添えてください。
       </li>
     </ul>
     <p>
@@ -164,14 +168,14 @@ footer a{text-decoration:none; font-weight:600}
       保存先の場所は、アプリの［カスタマイズ］タブ →［設定の保存先］で確認できます。
       <strong>この公式サイト</strong>で入力していただく場所は、
       <a href="./#report">不具合の報告・ご要望のフォーム</a>だけです。
-      そこでもお名前は聞いておらず、送られるのは上に書いたものだけです。
+      そこでもお名前は聞いておらず、送られるのは上に書いたもの（添えたファイルを含みます）だけです。
     </p>
 
     <h2>AI の機能について</h2>
     <ul>
       <li>
         AI の機能が<strong>入っている版と、入っていない版</strong>があります。
-        リボンに「AI」タブがあるかどうかで分かります。設定で切ることもできます。
+        リボンに「AI連携機能」のタブがあるかどうかで分かります。設定で切ることもできます。
       </li>
       <li>
         AI は、<strong>あなた自身の Claude Code と、あなた自身の契約</strong>で動きます。
@@ -235,17 +239,8 @@ footer a{text-decoration:none; font-weight:600}
         アプリの右上にある<strong>「改善要望・問い合わせ」</strong>
         （そのままの画面から送れます）
       </li>
-      <li>
-        <a class="js-mail" href="#contact"><strong>メールで問い合わせる</strong></a>
-        （押すと、お使いのメールソフトが宛先の入った状態で開きます）
-      </li>
     </ul>
     <div class="note">
-      <p>
-        リンクを押しても何も起きないときは、そのパソコンでメールソフトが
-        結び付いていないか、このページの仕掛けがうまく動いていない場合です。
-        そのときは、アプリの［改善要望・問い合わせ］からお送りください。
-      </p>
       <p>
         <strong>どの書類で、どの操作をしたときか</strong>を書いていただけると、
         直すのがぐっと速くなります。
@@ -266,22 +261,6 @@ footer a{text-decoration:none; font-weight:600}
 <footer>
   <div class="wrap"><a href="./">← PDF MARIN のトップへ</a></div>
 </footer>
-
-<script>
-// 問い合わせ先のメールアドレスは、迷惑メール集めの機械に拾われないよう
-// 平文では書かず、ここで組み立てて差し込みます（逆さに書いてあります）。
-// 直すときは下の2つの文字列を逆から読んでください。
-(function(){
-  var name = 'niramfdp', host = 'moc.liamg';
-  var rev = function(s){ return s.split('').reverse().join(''); };
-  var to = rev(name) + '@' + rev(host);
-  var subject = encodeURIComponent('PDF MARIN お問い合わせ');
-  var links = document.querySelectorAll('a.js-mail');
-  for (var i = 0; i < links.length; i++) {
-    links[i].href = 'mailto:' + to + '?subject=' + subject;
-  }
-})();
-</script>
 
 </body>
 </html>

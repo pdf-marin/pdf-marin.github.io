@@ -22,6 +22,8 @@
 <style>
 :root{
   --ocean:#1478c4;
+  --eyebrow-ink:#0d5e9e;   /* 節ラベルの文字。薄い水色の丸枠の上で 4.5:1 を満たす濃さ */
+  --warn-ink:#8a5a00;      /* 「8個までです」など、注意を促す短い文の色 */
   --sky:#34a8e8;
   --aqua:#3fc4d8;
   --mint:#1eb59f;
@@ -40,6 +42,8 @@
 @media (prefers-color-scheme: dark){
   :root{
     --ocean:#2f8fd8;
+    --eyebrow-ink:#7cc4f0;
+    --warn-ink:#f0b860;
     --sky:#4cb6ee;
     --aqua:#4fd0e2;
     --mint:#2ecdb4;
@@ -98,6 +102,8 @@ a{color:inherit}
   pointer-events:none;
 }
 .hero .wrap{position:relative; z-index:2}
+/* 見出し・ボタン・画面写真を、背景の光や紙吹雪より前に出す */
+.hero .wide{position:relative; z-index:2}
 
 /* きらめく飾り（お祭り感を出す、控えめに） */
 .confetti{position:absolute; inset:0; z-index:1; pointer-events:none}
@@ -152,6 +158,8 @@ a{color:inherit}
 }
 .form .send:hover{filter:brightness(1.07)}
 .form .send svg{width:17px; height:17px; stroke:#fff; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.filefield{margin:0 0 20px}
+.filenote{margin:8px 2px 0; font-size:13px; color:var(--warn-ink)}
 .dropzone{
   position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:6px; text-align:center; padding:24px 16px; border:2px dashed var(--line); border-radius:12px;
@@ -203,12 +211,11 @@ a{color:inherit}
   /* 配布ファイルがまだ無いときは、押せない見た目にする（下の is-wait） */
   transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
-.btn svg{width:26px; height:26px}
+.btn svg{width:19px; height:19px}
 .btn:hover{
   background:#f2fbff; transform:translateY(-2px);
   box-shadow:0 4px 10px rgba(6,52,89,.26), 0 22px 42px -14px rgba(6,52,89,.66);
 }
-.btn svg{width:19px; height:19px}
 .meta{color:#d3ecfb; font-size:14.5px; line-height:1.8}
 
 /* 波 */
@@ -229,21 +236,17 @@ section{padding:88px 0}
 .eyebrow{
   display:inline-flex; align-items:center; gap:6px;
   font-size:12px; font-weight:700; letter-spacing:.18em;
-  color:var(--ocean); background:rgba(52,168,232,.15);
+  color:var(--eyebrow-ink); background:rgba(52,168,232,.15);
   padding:4px 13px 4px 11px; border-radius:999px;
   margin:0 0 16px; text-transform:uppercase;
 }
-.eyebrow svg{width:13px; height:13px; stroke:var(--ocean); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex:0 0 auto}
+.eyebrow svg{width:13px; height:13px; stroke:var(--eyebrow-ink); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex:0 0 auto}
 
 /* 節と節の境目に波を挟む（PDF MARIN らしい雰囲気） */
 .wavecut{height:46px; overflow:hidden}
 .wavecut svg{display:block; width:100%; height:100%}
 .wc-wt{background:var(--bg)}
 .wc-tw{background:var(--tint)}
-@media (prefers-color-scheme: dark){
-  .wc-wt{background:var(--bg)}
-  .wc-tw{background:var(--tint)}
-}
 
 /* 大きな錨の透かし（AI の節の背景に薄く） */
 .anchor-watermark{
@@ -306,15 +309,18 @@ p:last-child{margin-bottom:0}
 .wip{
   display:inline-block; vertical-align:3px; margin-left:12px;
   font-size:12px; font-weight:700; letter-spacing:.04em;
-  color:#fff; background:var(--sun);
+  /* 白文字だと橙の上で 2.0:1 しかなく読みにくい。濃い茶色にして 6.4:1 にする */
+  color:#4a2a00; background:var(--sun);
   padding:3px 11px; border-radius:999px;
   box-shadow:0 2px 6px -2px rgba(246,167,35,.7);
 }
-.beta{
+/* ロゴ横のバッジ。.mark span（27px）に負けないよう、同じ入れ子で書く */
+.mark .beta{
   display:inline-block; vertical-align:4px; margin-left:12px;
   font-size:12.5px; font-weight:700; letter-spacing:.02em;
   color:#fff; background:var(--mint);
   padding:4px 13px; border-radius:999px;
+  text-shadow:none;
   box-shadow:0 2px 6px -2px rgba(30,181,159,.7);
 }
 
@@ -374,8 +380,6 @@ footer{
   background:linear-gradient(135deg,#0f6bb4,#35b4dd);
   color:#dceffb; padding:40px 0 56px; font-size:13.5px; line-height:1.9;
 }
-.foot-mark{display:flex; align-items:center; gap:9px; margin-bottom:18px}
-.foot-mark img{width:22px; height:22px; border-radius:6px}
 .support{
   display:inline-flex; align-items:center; gap:8px;
   background:rgba(255,255,255,.14); color:#fff; text-decoration:none;
@@ -391,10 +395,10 @@ footer{
 }
 .support.is-ready svg{stroke:#0f6bb4}
 .support.is-ready:hover{background:#eaf6ff}
-.footlinks{margin:20px 0 0}
-.footlinks a{color:#cfe8fb; text-decoration:none; border-bottom:1px solid rgba(207,232,251,.4); padding-bottom:1px}
-.footlinks a:hover{color:#fff; border-bottom-color:#fff}
-footer strong{color:#fff; font-size:15px}
+/* 有効化された「応援する」に乗せたとき、.topnav a:hover の白文字に
+   負けて白地に白にならないよう、同じ強さで文字色を戻す */
+.topnav .support.is-ready{color:#0f6bb4}
+.topnav .support.is-ready:hover{color:#0f6bb4}
 
 @media (max-width:640px){
   section{padding:60px 0}
@@ -445,11 +449,14 @@ footer strong{color:#fff; font-size:15px}
       「こうしてほしい」を集めて、AI と一緒に作っています。
     </p>
     <div class="actions">
-      <a class="btn" id="dlbtn" href="#tsukaikata">
+      <!-- 最初から「準備中」で置いておき、配布ファイルが用意できたら
+           version.json を読んだ JS が押せる状態に変える。
+           逆にすると、JS が動かない人に押せないボタンを見せてしまう -->
+      <a class="btn is-wait" id="dlbtn" role="button" aria-disabled="true" tabindex="-1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-        ダウンロード
+        準備中
       </a>
-      <p class="meta" id="dlmeta">v0.1.0 ・ Windows 10 / 11（64bit）<br>インストーラー形式</p>
+      <p class="meta" id="dlmeta"><strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式</p>
     </div>
       </div>
       <div class="hero-visual">
@@ -514,7 +521,7 @@ footer strong{color:#fff; font-size:15px}
   <svg class="anchor-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>
   <div class="wrap">
     <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>AI</p>
-    <div class="split2 split2-ai">
+    <div class="split2">
       <div>
         <h2>あなたの声が、そのまま次の版になります</h2>
         <div class="measure">
@@ -626,7 +633,6 @@ footer strong{color:#fff; font-size:15px}
     </div>
   </div>
 </section>
-<div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
 <section class="tinted">
   <div class="wrap">
     <div class="split2">
@@ -685,15 +691,18 @@ footer strong{color:#fff; font-size:15px}
         <input type="email" name="contact" placeholder="空欄でも送れます">
       </label>
 
-      <label>
-        <span class="lab">添付ファイル <span class="hint">（任意・8個まで。ドラッグ&amp;ドロップも使えます）</span></span>
+      <!-- ファイル一覧を <label> の外に出す。中に入れると、選んだファイル名を
+           押しただけでファイル選択の画面がまた開いてしまう -->
+      <div class="filefield">
+        <label class="lab" for="attachments">添付ファイル <span class="hint">（任意・8個まで。ドラッグ&amp;ドロップも使えます）</span></label>
         <div class="dropzone" id="dropzone">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 21h14"/></svg>
           <p>ここにファイルをドラッグ、またはクリックして選ぶ</p>
           <input type="file" name="attachments" id="attachments" multiple>
         </div>
         <ul class="filelist" id="filelist"></ul>
-      </label>
+        <p class="filenote" id="filenote" role="status" hidden></p>
+      </div>
 
       <input type="hidden" name="appVersion" value="（公式サイトから送信）">
       <input type="hidden" name="os" value="ブラウザ">
@@ -715,10 +724,17 @@ footer strong{color:#fff; font-size:15px}
   var dz = document.getElementById('dropzone');
   var input = document.getElementById('attachments');
   var list = document.getElementById('filelist');
+  var note = document.getElementById('filenote');
   if (!dz || !input || !list || typeof DataTransfer === 'undefined') return;
 
   var MAX_FILES = 8;
   var selected = [];
+
+  function say(msg){
+    if (!note) return;
+    note.textContent = msg || '';
+    note.hidden = !msg;
+  }
 
   function fmtSize(bytes){
     if (bytes < 1024) return bytes + 'B';
@@ -738,6 +754,7 @@ footer strong{color:#fff; font-size:15px}
       rm.textContent = '削除';
       rm.addEventListener('click', function(){
         selected.splice(i, 1);
+        say('');
         sync();
       });
       li.appendChild(name);
@@ -747,15 +764,30 @@ footer strong{color:#fff; font-size:15px}
   }
 
   function sync(){
-    selected = selected.slice(0, MAX_FILES);
     var dt = new DataTransfer();
     selected.forEach(function(f){ dt.items.add(f); });
     input.files = dt.files;
     render();
   }
 
+  // 同じファイルを二度入れない。名前・大きさ・更新日時が全部同じなら同じものとみなす
+  function alreadyHave(f){
+    return selected.some(function(g){
+      return g.name === f.name && g.size === f.size && g.lastModified === f.lastModified;
+    });
+  }
+
   function addFiles(fileList){
-    Array.prototype.forEach.call(fileList, function(f){ selected.push(f); });
+    var dropped = 0, over = 0;
+    Array.prototype.forEach.call(fileList, function(f){
+      if (alreadyHave(f)) { dropped++; return; }
+      if (selected.length >= MAX_FILES) { over++; return; }
+      selected.push(f);
+    });
+    var msgs = [];
+    if (over) { msgs.push('添付は ' + MAX_FILES + ' 個までです。' + over + ' 個は入りませんでした。'); }
+    if (dropped) { msgs.push('同じファイルが ' + dropped + ' 個あったので、重ねずに1つにしました。'); }
+    say(msgs.join(' '));
     sync();
   }
 
@@ -784,20 +816,23 @@ footer strong{color:#fff; font-size:15px}
 (function(){
   var byId = function(id){ return document.getElementById(id); };
 
-  // 配布ファイルがまだ無いとき。押しても「使い方」へ飛ぶだけの堂々巡りにしない
-  function setWaiting(){
+  // HTML は最初から「準備中」で置いてある。配布ファイルが用意できたときだけ、
+  // ここで押せるボタンに変える
+  function setReady(v){
     var meta = byId('dlmeta'), btn = byId('dlbtn');
-    if (meta) {
-      meta.innerHTML = '<strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式';
-    }
     if (btn) {
-      btn.removeAttribute('href');
-      btn.setAttribute('role', 'button');
-      btn.setAttribute('aria-disabled', 'true');
-      btn.setAttribute('tabindex', '-1');
-      btn.classList.add('is-wait');
+      btn.href = v.url;
+      btn.removeAttribute('role');
+      btn.removeAttribute('aria-disabled');
+      btn.removeAttribute('tabindex');
+      btn.classList.remove('is-wait');
       var last = btn.lastChild;
-      if (last && last.nodeType === 3) { last.nodeValue = ' 準備中 '; }
+      if (last && last.nodeType === 3) { last.nodeValue = ' ダウンロード '; }
+    }
+    if (meta) {
+      meta.innerHTML = (v.version ? 'v' + v.version + ' ・ ' : '')
+        + 'Windows 10 / 11（64bit）<br>インストーラー形式'
+        + (v.size ? ' ・ ' + v.size : '');
     }
   }
 
@@ -805,16 +840,7 @@ footer strong{color:#fff; font-size:15px}
     .then(function(r){ return r.ok ? r.json() : null; })
     .then(function(v){
       v = v || {};
-      if (v.url) {
-        var btn = byId('dlbtn'), meta = byId('dlmeta');
-        if (btn) { btn.href = v.url; }
-        if (meta) {
-          meta.innerHTML = 'v' + v.version + ' ・ Windows 10 / 11（64bit）<br>インストーラー形式'
-            + (v.size ? ' ・ ' + v.size : '');
-        }
-      } else {
-        setWaiting();
-      }
+      if (v.url) { setReady(v); }   // url が空なら、置いてある「準備中」のまま
       if (v.sponsorUrl) {
         document.querySelectorAll('a.support').forEach(function(sb){
           sb.href = v.sponsorUrl;
@@ -826,24 +852,9 @@ footer strong{color:#fff; font-size:15px}
       }
     })
     .catch(function(e){
-      // 黙って死なせない。原因は必ず残す
+      // 黙って死なせない。原因は必ず残す（ボタンは「準備中」のまま）
       console.error('version.json を読み込めませんでした:', e);
-      setWaiting();
     });
-})();
-
-// 問い合わせ先のメールアドレスは、迷惑メール集めの機械に拾われないよう
-// 平文では書かず、ここで組み立てて差し込みます（逆さに書いてあります）。
-// 直すときは下の2つの文字列を逆から読んでください。
-(function(){
-  var name = 'niramfdp', host = 'moc.liamg';
-  var rev = function(s){ return s.split('').reverse().join(''); };
-  var to = rev(name) + '@' + rev(host);
-  var subject = encodeURIComponent('PDF MARIN お問い合わせ');
-  var links = document.querySelectorAll('a.js-mail');
-  for (var i = 0; i < links.length; i++) {
-    links[i].href = 'mailto:' + to + '?subject=' + subject;
-  }
 })();
 </script>
 
