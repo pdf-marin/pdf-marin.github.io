@@ -9,7 +9,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="PDF MARIN">
 <meta property="og:description" content="みんなで作る PDF 編集ソフト。Windows 10 / 11 用。">
-<meta property="og:image" content="assets/ogp.png">
+<meta property="og:image" content="https://pdf-marin.github.io/assets/ogp.png">
+<meta property="og:url" content="https://pdf-marin.github.io/">
+<link rel="canonical" href="https://pdf-marin.github.io/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#17b8bb">
 
@@ -31,7 +33,7 @@
   --tint2:#fff8ec;
   --ink:#12263a;
   --ink-soft:#3f5568;
-  --muted:#6b8299;
+  --muted:#5c7387;   /* 白地で 4.9:1。#6b8299 だと 4.0:1 で読みにくい人が出る */
   --line:#dbe8f3;
   --card:#ffffff;
 }
@@ -69,7 +71,8 @@ body{
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
-img{max-width:100%; display:block}
+/* height:auto を外すと、img の height 属性が効いたまま横だけ縮んで縦に伸びます */
+img{max-width:100%; height:auto; display:block}
 a{color:inherit}
 
 .wrap{width:min(1020px,90vw); margin-inline:auto}
@@ -114,12 +117,18 @@ a{color:inherit}
   color:#e8f6ff; margin:0 0 40px; max-width:30em; line-height:1.9;
 }
 .actions{display:flex; align-items:center; gap:22px; flex-wrap:wrap}
+.btn.is-wait{
+  background:rgba(255,255,255,.22); color:#eaf6ff;
+  border:1px solid rgba(255,255,255,.42);
+  box-shadow:none; cursor:default; pointer-events:none;
+}
 .btn{
   display:inline-flex; align-items:center; gap:11px;
   background:#fff; color:#0f6bb4; text-decoration:none;
   font-weight:700; font-size:16.5px;
   padding:16px 32px; border-radius:999px;
   box-shadow:0 3px 8px rgba(6,52,89,.22), 0 16px 34px -14px rgba(6,52,89,.6);
+  /* 配布ファイルがまだ無いときは、押せない見た目にする（下の is-wait） */
   transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
 .btn:hover{
@@ -311,6 +320,7 @@ footer strong{color:#fff; font-size:15px}
 }
 @media (prefers-reduced-motion: reduce){
   .confetti svg{animation:none}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
@@ -458,6 +468,14 @@ footer strong{color:#fff; font-size:15px}
     <p class="caption">
       墨消しでの見本です。この仕組み自体はまだ開発中で、できることは少しずつ増えていきます。
     </p>
+    <div class="callout" style="margin-top:26px">
+      <p class="note">
+        <strong>AI の機能を使うには、お手持ちの Claude Code が必要です。</strong>
+        AI はあなた自身の契約で動き、こちらで利用料をいただくことはありません。
+        AI の機能が入っていない版もあります（リボンに「AI」タブがあるかどうかで分かります）。
+        くわしくは<a href="terms.html">利用について</a>をご覧ください。
+      </p>
+    </div>
   </div>
 </section>
 <div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--tint)"/></svg></div>
@@ -505,7 +523,7 @@ footer strong{color:#fff; font-size:15px}
 <footer>
   <div class="wrap">
     <div class="foot-mark"><img src="assets/icon-256.png" alt=""><strong>PDF MARIN</strong></div>
-    <a class="support" id="supportBtn" href="#" target="_blank" rel="noopener">
+    <a class="support" id="supportBtn" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">
       <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
       応援する
       <span class="wip" id="supportWip">準備中</span>
@@ -516,27 +534,57 @@ footer strong{color:#fff; font-size:15px}
 
 <script>
 // 新しい版を出すときは version.json だけ直せば、ここに反映されます。
-fetch('version.json', {cache:'no-store'})
-  .then(function(r){ return r.ok ? r.json() : null; })
-  .then(function(v){
-    if (!v) return;
-    if (v.url && v.url.indexOf('USERNAME') < 0) {
-      document.getElementById('dlbtn').href = v.url;
-      document.getElementById('dlmeta').innerHTML =
-        'v' + v.version + ' ・ Windows 10 / 11（64bit）<br>インストーラー形式' + (v.size ? ' ・ ' + v.size : '');
-    } else {
-      // まだ配布ファイルを置いていないので、押しても404にならないようにする
-      document.getElementById('dlmeta').innerHTML =
-        '<strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式';
+(function(){
+  var byId = function(id){ return document.getElementById(id); };
+
+  // 配布ファイルがまだ無いとき。押しても「使い方」へ飛ぶだけの堂々巡りにしない
+  function setWaiting(){
+    var meta = byId('dlmeta'), btn = byId('dlbtn');
+    if (meta) {
+      meta.innerHTML = '<strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式';
     }
-    if (v.sponsorUrl) {
-      var btn = document.getElementById('supportBtn');
-      btn.href = v.sponsorUrl;
-      btn.classList.add('is-ready');
-      document.getElementById('supportWip').remove();
+    if (btn) {
+      btn.removeAttribute('href');
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('aria-disabled', 'true');
+      btn.setAttribute('tabindex', '-1');
+      btn.classList.add('is-wait');
+      var last = btn.lastChild;
+      if (last && last.nodeType === 3) { last.nodeValue = ' 準備中 '; }
     }
-  })
-  .catch(function(){});
+  }
+
+  fetch('version.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(v){
+      v = v || {};
+      if (v.url) {
+        var btn = byId('dlbtn'), meta = byId('dlmeta');
+        if (btn) { btn.href = v.url; }
+        if (meta) {
+          meta.innerHTML = 'v' + v.version + ' ・ Windows 10 / 11（64bit）<br>インストーラー形式'
+            + (v.size ? ' ・ ' + v.size : '');
+        }
+      } else {
+        setWaiting();
+      }
+      if (v.sponsorUrl) {
+        var sb = byId('supportBtn'), wip = byId('supportWip');
+        if (sb) {
+          sb.href = v.sponsorUrl;
+          sb.classList.add('is-ready');
+          sb.removeAttribute('aria-disabled');
+          sb.removeAttribute('tabindex');
+        }
+        if (wip) { wip.remove(); }
+      }
+    })
+    .catch(function(e){
+      // 黙って死なせない。原因は必ず残す
+      console.error('version.json を読み込めませんでした:', e);
+      setWaiting();
+    });
+})();
 
 // 問い合わせ先のメールアドレスは、迷惑メール集めの機械に拾われないよう
 // 平文では書かず、ここで組み立てて差し込みます（逆さに書いてあります）。
