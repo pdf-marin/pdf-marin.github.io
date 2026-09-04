@@ -74,6 +74,10 @@ body{
 /* height:auto を外すと、img の height 属性が効いたまま横だけ縮んで縦に伸びます */
 img{max-width:100%; height:auto; display:block}
 a{color:inherit}
+/* 本文中のリンクは、色だけだと見分けられないので下線も付ける */
+.measure a, .points a, .note a, .caption a{
+  color:var(--ocean); text-decoration:underline; text-underline-offset:3px;
+}
 
 .wrap{width:min(1020px,90vw); margin-inline:auto}
 .wide{width:min(1300px,94vw); margin-inline:auto}
@@ -116,6 +120,32 @@ a{color:inherit}
   font-size:clamp(15px,1.7vw,17.5px);
   color:#e8f6ff; margin:0 0 40px; max-width:30em; line-height:1.9;
 }
+/* ────────── 報告フォーム ────────── */
+.form{max-width:640px; margin-top:10px}
+.form label{display:block; margin:0 0 20px}
+.form .lab{display:block; font-weight:700; font-size:15px; color:var(--ink); margin-bottom:7px}
+.form .hint{font-weight:400; color:var(--muted); font-size:13.5px}
+.form select, .form input[type=email], .form textarea{
+  width:100%; font:inherit; font-size:15.5px; color:var(--ink);
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:12px 14px; line-height:1.75;
+}
+.form textarea{min-height:172px; resize:vertical}
+.form select:focus, .form input:focus, .form textarea:focus{
+  outline:none; border-color:var(--sky); box-shadow:0 0 0 3px rgba(52,168,232,.24);
+}
+.form .send{
+  display:inline-flex; align-items:center; gap:9px;
+  background:linear-gradient(135deg,#1478c4,#35b4dd); color:#fff;
+  border:0; border-radius:999px; padding:14px 32px;
+  font:inherit; font-weight:700; font-size:16px; cursor:pointer;
+  box-shadow:0 10px 22px -10px rgba(6,52,89,.7);
+}
+.form .send:hover{filter:brightness(1.07)}
+.form .send svg{width:17px; height:17px; stroke:#fff; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+/* 機械よけ。人には見せない欄で、埋まっていたら受け口が捨てます */
+.hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+
 .safety-h{
   margin:44px 0 14px; font-size:19px; font-weight:700; line-height:1.6; color:var(--ink);
   padding-left:13px; border-left:4px solid var(--sky); border-radius:2px;
@@ -427,7 +457,7 @@ footer strong{color:#fff; font-size:15px}
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
         <h3>要望から作ります</h3>
-        <p>アプリの右上に「改善要望・問い合わせ」の入口を用意しています。届いた声から順に作ります。メールでも受け付けています。</p>
+        <p>アプリの右上に「改善要望・問い合わせ」の入口があります。<a href="#report">このページからも送れます</a>。届いた声から順に作ります。</p>
       </li>
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
@@ -541,7 +571,64 @@ footer strong{color:#fff; font-size:15px}
     </div>
   </div>
 </section>
-<div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="#0f6bb4"/></svg></div>
+<div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
+<section id="report">
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Feedback</p>
+    <h2>うまく動かないとき・こうしてほしいとき</h2>
+    <div class="measure">
+      <p>
+        気づいたことを、ここからそのまま送れます。届いた声から順に直していきます。
+        お名前は要りません。アプリの右上［改善要望・問い合わせ］からも同じものを送れます。
+      </p>
+    </div>
+
+    <form class="form" method="post"
+          action="https://script.google.com/macros/s/AKfycbyQ9h2FEZG4L_FmqBzfqTkGJHd9mUVb2bU6NHCeOzX1dkMGqQDwsX7VfuRNb5Tc36UC6g/exec">
+      <label>
+        <span class="lab">種類</span>
+        <select name="kind">
+          <option value="bug">うまく動かない</option>
+          <option value="want">こうしてほしい</option>
+          <option value="hard">使いにくい</option>
+          <option value="other" selected>その他</option>
+        </select>
+      </label>
+
+      <label>
+        <span class="lab">内容 <span class="hint">（必須・4000文字まで）</span></span>
+        <textarea name="text" required maxlength="4000"
+          placeholder="【何をしたか】&#10;【どうなったか】&#10;【どうなってほしかったか】"></textarea>
+      </label>
+
+      <label>
+        <span class="lab">メールアドレス <span class="hint">（返信がほしいときだけ。空欄のままでも送れます）</span></span>
+        <input type="email" name="contact" placeholder="空欄でも送れます">
+      </label>
+
+      <input type="hidden" name="appVersion" value="（公式サイトから送信）">
+      <input type="hidden" name="os" value="ブラウザ">
+
+      <div class="hp" aria-hidden="true">
+        <label>website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <button class="send" type="submit">
+        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+        送信する
+      </button>
+    </form>
+
+    <div class="callout" style="margin-top:30px">
+      <p class="note">
+        送信されるのは、<strong>書いていただいた内容</strong>と、
+        返信先を書いた場合のみ<strong>そのアドレス</strong>だけです。
+        お名前や、お使いのファイルの情報は送られません。
+      </p>
+    </div>
+  </div>
+</section>
+<div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="#0f6bb4"/></svg></div>
 <footer>
   <div class="wrap">
     <div class="foot-mark"><img src="assets/icon-256.png" alt=""><strong>PDF MARIN</strong></div>
@@ -550,7 +637,7 @@ footer strong{color:#fff; font-size:15px}
       応援する
       <span class="wip" id="supportWip">準備中</span>
     </a>
-    <p class="footlinks"><a href="terms.html">利用について</a>　・　<a class="js-mail" href="terms.html#contact">メールで問い合わせる</a></p>
+    <p class="footlinks"><a href="#report">不具合の報告・ご要望</a>　・　<a href="terms.html">利用について</a>　・　<a class="js-mail" href="terms.html#contact">メールで問い合わせる</a></p>
   </div>
 </footer>
 
