@@ -116,6 +116,10 @@ a{color:inherit}
   font-size:clamp(15px,1.7vw,17.5px);
   color:#e8f6ff; margin:0 0 40px; max-width:30em; line-height:1.9;
 }
+.safety-h{
+  margin:44px 0 14px; font-size:19px; font-weight:700; line-height:1.6; color:var(--ink);
+  padding-left:13px; border-left:4px solid var(--sky); border-radius:2px;
+}
 .actions{display:flex; align-items:center; gap:22px; flex-wrap:wrap}
 .btn.is-wait{
   background:rgba(255,255,255,.22); color:#eaf6ff;
@@ -490,8 +494,26 @@ footer strong{color:#fff; font-size:15px}
     </ol>
     <div class="callout">
       <p class="note">
-        管理者のパスワードは要りません。自分のパソコンのユーザー領域に入ります。<br>
-        途中で「WindowsによってPCが保護されました」と出たら、「詳細情報」→「実行」を押してください。
+        管理者のパスワードは要りません。自分のパソコンのユーザー領域に入ります。
+      </p>
+    </div>
+
+    <h3 class="safety-h">青い警告画面が出ることについて</h3>
+    <div class="measure">
+      <p>
+        初めて実行したとき、Windows の青い画面
+        （<b>「WindowsによってPCが保護されました」</b>）が出ます。
+        <b>［詳細情報］→［実行］</b>で進められます。
+      </p>
+      <p>
+        これは「危ないから」ではなく、<strong>発行元を証明する電子署名を付けていないから</strong>です。
+        署名には毎年お金のかかる証明書が必要で、個人が無料で配っているソフトには
+        付いていないことがよくあります。
+      </p>
+      <p>
+        落としたファイルが途中ですり替わっていないかは、
+        <strong>SHA-256 という指紋の値</strong>で確かめられます。
+        配布を始めるときに、この場所に載せます。
       </p>
     </div>
   </div>
