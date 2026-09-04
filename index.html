@@ -160,27 +160,31 @@ a{color:inherit}
   margin:44px 0 14px; font-size:19px; font-weight:700; line-height:1.6; color:var(--ink);
   padding-left:13px; border-left:4px solid var(--sky); border-radius:2px;
 }
-.actions{display:flex; align-items:center; gap:22px; flex-wrap:wrap}
+.actions{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  gap:16px; width:100%; margin-top:14px;
+}
 .btn.is-wait{
   background:rgba(255,255,255,.22); color:#eaf6ff;
   border:1px solid rgba(255,255,255,.42);
   box-shadow:none; cursor:default; pointer-events:none;
 }
 .btn{
-  display:inline-flex; align-items:center; gap:11px;
+  display:inline-flex; align-items:center; gap:14px;
   background:#fff; color:#0f6bb4; text-decoration:none;
-  font-weight:700; font-size:16.5px;
-  padding:16px 32px; border-radius:999px;
-  box-shadow:0 3px 8px rgba(6,52,89,.22), 0 16px 34px -14px rgba(6,52,89,.6);
+  font-weight:800; font-size:22px;
+  padding:24px 56px; border-radius:999px;
+  box-shadow:0 6px 16px rgba(6,52,89,.26), 0 26px 50px -18px rgba(6,52,89,.65);
   /* 配布ファイルがまだ無いときは、押せない見た目にする（下の is-wait） */
   transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
+.btn svg{width:26px; height:26px}
 .btn:hover{
   background:#f2fbff; transform:translateY(-2px);
   box-shadow:0 4px 10px rgba(6,52,89,.26), 0 22px 42px -14px rgba(6,52,89,.66);
 }
 .btn svg{width:19px; height:19px}
-.meta{color:#d3ecfb; font-size:13.5px; line-height:1.7}
+.meta{color:#d3ecfb; font-size:14.5px; line-height:1.8}
 
 /* 波 */
 .waves{position:absolute; left:0; right:0; bottom:-1px; z-index:0; width:100%; height:110px}
