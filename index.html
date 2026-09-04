@@ -152,6 +152,25 @@ a{color:inherit}
 }
 .form .send:hover{filter:brightness(1.07)}
 .form .send svg{width:17px; height:17px; stroke:#fff; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.dropzone{
+  position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; text-align:center; padding:24px 16px; border:2px dashed var(--line); border-radius:12px;
+  background:var(--card); color:var(--muted); font-size:13.5px; cursor:pointer; transition:border-color .15s,background .15s;
+}
+.dropzone:hover{border-color:var(--sky)}
+.dropzone.is-drag{border-color:var(--sky); background:rgba(52,168,232,.08)}
+.dropzone svg{width:24px; height:24px; stroke:var(--sky); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.dropzone p{margin:0}
+.dropzone input[type=file]{position:absolute; inset:0; opacity:0; cursor:pointer}
+.filelist{list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:6px}
+.filelist:empty{margin:0}
+.filelist li{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  font-size:13.5px; color:var(--ink); background:var(--card); border:1px solid var(--line);
+  border-radius:9px; padding:8px 12px;
+}
+.filelist .rm{background:none; border:0; color:var(--muted); cursor:pointer; font:inherit; font-size:13px; padding:2px 4px}
+.filelist .rm:hover{color:var(--ink)}
 /* 機械よけ。人には見せない欄で、埋まっていたら受け口が捨てます */
 .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
 
@@ -163,7 +182,7 @@ a{color:inherit}
   display:flex; flex-direction:column; align-items:flex-start; text-align:left;
   gap:16px; margin-top:22px;
 }
-.hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:center; margin-top:34px}
+.hero-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:44px; align-items:center; margin-top:34px}
 .hero-visual .frame{border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.35); box-shadow:0 20px 50px -18px rgba(6,40,70,.55)}
 .hero-visual img{display:block; width:100%; height:auto}
 @media (max-width:880px){
@@ -435,7 +454,7 @@ footer strong{color:#fff; font-size:15px}
       </div>
       <div class="hero-visual">
         <div class="frame">
-          <img src="assets/shots/home.jpg" width="1440" height="900" alt="PDF を開いた画面。上にリボン、左にページ一覧、右にプロパティ。">
+          <img src="assets/shots/home.jpg" width="1919" height="1025" alt="PDF に手書きで注釈を書き込んでいる画面。右にペンの色や太さを選べるパネル。">
         </div>
       </div>
     </div>
@@ -553,7 +572,7 @@ footer strong{color:#fff; font-size:15px}
 
   <div class="wide" style="margin-top:34px">
     <div class="frame">
-      <img src="assets/shots/ai-detect.jpg" width="1909" height="994" loading="lazy" alt="墨消しの画面。AI が会社名を見つけ、赤い枠で示して消してよいか確認している。">
+      <img src="assets/shots/ai-detect.jpg" width="1915" height="1032" loading="lazy" alt="墨消しの画面。何を探すかを選ぶと、AI が会社名や個人名を見つけて赤い枠で示し、消してよいか確認している。">
     </div>
     <p class="caption">
       墨消しの見本です。消したほうがよさそうな所を見つけ、赤い枠で示して確認してから消します。
@@ -643,8 +662,8 @@ footer strong{color:#fff; font-size:15px}
       </p>
     </div>
 
-    <form class="form" method="post"
-          action="https://script.google.com/macros/s/AKfycbyQ9h2FEZG4L_FmqBzfqTkGJHd9mUVb2bU6NHCeOzX1dkMGqQDwsX7VfuRNb5Tc36UC6g/exec">
+    <form class="form" method="post" enctype="multipart/form-data"
+          action="https://pdf-marin-backend.a-s-kakeru.workers.dev/feedback">
       <label>
         <span class="lab">種類</span>
         <select name="kind">
@@ -666,6 +685,16 @@ footer strong{color:#fff; font-size:15px}
         <input type="email" name="contact" placeholder="空欄でも送れます">
       </label>
 
+      <label>
+        <span class="lab">添付ファイル <span class="hint">（任意・8個まで。ドラッグ&amp;ドロップも使えます）</span></span>
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 21h14"/></svg>
+          <p>ここにファイルをドラッグ、またはクリックして選ぶ</p>
+          <input type="file" name="attachments" id="attachments" multiple>
+        </div>
+        <ul class="filelist" id="filelist"></ul>
+      </label>
+
       <input type="hidden" name="appVersion" value="（公式サイトから送信）">
       <input type="hidden" name="os" value="ブラウザ">
 
@@ -680,6 +709,71 @@ footer strong{color:#fff; font-size:15px}
     </form>
   </div>
 </section>
+<script>
+// 添付ファイル欄。選んだ内容は自前で保持し、送信のたびに <input> へ積み直す
+(function(){
+  var dz = document.getElementById('dropzone');
+  var input = document.getElementById('attachments');
+  var list = document.getElementById('filelist');
+  if (!dz || !input || !list || typeof DataTransfer === 'undefined') return;
+
+  var MAX_FILES = 8;
+  var selected = [];
+
+  function fmtSize(bytes){
+    if (bytes < 1024) return bytes + 'B';
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + 'KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
+  }
+
+  function render(){
+    list.innerHTML = '';
+    selected.forEach(function(f, i){
+      var li = document.createElement('li');
+      var name = document.createElement('span');
+      name.textContent = f.name + '（' + fmtSize(f.size) + '）';
+      var rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'rm';
+      rm.textContent = '削除';
+      rm.addEventListener('click', function(){
+        selected.splice(i, 1);
+        sync();
+      });
+      li.appendChild(name);
+      li.appendChild(rm);
+      list.appendChild(li);
+    });
+  }
+
+  function sync(){
+    selected = selected.slice(0, MAX_FILES);
+    var dt = new DataTransfer();
+    selected.forEach(function(f){ dt.items.add(f); });
+    input.files = dt.files;
+    render();
+  }
+
+  function addFiles(fileList){
+    Array.prototype.forEach.call(fileList, function(f){ selected.push(f); });
+    sync();
+  }
+
+  input.addEventListener('change', function(){ addFiles(input.files); });
+
+  ['dragenter', 'dragover'].forEach(function(ev){
+    dz.addEventListener(ev, function(e){ e.preventDefault(); dz.classList.add('is-drag'); });
+  });
+  ['dragleave', 'drop'].forEach(function(ev){
+    dz.addEventListener(ev, function(e){ e.preventDefault(); dz.classList.remove('is-drag'); });
+  });
+  dz.addEventListener('drop', function(e){
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+      addFiles(e.dataTransfer.files);
+    }
+  });
+})();
+</script>
 <div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="#0f6bb4"/></svg></div>
 <footer>
   <div class="wrap"></div>
