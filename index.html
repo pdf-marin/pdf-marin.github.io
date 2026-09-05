@@ -224,6 +224,9 @@ a{color:inherit}
   box-shadow:0 4px 10px rgba(6,52,89,.26), 0 22px 42px -14px rgba(6,52,89,.66);
 }
 .meta{color:#d3ecfb; font-size:14.5px; line-height:1.8}
+/* ダウンロードボタン直下の警告案内。青い背景の上なので白系で下線を付ける */
+.dl-warn{margin-top:12px; font-size:13.5px}
+.dl-warn a{color:#fff; text-decoration:underline; text-underline-offset:3px}
 
 /* 波 */
 .waves{position:absolute; left:0; right:0; bottom:-1px; z-index:0; width:100%; height:110px}
@@ -464,6 +467,11 @@ footer{
         準備中
       </a>
       <p class="meta" id="dlmeta"><strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式</p>
+      <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く -->
+      <p class="meta dl-warn">
+        ダウンロードのとき・実行のときに<strong>警告が出ます</strong>。
+        <a href="#keikoku">進め方はこちら</a>
+      </p>
     </div>
       </div>
       <div class="hero-visual">
@@ -628,22 +636,37 @@ footer{
       </p>
     </div>
 
-    <h3 class="safety-h">青い警告画面が出ることについて</h3>
+    <h3 class="safety-h" id="keikoku">警告が出ることについて</h3>
     <div class="measure">
       <p>
-        初めて実行したとき、Windows の青い画面
-        （<b>「WindowsによってPCが保護されました」</b>）が出ます。
-        <b>［詳細情報］→［実行］</b>で進められます。
+        PDF MARIN には<strong>コード署名（有料の証明書）を付けていない</strong>ため、
+        入れるまでに<strong>2回、警告が出ます</strong>。
+        <strong>ファイルに問題があるという意味ではなく、
+        「まだ広く使われていない新しいソフトです」という意味</strong>です。
       </p>
+    </div>
+    <ol class="steps">
+      <li>
+        <b>ダウンロードのとき</b>：ブラウザが「一般的にダウンロードされていません」と止めます。<br>
+        ［もっと見る］→［保存］→（出れば）［詳細表示］→［保持する］
+      </li>
+      <li>
+        <b>実行のとき</b>：Windows の青い画面「WindowsによってPCが保護されました」が出ます。<br>
+        ［詳細情報］→［実行］
+      </li>
+    </ol>
+    <div class="callout">
+      <p class="note">
+        この警告が出るのは<strong>最初の1回だけ</strong>です。
+        2回目からの新しい版は、アプリが自分で入れ替えるので警告は出ません。
+      </p>
+    </div>
+    <div class="measure">
       <p>
-        これは「危ないから」ではなく、<strong>発行元を証明する電子署名を付けていないから</strong>です。
         署名には毎年お金のかかる証明書が必要で、個人が無料で配っているソフトには
         付いていないことがよくあります。
-      </p>
-      <p>
-        落としたファイルが途中ですり替わっていないかは、
-        <strong>SHA-256 という指紋の値</strong>で確かめられます。
-        配布を始めるときに、この場所に載せます。
+        落としたファイルがすり替わっていないか確かめたい方は、
+        <strong>更新履歴に SHA-256 の値</strong>を載せていますので、そちらと見比べてください。
       </p>
     </div>
   </div>
