@@ -385,6 +385,15 @@ p:last-child{margin-bottom:0}
 }
 .rel time{color:var(--muted); font-size:13.5px}
 .rel ul{margin:6px 0 0; padding-left:1.15em; color:var(--ink-soft); font-size:15.5px; width:100%}
+/* 落としたファイルの指紋。長い値なので、どの幅でも必ず折り返して収める */
+.rel .hash{margin-top:8px; font-size:13px; color:var(--muted); list-style:none; margin-left:-1.15em}
+.rel .hash code{
+  display:block; margin-top:3px; font-size:12px; line-height:1.7;
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  color:var(--ink-soft); background:var(--card);
+  border:1px solid var(--line); border-radius:8px; padding:7px 10px;
+  overflow-wrap:anywhere; word-break:break-all;
+}
 
 footer{
   background:linear-gradient(135deg,#0f6bb4,#35b4dd);
@@ -686,9 +695,15 @@ footer{
         <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Releases</p>
         <h2>更新履歴</h2>
         <div class="rel">
-          <h3>v0.1.0</h3>
-          <time>公開準備中</time>
-          <ul><li>初版を準備しています。もうすぐお届けします。</li></ul>
+          <h3>v0.1.2</h3>
+          <time>2026-09-05</time>
+          <ul>
+            <li>初版を公開しました。</li>
+            <li class="hash">
+              SHA-256
+              <code>145c57914db4368a060bc3b632dfc793b191046b33b8e066ee764345fad6d7d7</code>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
