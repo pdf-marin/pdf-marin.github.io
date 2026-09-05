@@ -159,6 +159,13 @@ a{color:inherit}
 .form .send:hover{filter:brightness(1.07)}
 .form .send svg{width:17px; height:17px; stroke:#fff; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
 .filefield{margin:0 0 20px}
+/* 添付の注意。規約 第8条2項と同じことを、フォームの手前で言う */
+.form .warn{
+  margin:0 0 10px; font-size:13px; line-height:1.85; color:var(--warn-ink);
+  background:rgba(246,167,35,.10); border:1px solid rgba(246,167,35,.42);
+  border-radius:10px; padding:10px 13px;
+}
+.tip-note{margin-top:30px}
 .filenote{margin:8px 2px 0; font-size:13px; color:var(--warn-ink)}
 .dropzone{
   position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -657,8 +664,8 @@ footer{
         <h2>更新履歴</h2>
         <div class="rel">
           <h3>v0.1.0</h3>
-          <time>2026-09-03</time>
-          <ul><li>初版を公開しました。</li></ul>
+          <time>公開準備中</time>
+          <ul><li>初版を準備しています。もうすぐお届けします。</li></ul>
         </div>
       </div>
     </div>
@@ -703,6 +710,12 @@ footer{
            押しただけでファイル選択の画面がまた開いてしまう -->
       <div class="filefield">
         <label class="lab" for="attachments">添付ファイル <span class="hint">（任意・8個まで。ドラッグ&amp;ドロップも使えます）</span></label>
+        <!-- 規約 第8条2項の★と同じ注意。規約を読まずに客先の書類を添えられる導線にしない -->
+        <p class="warn">
+          添えたファイルは、<strong>中身もファイル名もそのまま作者に届きます。</strong>
+          社外に出せない書類（客先の図面など）は添えないでください。
+          見せたくない部分があるときは、<strong>先に墨消ししてから</strong>添えてください。
+        </p>
         <div class="dropzone" id="dropzone">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 21h14"/></svg>
           <p>ここにファイルをドラッグ、またはクリックして選ぶ</p>
@@ -724,6 +737,18 @@ footer{
         送信する
       </button>
     </form>
+
+    <!-- 応援＝チップであることを、規約 第3条と同じ言い方でサイト側にも置く -->
+    <div class="callout tip-note">
+      <p class="note">
+        <strong>応援について。</strong>
+        PDF MARIN は無料です。気に入っていただけたら、上の「応援する」から
+        <strong>任意のチップ</strong>を送っていただけます。
+        いただいたお金は、<strong>開発を続けるための資金</strong>として使います。
+        送っても送らなくても<strong>使える機能は変わらず</strong>、見返りに何かをお渡しすることもありません。
+        くわしくは<a href="terms.html">利用規約</a>をご覧ください。
+      </p>
+    </div>
   </div>
 </section>
 <script>
