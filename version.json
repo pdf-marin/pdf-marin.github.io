@@ -1,8 +1,8 @@
 {
-  "version": "0.1.0",
-  "date": "2026-09-03",
-  "size": "",
-  "url": "",
+  "version": "0.1.2",
+  "date": "2026-09-05",
+  "size": "約117MB",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.2/PDF-MARIN-Setup-0.1.2.exe",
   "notes": "初版公開",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります"
