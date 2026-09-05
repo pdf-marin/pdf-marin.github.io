@@ -3,17 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PDF MARIN</title>
-<meta name="description" content="使いやすさとロマンを追求。みんなで作る PDF アプリ。あなたの声で PDF が進化します。要望を集めて AI と一緒に作っています。Windows 10 / 11 用・無料。">
+<!-- ★title は画面には出ず、検索結果とタブにだけ出る。
+     「PDF MARIN」だけだと、名前を知っている人しか辿り着けない。
+     探している人が実際に打つ言葉（無料・PDF編集・Windows）を入れる。 -->
+<title>PDF MARIN｜Windows用の無料PDF編集・墨消しソフト</title>
+<meta name="description" content="Windows 10 / 11 用の無料 PDF 編集ソフト。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定まで。使いやすさとロマンを追求、みんなで作る PDF アプリです。">
 <link rel="icon" href="assets/favicon.ico">
 <meta property="og:type" content="website">
-<meta property="og:title" content="PDF MARIN">
-<meta property="og:description" content="使いやすさとロマンを追求。みんなで作る PDF アプリ。あなたの声で PDF が進化します。Windows 10 / 11 用・無料。">
+<meta property="og:title" content="PDF MARIN｜Windows用の無料PDF編集ソフト">
+<meta property="og:description" content="墨消しは文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定まで。Windows 10 / 11 用・無料。">
 <meta property="og:image" content="https://pdf-marin.github.io/assets/ogp.png">
 <meta property="og:url" content="https://pdf-marin.github.io/">
 <link rel="canonical" href="https://pdf-marin.github.io/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#17b8bb">
+
+<!-- 検索エンジンに「これは Windows 用の無料ソフトです」と機械が読める形で伝える。
+     版と大きさは version.json と二重管理になるので、変えたときは両方直すこと。 -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF MARIN",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "PDF編集ソフト",
+  "operatingSystem": "Windows 10, Windows 11",
+  "softwareVersion": "0.1.2",
+  "description": "Windows 用の無料 PDF 編集ソフト。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定に対応。",
+  "url": "https://pdf-marin.github.io/",
+  "downloadUrl": "https://pdf-marin.github.io/",
+  "installUrl": "https://pdf-marin.github.io/",
+  "image": "https://pdf-marin.github.io/assets/ogp.png",
+  "inLanguage": "ja",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "featureList": [
+    "墨消し（文字も画像の中身も取り除く）",
+    "ページの回転・削除・並べ替え・結合・分割",
+    "ハイライト・コメント・図形の書き込み",
+    "PDF の圧縮",
+    "図面の寸法を測る",
+    "文字や画像の差し込み・印鑑・ページ番号・透かし",
+    "画像 / Word / Excel / PowerPoint から PDF への変換",
+    "パスワードの設定と解除"
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -540,6 +578,42 @@ footer{
     </ul>
   </div>
 </section>
+
+<!-- 困っている人が実際に打つ言葉で書いた節。
+     「黒く塗っただけでは消えていない」「図面の寸法を測りたい」は、
+     探している人が多いわりに答えられる無料ソフトが少ない。 -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Cases</p>
+    <h2>こんなときに</h2>
+
+    <h3 class="safety-h">黒く塗っただけでは、文字は消えていません</h3>
+    <div class="measure">
+      <p>
+        PDF の上に黒い四角を置いても、その下の文字は<strong>ファイルの中に残ったまま</strong>です。
+        文字を選んでコピーすれば読めてしまいますし、
+        別のソフトで開くと出てくることもあります。
+        客先や社外に出す書類では、これが情報漏れになります。
+      </p>
+      <p>
+        PDF MARIN の<strong>墨消し</strong>は、黒く塗るのではなく、
+        <strong>文字そのものと、画像の中の画素まで PDF から取り除きます</strong>。
+        消したあとにコピーしても、何も出てきません。
+        大事な書類は、出す前にご自身の目でも確かめてください。
+      </p>
+    </div>
+
+    <h3 class="safety-h">図面の寸法を、PDF のまま測りたい</h3>
+    <div class="measure">
+      <p>
+        受け取った図面の PDF で「この部品は何ミリか」を知りたいとき、
+        <strong>縮尺を合わせておけば、画面の上でなぞるだけで実寸が読めます</strong>。
+        定規を当てたり、CAD を開き直したりせずに済みます。
+      </p>
+    </div>
+  </div>
+</section>
+
 <div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--tint)"/></svg></div>
 <section class="tinted" style="position:relative; overflow:hidden">
   <svg class="anchor-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>

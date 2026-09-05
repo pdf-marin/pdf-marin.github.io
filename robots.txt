@@ -1,0 +1,5 @@
+# 検索エンジン向けの案内。全ページを見てよい。
+User-agent: *
+Allow: /
+
+Sitemap: https://pdf-marin.github.io/sitemap.xml
