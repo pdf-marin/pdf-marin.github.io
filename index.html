@@ -280,8 +280,44 @@ footer .x svg{width:13px; height:13px; fill:#fff}
 .hero-visual img{display:block; width:100%; height:auto}
 @media (max-width:880px){
   .hero-grid{grid-template-columns:1fr}
-  .hero-visual{order:-1; max-width:480px; margin-inline:auto}
+  /* 狭い画面では見出しとボタンを先に。写真が先だとボタンが画面の下に隠れる */
+  .hero-visual{max-width:480px; margin-inline:auto}
 }
+/* ボタン下の安心の札 */
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:-4px 0 0; padding:0; list-style:none}
+.chips li{
+  font-size:13px; font-weight:700; color:#fff; padding:5px 12px; border-radius:999px;
+  background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.34);
+}
+/* スマホなど Windows 以外への案内 */
+.pcnote{
+  margin-top:4px; padding:14px 16px; border-radius:12px; max-width:36em;
+  background:rgba(6,52,89,.45); color:#fff; font-size:14px; line-height:1.8;
+}
+.pcnote p{margin:0}
+.pcnote-btns{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+.pcnote-btns button, .pcnote-btns a{
+  font:inherit; font-size:14px; font-weight:700; color:#0f6bb4; background:#fff;
+  border:0; border-radius:999px; padding:9px 16px; cursor:pointer; text-decoration:none;
+}
+.pcnote-done{margin-top:8px !important; font-size:13px}
+/* 追いかけるダウンロードの帯。ヒーローのボタンが画面から消えたときだけ出す */
+.stickybar{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+  padding:9px 16px; background:#0f6bb4; color:#fff; font-size:14px;
+  box-shadow:0 6px 18px -8px rgba(6,40,70,.6);
+  transform:translateY(-110%); transition:transform .25s ease;
+}
+.stickybar.is-on{transform:translateY(0)}
+.stickybar .sb-text{white-space:nowrap}
+.stickybar a{
+  color:#0f6bb4; background:#fff; text-decoration:none; font-weight:700; font-size:14px;
+  padding:7px 16px; border-radius:999px; white-space:nowrap;
+}
+.stickybar a:hover{background:#eaf6ff}
+@media (max-width:480px){ .stickybar .sb-text{display:none} }
+@media (prefers-reduced-motion: reduce){ .stickybar{transition:none} }
 .btn.is-wait{
   background:rgba(255,255,255,.22); color:#eaf6ff;
   border:1px solid rgba(255,255,255,.42);
@@ -547,9 +583,8 @@ footer{
           <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
           応援する
         </a>
-        <a href="#report">不具合の報告・ご要望</a>
+        <a href="#report">問い合わせ・要望</a>
         <a href="terms.html">利用規約</a>
-        <a href="#report">問い合わせ</a>
         <a class="xlink" href="https://x.com/PDFMARIN" target="_blank" rel="noopener" aria-label="X（旧Twitter）の PDF MARIN 公式アカウント">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           最新情報
@@ -560,10 +595,12 @@ footer{
   <div class="wide">
     <div class="hero-grid">
       <div class="hero-text">
-    <!-- 探している人が打つ言葉（無料・オフライン・Windows・PDF 編集）を、見出しのすぐ上に見える形で置く -->
-    <p class="kicker">Windows 用・無料・オフラインで使える PDF 編集ソフト</p>
-    <h1>使いやすさとロマンを追求<br>みんなで作る PDF アプリ</h1>
+    <!-- 見出しは「何のソフトか」を3秒で伝える文にする（無料・本当に消せる・Windows）。
+         ロマンの一文は副題として残す。検索で来た人は、ここで自分に関係あるかを決める -->
+    <p class="kicker">使いやすさとロマンを追求 ── みんなで作る PDF アプリ</p>
+    <h1>無料で、本当に消せる。<br>Windows の PDF 編集ソフト</h1>
     <p class="sub">
+      墨消しは黒く塗るだけでなく、文字も画像の中身も取り除きます。
       <strong>あなたの声で、PDF が進化します。</strong>
       「こうしてほしい」を集めて、AI と一緒に作っています。
     </p>
@@ -581,11 +618,24 @@ footer{
         <p class="meta">この画面でボタンが押せないときは、
           <a href="https://github.com/pdf-marin/pdf-marin.github.io/releases/latest">GitHub の配布ページ</a>から最新版を落とせます。</p>
       </noscript>
-      <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く -->
+      <!-- 押す直前の不安を減らす札。4つとも FAQ・規約で裏付けのある事実だけ -->
+      <ul class="chips" aria-label="安心できる点">
+        <li>無料</li><li>登録不要</li><li>広告なし</li><li>書類は外に出ない</li>
+      </ul>
+      <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く。ただし脅かさない文にする -->
       <p class="meta dl-warn">
-        ダウンロードのときに<strong>警告が出ます</strong>（実行のときにも出ることがあります）。
+        はじめて入れるときだけ、警告が出ます。
         <a href="#keikoku">進め方はこちら</a>
       </p>
+      <!-- Windows 以外（スマホなど）で開いた人の受け皿。JS が html に is-notwin を付けたときだけ出る -->
+      <div class="pcnote" id="pcnote" hidden>
+        <p><strong>このソフトは Windows 10 / 11 用です。</strong>パソコンでこのページを開いてください。</p>
+        <div class="pcnote-btns">
+          <button type="button" id="copylink">リンクをコピー</button>
+          <a id="maillink" href="mailto:?subject=PDF%20MARIN&body=https%3A%2F%2Fpdf-marin.github.io%2F">自分にメールで送る</a>
+        </div>
+        <p class="pcnote-done" id="copydone" role="status" hidden>コピーしました</p>
+      </div>
     </div>
       </div>
       <div class="hero-visual">
@@ -1072,6 +1122,11 @@ footer{
 })();
 </script>
 <div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="#0f6bb4"/></svg></div>
+<!-- 追いかける帯。中身は version.json を読んだ JS が入れる。JS が無いときは出ない -->
+<div class="stickybar" id="stickybar" aria-hidden="true">
+  <span class="sb-text" id="sbtext">PDF MARIN は無料です</span>
+  <a id="sbbtn" href="#dlbtn">ダウンロード</a>
+</div>
 <footer>
   <div class="wrap">© 2026 PDF MARIN
     <a class="x" href="https://x.com/PDFMARIN" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@PDFMARIN</a>
@@ -1101,6 +1156,49 @@ footer{
         + 'Windows 10 / 11（64bit）<br>インストーラー形式'
         + (v.size ? ' ・ ' + v.size : '');
     }
+    setupSticky(v);
+  }
+
+  // Windows 以外（スマホなど）で開いた人には「パソコンで開いてください」と、リンクを渡す手段を出す
+  var isWin = /Windows/.test(navigator.userAgent) && !/Windows Phone/.test(navigator.userAgent);
+  if (!isWin) {
+    document.documentElement.classList.add('is-notwin');
+    var note = byId('pcnote');
+    if (note) { note.hidden = false; }
+    var copy = byId('copylink');
+    if (copy) {
+      copy.addEventListener('click', function(){
+        var url = 'https://pdf-marin.github.io/';
+        var done = function(){ var d = byId('copydone'); if (d) { d.hidden = false; } };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(done, function(){ window.prompt('このリンクをコピーしてください', url); });
+        } else {
+          window.prompt('このリンクをコピーしてください', url);
+        }
+      });
+    }
+  }
+
+  // 追いかける帯：ヒーローのボタンが画面から消えたら出す（Windows のときだけ。スマホでは入れられないので出さない）
+  function setupSticky(v){
+    var bar = byId('stickybar'), btn = byId('dlbtn'), sb = byId('sbbtn'), tx = byId('sbtext');
+    if (!bar || !btn || !sb || !isWin) { return; }
+    sb.href = v.url;
+    if (tx) { tx.textContent = 'PDF MARIN' + (v.version ? ' v' + v.version : '') + '（無料' + (v.size ? '・' + v.size : '') + '）'; }
+    // 「ボタンの下端が画面の上に消えたか」をスクロールのたびに見る（間引きは 100ms に1回）
+    var timer = null, shown = null;
+    function check(){
+      timer = null;
+      var out = btn.getBoundingClientRect().bottom < 0;
+      if (out === shown) { return; }
+      shown = out;
+      bar.classList.toggle('is-on', out);
+      bar.setAttribute('aria-hidden', out ? 'false' : 'true');
+    }
+    window.addEventListener('scroll', function(){
+      if (!timer) { timer = setTimeout(check, 100); }
+    }, {passive: true});
+    check();
   }
 
   fetch('version.json', {cache:'no-store'})
