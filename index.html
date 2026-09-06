@@ -10,7 +10,7 @@
 <meta name="description" content="Windows 10 / 11 用の無料 PDF 編集ソフト。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定まで。使いやすさとロマンを追求、みんなで作る PDF アプリです。">
 <link rel="icon" href="assets/favicon.ico">
 <meta property="og:type" content="website">
-<meta property="og:title" content="PDF MARIN｜Windows用の無料PDF編集ソフト">
+<meta property="og:title" content="PDF MARIN｜Windows用の無料PDF編集・墨消しソフト">
 <meta property="og:description" content="墨消しは文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定まで。Windows 10 / 11 用・無料。">
 <meta property="og:image" content="https://pdf-marin.github.io/assets/ogp.png">
 <meta property="og:url" content="https://pdf-marin.github.io/">
@@ -41,14 +41,15 @@
     "priceCurrency": "JPY"
   },
   "featureList": [
-    "墨消し（文字も画像の中身も取り除く）",
+    "PDF の圧縮（ファイルを軽くする）",
     "ページの回転・削除・並べ替え・結合・分割",
-    "ハイライト・コメント・図形の書き込み",
-    "PDF の圧縮",
-    "図面の寸法を測る",
-    "文字や画像の差し込み・印鑑・ページ番号・透かし",
-    "画像 / Word / Excel / PowerPoint から PDF への変換",
-    "パスワードの設定と解除"
+    "ハイライト・コメント・図形などの書き込み",
+    "文字や画像の差し込み、印鑑、ページ番号、透かし",
+    "墨消し（文字も画像の中身も本当に取り除きます）",
+    "すでにある文字の書き換え、文字の検索",
+    "図面の寸法を測る（縮尺を合わせてから）",
+    "画像 / Excel / Word / PowerPoint から PDF に変換",
+    "パスワードの設定と解除、印刷"
   ]
 }
 </script>
@@ -134,8 +135,13 @@ a{color:inherit}
 }
 .hero::before{
   content:""; position:absolute; inset:0; z-index:0;
+  /* ★文字が載る所（上の帯＝ロゴとナビ、左の列＝見出しと説明）だけ少し暗くする。
+     実画素で測ると、明るい所の薄い文字は 1.9〜3.4:1 しかなく読みにくい人が出る。
+     右の画面写真の上は暗くしない。光の玉はナビの真下から外した */
   background:
-    radial-gradient(900px 420px at 82% 6%, rgba(255,255,255,.28), transparent 62%),
+    linear-gradient(180deg, rgba(6,52,89,.56) 0, rgba(6,52,89,.56) 120px, rgba(6,52,89,0) 240px),
+    linear-gradient(90deg, rgba(6,52,89,.36) 0, rgba(6,52,89,.36) 560px, rgba(6,52,89,0) 760px),
+    radial-gradient(900px 420px at 82% 34%, rgba(255,255,255,.22), transparent 62%),
     radial-gradient(620px 400px at 6% 92%, rgba(63,196,216,.40), transparent 66%);
   pointer-events:none;
 }
@@ -154,7 +160,8 @@ a{color:inherit}
   display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end;
   gap:8px 18px; font-size:13.5px; padding-top:2px;
 }
-.topnav a{color:#cfe8fb; text-decoration:none; border-bottom:1px solid rgba(207,232,251,.4); padding-bottom:1px; white-space:nowrap}
+/* 文字は白。薄い水色だと暗くした帯の上でも 3.7:1 止まりで足りない */
+.topnav a{color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.5); padding-bottom:1px; white-space:nowrap}
 .topnav a:hover{color:#fff; border-bottom-color:#fff}
 .topnav .support{border-bottom:0; padding-bottom:10px}
 .mark{display:flex; align-items:center; flex-wrap:wrap; row-gap:8px; gap:14px; margin-bottom:46px}
@@ -171,7 +178,7 @@ a{color:inherit}
 }
 .hero .sub{
   font-size:clamp(15px,1.7vw,17.5px);
-  color:#e8f6ff; margin:0 0 40px; max-width:30em; line-height:1.9;
+  color:#fff; margin:0 0 40px; max-width:30em; line-height:1.9;
 }
 /* ────────── 報告フォーム ────────── */
 .form{max-width:640px; margin-top:10px}
@@ -261,9 +268,13 @@ a{color:inherit}
   background:#f2fbff; transform:translateY(-2px);
   box-shadow:0 4px 10px rgba(6,52,89,.26), 0 22px 42px -14px rgba(6,52,89,.66);
 }
-.meta{color:#d3ecfb; font-size:14.5px; line-height:1.8}
+.meta{color:#fff; font-size:14.5px; line-height:1.8}
 /* ダウンロードボタン直下の警告案内。青い背景の上なので白系で下線を付ける */
-.dl-warn{margin-top:12px; font-size:13.5px}
+/* 波の白い重なりの上に載るので、帯だけでは 2.7:1 止まり。この一文にだけ濃い下地を敷く */
+.dl-warn{
+  display:inline-block; max-width:100%; margin-top:12px; font-size:13.5px; color:#fff;
+  background:rgba(6,52,89,.45); padding:8px 12px; border-radius:10px;
+}
 .dl-warn a{color:#fff; text-decoration:underline; text-underline-offset:3px}
 
 /* 波 */
@@ -434,8 +445,10 @@ p:last-child{margin-bottom:0}
 }
 
 footer{
-  background:linear-gradient(135deg,#0f6bb4,#35b4dd);
-  color:#dceffb; padding:40px 0 56px; font-size:13.5px; line-height:1.9;
+  /* 単色の濃い青に白文字＝約5.5:1。グラデーションの明るい側だと 3.3:1 まで落ちていた。
+     上の波（.wc-wt の fill）と同じ色なので、継ぎ目は出ない */
+  background:#0f6bb4;
+  color:#fff; padding:40px 0 56px; font-size:13.5px; line-height:1.9;
 }
 .support{
   display:inline-flex; align-items:center; gap:8px;
@@ -553,7 +566,7 @@ footer{
       </li>
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5-5 5-3-3-3 3"/></svg></span>
-        文字や画像の差し込み、印鑑、ページ番号
+        文字や画像の差し込み、印鑑、ページ番号、透かし
       </li>
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 10.5h10"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg></span>
