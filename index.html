@@ -44,17 +44,17 @@
   "featureList": [
     "PDF の圧縮（ファイルを軽くする）",
     "ページの回転・削除・並べ替え・結合・分割",
+    "パスワードの設定と解除、印刷",
     "ハイライト・コメント・図形などの書き込み",
     "文字や画像の差し込み、印鑑、ページ番号、透かし",
-    "墨消し（文字も画像の中身も本当に取り除きます）",
     "すでにある文字の書き換え、文字の検索",
-    "図面の寸法を測る（縮尺を合わせてから）",
+    "墨消し（文字も画像の中身も本当に取り除きます）",
     "2つの PDF を見比べる（文字の違いは一覧で、図の違いは重ねて色で）",
     "同じ雛形の PDF を何枚も重ねて見比べる、同じ印をまとめて付ける",
+    "図面の寸法を測る（縮尺を合わせてから）",
     "画像 / Excel / Word / PowerPoint から PDF に変換",
     "PDF を Excel / Word / PowerPoint に書き出す（表の数字を打ち直さなくてよい）",
-    "ページを画像（PNG / JPEG）に書き出す",
-    "パスワードの設定と解除、印刷"
+    "ページを画像（PNG / JPEG）に書き出す"
   ]
 }
 </script>
@@ -284,6 +284,7 @@ footer .x svg{width:13px; height:13px; fill:#fff}
   .hero-visual{max-width:480px; margin-inline:auto}
 }
 /* ボタン下の安心の札 */
+.updated{font-size:13px}
 .chips{display:flex; flex-wrap:wrap; gap:8px; margin:-4px 0 0; padding:0; list-style:none}
 .chips li{
   font-size:13px; font-weight:700; color:#fff; padding:5px 12px; border-radius:999px;
@@ -411,6 +412,11 @@ p:last-child{margin-bottom:0}
   display:flex; gap:14px; align-items:center;
   transition:transform .16s ease, box-shadow .16s ease;
 }
+/* できることの塊。見出しは小さく、下線で区切るだけ */
+.group{margin-top:26px}
+.group:first-of-type{margin-top:0}
+.group h3{margin:0; font-size:14px; font-weight:700; letter-spacing:.06em; color:var(--eyebrow-ink)}
+.group .list{margin-top:12px}
 .list li:hover{transform:translateY(-2px); box-shadow:0 8px 22px -12px rgba(12,60,100,.45)}
 .list li .ic{background:var(--sky)}
 .list li:nth-child(5n+2) .ic{background:var(--mint)}
@@ -622,6 +628,8 @@ footer{
       <ul class="chips" aria-label="安心できる点">
         <li>無料</li><li>登録不要</li><li>広告なし</li><li>書類は外に出ない</li>
       </ul>
+      <!-- 「放置されていない」ことを示す。日付は publish.py が index.html を上げるたびに今日にする -->
+      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-06">2026-09-06</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
       <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く。ただし脅かさない文にする -->
       <p class="meta dl-warn">
         はじめて入れるときだけ、警告が出ます。
@@ -655,7 +663,11 @@ footer{
   <div class="wrap">
     <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Features</p>
     <h2>できること</h2>
-    <ul class="list">
+    <!-- 13項目を4つの塊に。目玉（墨消し）が13行の中に埋もれないように。
+         ★並び順は先頭の JSON-LD featureList と同じにすること -->
+    <div class="group">
+      <h3>整理する</h3>
+      <ul class="list">
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 3H3v6"/><path d="M15 21h6v-6"/><path d="M21 3l-8 8"/><path d="M3 21l8-8"/></svg></span>
         PDF の圧縮（ファイルを軽くする）
@@ -665,6 +677,15 @@ footer{
         ページの回転・削除・並べ替え・結合・分割
       </li>
       <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        パスワードの設定と解除、印刷
+      </li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>書き込む・直す</h3>
+      <ul class="list">
+      <li>
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
         ハイライト・コメント・図形などの書き込み
       </li>
@@ -673,16 +694,17 @@ footer{
         文字や画像の差し込み、印鑑、ページ番号、透かし
       </li>
       <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 10.5h10"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg></span>
-        墨消し（文字も画像の中身も本当に取り除きます）
-      </li>
-      <li>
         <span class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
         すでにある文字の書き換え、文字の検索
       </li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>守る・確かめる</h3>
+      <ul class="list">
       <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.6"/><path d="M7 8v3M11 8v3M15 8v3"/></svg></span>
-        図面の寸法を測る（縮尺を合わせてから）
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 10.5h10"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg></span>
+        墨消し（文字も画像の中身も本当に取り除きます）
       </li>
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/><path d="M6 9h2M6 12h2M16 9h2M16 12h2M16 15h2"/></svg></span>
@@ -692,6 +714,15 @@ footer{
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/><path d="M18 15l2 2 3-3"/></svg></span>
         同じ雛形の PDF を何枚も重ねて見比べる、同じ印をまとめて付ける
       </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.6"/><path d="M7 8v3M11 8v3M15 8v3"/></svg></span>
+        図面の寸法を測る（縮尺を合わせてから）
+      </li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>変換する</h3>
+      <ul class="list">
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
         画像 / Excel / Word / PowerPoint から PDF に変換
@@ -704,11 +735,8 @@ footer{
         <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5-6 6-2-2-5 5"/><path d="M14 3v4"/></svg></span>
         ページを画像（PNG / JPEG）に書き出す
       </li>
-      <li>
-        <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-        パスワードの設定と解除、印刷
-      </li>
-    </ul>
+      </ul>
+    </div>
   </div>
 </section>
 
