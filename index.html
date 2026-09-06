@@ -31,8 +31,8 @@
   "softwareVersion": "0.1.2",
   "description": "Windows 用の無料 PDF 編集ソフト。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定に対応。",
   "url": "https://pdf-marin.github.io/",
-  "downloadUrl": "https://pdf-marin.github.io/",
-  "installUrl": "https://pdf-marin.github.io/",
+  "downloadUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.2/PDF-MARIN-Setup-0.1.2.exe",
+  "installUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.2/PDF-MARIN-Setup-0.1.2.exe",
   "image": "https://pdf-marin.github.io/assets/ogp.png",
   "inLanguage": "ja",
   "offers": {
@@ -61,6 +61,7 @@
 <style>
 :root{
   --ocean:#1478c4;
+  --link:#1063a8;          /* 本文中のリンク。--ocean だと橙の囲み（#fff8ec）の上で 4.4:1 に届かない */
   --eyebrow-ink:#0d5e9e;   /* 節ラベルの文字。薄い水色の丸枠の上で 4.5:1 を満たす濃さ */
   --warn-ink:#8a5a00;      /* 「8個までです」など、注意を促す短い文の色 */
   --sky:#34a8e8;
@@ -81,6 +82,7 @@
 @media (prefers-color-scheme: dark){
   :root{
     --ocean:#2f8fd8;
+    --link:#63b6f0;
     --eyebrow-ink:#7cc4f0;
     --warn-ink:#f0b860;
     --sky:#4cb6ee;
@@ -119,7 +121,7 @@ img{max-width:100%; height:auto; display:block}
 a{color:inherit}
 /* 本文中のリンクは、色だけだと見分けられないので下線も付ける */
 .measure a, .points a, .note a, .caption a{
-  color:var(--ocean); text-decoration:underline; text-underline-offset:3px;
+  color:var(--link); text-decoration:underline; text-underline-offset:3px;
 }
 
 .wrap{width:min(1020px,90vw); margin-inline:auto}
@@ -275,7 +277,7 @@ a{color:inherit}
   display:inline-block; max-width:100%; margin-top:12px; font-size:13.5px; color:#fff;
   background:rgba(6,52,89,.45); padding:8px 12px; border-radius:10px;
 }
-.dl-warn a{color:#fff; text-decoration:underline; text-underline-offset:3px}
+.meta a, .dl-warn a{color:#fff; text-decoration:underline; text-underline-offset:3px}
 
 /* 波 */
 .waves{position:absolute; left:0; right:0; bottom:-1px; z-index:0; width:100%; height:110px}
@@ -377,10 +379,11 @@ p:last-child{margin-bottom:0}
 .mark .beta{
   display:inline-block; vertical-align:4px; margin-left:12px;
   font-size:12.5px; font-weight:700; letter-spacing:.02em;
-  color:#fff; background:var(--mint);
+  /* 白文字は --mint（#1eb59f）の上で 2.6:1 しかない。濃い青緑にして 5.2:1 */
+  color:#fff; background:#0c7a6a;
   padding:4px 13px; border-radius:999px;
   text-shadow:none;
-  box-shadow:0 2px 6px -2px rgba(30,181,159,.7);
+  box-shadow:0 2px 6px -2px rgba(12,122,106,.7);
 }
 
 /* 使い方 */
@@ -499,10 +502,12 @@ footer{
     <div class="topbar">
       <div class="mark"><img src="assets/icon-256.png" alt=""><span>PDF MARIN</span><span class="beta">ベータ版（無料）</span></div>
       <nav class="topnav">
-        <a class="support" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">
+        <!-- 行き先は最初から入れておく（JS が動かない人にも押せるように）。
+             version.json の sponsorUrl はこれを上書きするだけ。以前は href="#" で
+             JS が失敗すると空のタブが開いた -->
+        <a class="support is-ready" href="https://ko-fi.com/pdfmarin" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
           応援する
-          <span class="wip">準備中</span>
         </a>
         <a href="#report">不具合の報告・ご要望</a>
         <a href="terms.html">利用規約</a>
@@ -527,6 +532,11 @@ footer{
         準備中
       </a>
       <p class="meta" id="dlmeta"><strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式</p>
+      <!-- JS が切られていると上のボタンは「準備中」のまま。落とせる場所を1本だけ残す -->
+      <noscript>
+        <p class="meta">この画面でボタンが押せないときは、
+          <a href="https://github.com/pdf-marin/pdf-marin.github.io/releases/latest">GitHub の配布ページ</a>から最新版を落とせます。</p>
+      </noscript>
       <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く -->
       <p class="meta dl-warn">
         ダウンロードのとき・実行のときに<strong>警告が出ます</strong>。
@@ -736,7 +746,7 @@ footer{
     <div class="measure">
       <p>
         PDF MARIN には<strong>コード署名（有料の証明書）を付けていない</strong>ため、
-        入れるまでに<strong>2回、警告が出ます</strong>。
+        入れるまでに<strong>最大で2回、警告が出ます</strong>。
         <strong>ファイルに問題があるという意味ではなく、
         「まだ広く使われていない新しいソフトです」という意味</strong>です。
       </p>
@@ -744,17 +754,17 @@ footer{
     <ol class="steps">
       <li>
         <b>ダウンロードのとき</b>：ブラウザが「一般的にダウンロードされていません」と止めます。<br>
-        ［もっと見る］→［保存］→（出れば）［詳細表示］→［保持する］
+        ［もっと見る］（または［…］）→［保持する］→（確認の画面が出れば）［詳細表示］→［保持する］
       </li>
       <li>
-        <b>実行のとき</b>：Windows の青い画面「WindowsによってPCが保護されました」が出ます。<br>
+        <b>実行のとき</b>：Windows の青い画面「WindowsによってPCが保護されました」が出ることがあります。<br>
         ［詳細情報］→［実行］
       </li>
     </ol>
     <div class="callout">
       <p class="note">
-        この警告が出るのは<strong>最初の1回だけ</strong>です。
-        2回目からの新しい版は、アプリが自分で入れ替えるので警告は出ません。
+        この警告が出るのは<strong>最初に入れるときだけ</strong>です。
+        そのあとの新しい版は、アプリが自分で入れ替えるので警告は出ません。
       </p>
     </div>
     <div class="measure">
@@ -785,7 +795,7 @@ footer{
           <h3>v0.1.2</h3>
           <time>2026-09-05</time>
           <ul>
-            <li>初版を公開しました。</li>
+            <li>最初の公開版です（同じ日の v0.1.0 / v0.1.1 は自動更新の確認用で、中身は同じです）。</li>
             <li class="hash">
               SHA-256
               <code>145c57914db4368a060bc3b632dfc793b191046b33b8e066ee764345fad6d7d7</code>
@@ -1000,19 +1010,25 @@ footer{
       v = v || {};
       if (v.url) { setReady(v); }   // url が空なら、置いてある「準備中」のまま
       if (v.sponsorUrl) {
-        document.querySelectorAll('a.support').forEach(function(sb){
-          sb.href = v.sponsorUrl;
-          sb.classList.add('is-ready');
-          sb.removeAttribute('aria-disabled');
-          sb.removeAttribute('tabindex');
-        });
-        document.querySelectorAll('a.support .wip').forEach(function(wip){ wip.remove(); });
+        // 行き先は HTML に書いてある。version.json 側を変えたときだけ上書き
+        document.querySelectorAll('a.support').forEach(function(sb){ sb.href = v.sponsorUrl; });
       }
+      if (!v.url) { fallback(); }
     })
     .catch(function(e){
-      // 黙って死なせない。原因は必ず残す（ボタンは「準備中」のまま）
+      // 黙って死なせない。原因は必ず残し、落とせる場所を1本出す
       console.error('version.json を読み込めませんでした:', e);
+      fallback();
     });
+
+  // version.json が読めない・url が空のとき：「準備中」のままにせず、配布ページへの道を出す
+  function fallback(){
+    var meta = byId('dlmeta');
+    if (!meta) { return; }
+    meta.innerHTML = 'ボタンが押せないときは、'
+      + '<a href="https://github.com/pdf-marin/pdf-marin.github.io/releases/latest">GitHub の配布ページ</a>'
+      + 'から最新版を落とせます。<br>Windows 10 / 11（64bit）・インストーラー形式';
+  }
 })();
 </script>
 
