@@ -10,6 +10,7 @@
 | `404.html` | アドレスを打ち間違えたときのページ |
 | `assets/` | アイコン・OGP 画像・画面写真（架空の見本書類のみ） |
 | `sitemap.xml` / `robots.txt` | 検索エンジン向けの案内 |
+| `google203c04aaea034c73.html` | Google Search Console の所有権確認ファイル（**消すと確認が外れる**） |
 | `.nojekyll` | GitHub の余計な変換を止める空ファイル（消さない） |
 
 配布するインストーラー本体は、このフォルダには入れません。GitHub の **Releases** に置きます
