@@ -277,8 +277,7 @@ footer .x svg{width:13px; height:13px; fill:#fff}
 }
 .hero-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:44px; align-items:center; margin-top:34px}
 .hero-visual .frame{border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.35); box-shadow:0 20px 50px -18px rgba(6,40,70,.55)}
-.hero-visual img, .hero-visual video{display:block; width:100%; height:auto}
-.hero-cap{margin:12px 4px 0; font-size:13.5px; color:#fff; text-align:center}
+.hero-visual img{display:block; width:100%; height:auto}
 @media (max-width:880px){
   .hero-grid{grid-template-columns:1fr}
   /* 狭い画面では見出しとボタンを先に。写真が先だとボタンが画面の下に隠れる */
@@ -359,10 +358,6 @@ footer .x svg{width:13px; height:13px; fill:#fff}
   background:var(--card);
 }
 .caption{color:var(--muted); font-size:13.5px; margin:14px 2px 0}
-/* 実演の動画。写真と同じ枠に入れる */
-.demo{margin:26px 0 0; max-width:760px}
-.demo video{display:block; width:100%; height:auto}
-
 /* ────────── 節 ────────── */
 section{padding:88px 0}
 .tinted{background:var(--tint)}
@@ -650,18 +645,9 @@ footer{
     </div>
       </div>
       <div class="hero-visual">
-        <!-- 基本操作の実演（20秒・無音・架空見本）。開く→回す→書く→墨消し→背景色で消す→圧縮。
-             muted が無いと自動再生されない。動画が使えない環境では poster の静止画が出る -->
         <div class="frame">
-          <video width="1280" height="770" poster="assets/shots/basics-poster.jpg"
-                 autoplay muted loop playsinline preload="metadata"
-                 aria-label="PDF を開いてページを回し、ハイライトと墨消しをして、写真を背景色で消し、圧縮するまでの操作">
-            <source src="assets/shots/basics.webm" type="video/webm">
-            <source src="assets/shots/basics.mp4" type="video/mp4">
-            <img src="assets/shots/basics-poster.jpg" width="1280" height="770" alt="PDF MARIN で活動レポートの見本書類を開き、墨消しとハイライトをした画面">
-          </video>
+          <img src="assets/shots/home.jpg" width="1919" height="1025" alt="PDF に手書きで注釈を書き込んでいる画面。右にペンの色や太さを選べるパネル。">
         </div>
-        <p class="hero-cap">PDF を開いて、ページを回し、ハイライトと墨消し、圧縮まで。見本の書類（架空）でひと通りやってみたところです。</p>
       </div>
     </div>
   </div>
@@ -775,23 +761,6 @@ footer{
         大事な書類は、出す前にご自身の目でも確かめてください。
       </p>
     </div>
-    <!-- 墨消しの実演（7.5秒・無音・架空見本）。muted が無いと自動再生されない。
-         1280×770（16:9 ではない）。下の状態バーに出るお知らせを切らないため -->
-    <figure class="demo">
-      <div class="frame">
-        <video width="1280" height="770" poster="assets/shots/redact-poster.jpg"
-               autoplay muted loop playsinline preload="metadata"
-               aria-label="墨消しの範囲をなぞって実行し、消えた所をコピーしても何も出ないところまでの操作">
-          <source src="assets/shots/redact.webm" type="video/webm">
-          <source src="assets/shots/redact.mp4" type="video/mp4">
-          <img src="assets/shots/redact-poster.jpg" width="1280" height="770" alt="社名の行を墨消しした画面">
-        </video>
-      </div>
-      <figcaption class="caption">
-        社名の行をなぞって［墨消し］。黒い帯の所を選んでコピーしても、文字は出てきません（架空の見本書類）。黒く塗るほかに、背景の色でなじませて消すこともできます。
-      </figcaption>
-    </figure>
-
     <h3 class="safety-h">図面の寸法を、PDF のまま測りたい</h3>
     <div class="measure">
       <p>
