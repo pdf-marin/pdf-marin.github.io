@@ -6,12 +6,12 @@
 <!-- ★title は画面には出ず、検索結果とタブにだけ出る。
      「PDF MARIN」だけだと、名前を知っている人しか辿り着けない。
      探している人が実際に打つ言葉（無料・PDF編集・Windows）を入れる。 -->
-<title>PDF MARIN｜Windows用の無料PDF編集・墨消しソフト</title>
-<meta name="description" content="Windows 10 / 11 用の無料 PDF 編集ソフト。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定・Excel / Word への書き出しまで。使いやすさとロマンを追求、みんなで作る PDF アプリです。">
+<title>PDF MARIN｜無料・オフラインで使えるWindows用PDF編集・墨消しソフト</title>
+<meta name="description" content="Windows 10 / 11 用の無料 PDF 編集ソフト。パソコンに入れて使うオフライン型で、会員登録なし・広告なし。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定・Excel / Word への書き出しまで。">
 <link rel="icon" href="assets/favicon.ico">
 <meta property="og:type" content="website">
-<meta property="og:title" content="PDF MARIN｜Windows用の無料PDF編集・墨消しソフト">
-<meta property="og:description" content="墨消しは文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定まで。Windows 10 / 11 用・無料。">
+<meta property="og:title" content="PDF MARIN｜無料・オフラインで使えるWindows用PDF編集・墨消しソフト">
+<meta property="og:description" content="会員登録なし・広告なしの無料 PDF 編集ソフト。墨消しは文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定・Excel / Word への書き出しまで。Windows 10 / 11 用。">
 <meta property="og:image" content="https://pdf-marin.github.io/assets/ogp.png">
 <meta property="og:url" content="https://pdf-marin.github.io/">
 <link rel="canonical" href="https://pdf-marin.github.io/">
@@ -35,6 +35,7 @@
   "installUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.2/PDF-MARIN-Setup-0.1.2.exe",
   "image": "https://pdf-marin.github.io/assets/ogp.png",
   "inLanguage": "ja",
+  "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -54,6 +55,22 @@
     "PDF を Excel / Word / PowerPoint に書き出す（表の数字を打ち直さなくてよい）",
     "ページを画像（PNG / JPEG）に書き出す",
     "パスワードの設定と解除、印刷"
+  ]
+}
+</script>
+<!-- よくある質問。本文の #faq と一字一句同じ（検索結果に質問と答えが直接出ることがある） -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "本当に無料ですか？", "acceptedAnswer": {"@type": "Answer", "text": "無料です。すべての機能が使えて、期限や回数の制限もありません。気に入ったら任意のチップで応援できますが、送っても送らなくても使える機能は変わりません。"}},
+    {"@type": "Question", "name": "オフラインで使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。PDF の編集はインターネットにつながなくても動きます。通信するのは、新しい版が出ていないかの確認（1日1回まで・書類の中身は送りません）、不具合の報告やご要望を送るとき、AI 機能を使うときの3つだけです。"}},
+    {"@type": "Question", "name": "会員登録やアカウントは必要ですか？", "acceptedAnswer": {"@type": "Answer", "text": "必要ありません。メールアドレスの入力もなく、インストールしてすぐ使えます。"}},
+    {"@type": "Question", "name": "広告は出ますか？", "acceptedAnswer": {"@type": "Answer", "text": "出ません。"}},
+    {"@type": "Question", "name": "書類の中身が外部に送られることはありますか？", "acceptedAnswer": {"@type": "Answer", "text": "作者に送られることはありません。AI 機能を使ったときだけ、お手持ちの Claude Code を通じて送られます（作者には届きません）。くわしくは利用規約の「データの取り扱い」をご覧ください。"}},
+    {"@type": "Question", "name": "会社の業務で使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。個人での利用のほか、会社や団体の中での業務利用も認めています。"}},
+    {"@type": "Question", "name": "Mac やスマホで使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "いまは Windows 10 / 11（64bit）だけです。"}}
   ]
 }
 </script>
@@ -181,6 +198,10 @@ footer .x svg{width:13px; height:13px; fill:#fff}
 .mark span{
   font-weight:800; font-size:27px; letter-spacing:-.01em; color:#fff;
   text-shadow:0 2px 10px rgba(6,52,89,.25);
+}
+.hero .kicker{
+  margin:0 0 14px; font-size:clamp(14px,1.5vw,16px); font-weight:700; letter-spacing:.04em;
+  color:#fff; text-shadow:0 2px 10px rgba(6,52,89,.25);
 }
 .hero h1{
   font-size:clamp(34px,5.6vw,56px);
@@ -439,6 +460,13 @@ p:last-child{margin-bottom:0}
 .rows dd{margin:0; color:var(--ink)}
 
 /* 更新履歴 */
+/* よくある質問。質問文は検索で打たれる言葉（無料・オフライン・登録・広告）をそのまま使う */
+.faq{margin:30px 0 0; padding:0; list-style:none; max-width:44em}
+.faq li{padding:18px 0; border-top:1px solid var(--line)}
+.faq li:last-child{border-bottom:1px solid var(--line)}
+.faq h3{margin:0 0 6px; font-size:16.5px; font-weight:700; color:var(--ink)}
+.faq p{margin:0; color:var(--ink-soft); font-size:15.5px}
+.faq a{color:var(--link); text-decoration:underline; text-underline-offset:3px}
 .rel{display:flex; gap:16px; align-items:center; margin-top:30px; flex-wrap:wrap}
 .rel h3{
   margin:0; font-family:"Inter",sans-serif; font-size:15px; font-weight:700; color:#fff;
@@ -532,6 +560,8 @@ footer{
   <div class="wide">
     <div class="hero-grid">
       <div class="hero-text">
+    <!-- 探している人が打つ言葉（無料・オフライン・Windows・PDF 編集）を、見出しのすぐ上に見える形で置く -->
+    <p class="kicker">Windows 用・無料・オフラインで使える PDF 編集ソフト</p>
     <h1>使いやすさとロマンを追求<br>みんなで作る PDF アプリ</h1>
     <p class="sub">
       <strong>あなたの声で、PDF が進化します。</strong>
@@ -837,6 +867,43 @@ footer{
   </div>
 </section>
 <div class="wavecut wc-tw" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="var(--bg)"/></svg></div>
+<!-- ★質問と答えは、先頭の FAQPage（JSON-LD）と一字一句同じにすること。ずれると検索側で無視される -->
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>FAQ</p>
+    <h2>よくある質問</h2>
+    <ul class="faq">
+      <li>
+        <h3>本当に無料ですか？</h3>
+        <p>無料です。すべての機能が使えて、期限や回数の制限もありません。気に入ったら任意のチップで応援できますが、送っても送らなくても使える機能は変わりません。</p>
+      </li>
+      <li>
+        <h3>オフラインで使えますか？</h3>
+        <p>使えます。PDF の編集はインターネットにつながなくても動きます。通信するのは、新しい版が出ていないかの確認（1日1回まで・書類の中身は送りません）、不具合の報告やご要望を送るとき、AI 機能を使うときの3つだけです。</p>
+      </li>
+      <li>
+        <h3>会員登録やアカウントは必要ですか？</h3>
+        <p>必要ありません。メールアドレスの入力もなく、インストールしてすぐ使えます。</p>
+      </li>
+      <li>
+        <h3>広告は出ますか？</h3>
+        <p>出ません。</p>
+      </li>
+      <li>
+        <h3>書類の中身が外部に送られることはありますか？</h3>
+        <p>作者に送られることはありません。AI 機能を使ったときだけ、お手持ちの Claude Code を通じて送られます（作者には届きません）。くわしくは利用規約の「データの取り扱い」をご覧ください。</p>
+      </li>
+      <li>
+        <h3>会社の業務で使えますか？</h3>
+        <p>使えます。個人での利用のほか、会社や団体の中での業務利用も認めています。</p>
+      </li>
+      <li>
+        <h3>Mac やスマホで使えますか？</h3>
+        <p>いまは Windows 10 / 11（64bit）だけです。</p>
+      </li>
+    </ul>
+  </div>
+</section>
 <section id="report">
   <div class="wrap">
     <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Feedback</p>
