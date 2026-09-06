@@ -166,6 +166,12 @@ a{color:inherit}
 .topnav a{color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.5); padding-bottom:1px; white-space:nowrap}
 .topnav a:hover{color:#fff; border-bottom-color:#fff}
 .topnav .support{border-bottom:0; padding-bottom:10px}
+/* X のリンク。ロゴは文字と同じ白で、文字の高さに合わせる */
+.topnav .xlink{display:inline-flex; align-items:center; gap:6px}
+.topnav .xlink svg{width:13px; height:13px; fill:#fff}
+footer a{color:#fff; text-decoration:underline; text-underline-offset:3px}
+footer .x{display:inline-flex; align-items:center; gap:6px; margin-left:14px}
+footer .x svg{width:13px; height:13px; fill:#fff}
 .mark{display:flex; align-items:center; flex-wrap:wrap; row-gap:8px; gap:14px; margin-bottom:46px}
 .mark img{width:52px; height:52px; border-radius:13px; box-shadow:0 6px 16px rgba(0,0,0,.28)}
 .mark span{
@@ -512,6 +518,10 @@ footer{
         <a href="#report">不具合の報告・ご要望</a>
         <a href="terms.html">利用規約</a>
         <a href="#report">問い合わせ</a>
+        <a class="xlink" href="https://x.com/PDFMARIN" target="_blank" rel="noopener" aria-label="X（旧Twitter）の PDF MARIN 公式アカウント">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          最新情報
+        </a>
       </nav>
     </div>
   </div>
@@ -976,7 +986,9 @@ footer{
 </script>
 <div class="wavecut wc-wt" aria-hidden="true"><svg viewBox="0 0 1440 46" preserveAspectRatio="none"><path d="M0,18 C240,42 480,2 720,16 C960,30 1200,44 1440,20 L1440,46 L0,46 Z" fill="#0f6bb4"/></svg></div>
 <footer>
-  <div class="wrap">© 2026 PDF MARIN</div>
+  <div class="wrap">© 2026 PDF MARIN
+    <a class="x" href="https://x.com/PDFMARIN" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@PDFMARIN</a>
+  </div>
 </footer>
 
 <script>
