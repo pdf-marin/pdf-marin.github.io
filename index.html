@@ -48,7 +48,7 @@
     "ハイライト・コメント・図形などの書き込み",
     "文字や画像の差し込み、印鑑、ページ番号、透かし",
     "すでにある文字の書き換え、文字の検索",
-    "墨消し（文字も画像の中身も本当に取り除きます）",
+    "墨消し（文字も画像の中身も本当に取り除きます。黒く塗るか、背景の色でなじませるかを選べます）",
     "2つの PDF を見比べる（文字の違いは一覧で、図の違いは重ねて色で）",
     "同じ雛形の PDF を何枚も重ねて見比べる、同じ印をまとめて付ける",
     "図面の寸法を測る（縮尺を合わせてから）",
@@ -65,7 +65,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     {"@type": "Question", "name": "本当に無料ですか？", "acceptedAnswer": {"@type": "Answer", "text": "無料です。すべての機能が使えて、期限や回数の制限もありません。気に入ったら任意のチップで応援できますが、送っても送らなくても使える機能は変わりません。"}},
-    {"@type": "Question", "name": "オフラインで使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。PDF の編集はインターネットにつながなくても動きます。通信するのは、新しい版が出ていないかの確認（1日1回まで・書類の中身は送りません）、不具合の報告やご要望を送るとき、AI 機能を使うとき、Web ページの URL を指定して PDF にするとき（そのページのサイトへ）の4つだけです。"}},
+    {"@type": "Question", "name": "オフラインで使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。PDF の編集はインターネットにつながなくても動きます。通信するのは、新しいバージョンが出ていないかの確認（1日1回まで・書類の中身は送りません）、不具合の報告やご要望を送るとき、AI 機能を使うとき、Web ページの URL を指定して PDF にするとき（そのページのサイトへ）の4つだけです。"}},
     {"@type": "Question", "name": "会員登録やアカウントは必要ですか？", "acceptedAnswer": {"@type": "Answer", "text": "必要ありません。メールアドレスの入力もなく、インストールしてすぐ使えます。"}},
     {"@type": "Question", "name": "広告は出ますか？", "acceptedAnswer": {"@type": "Answer", "text": "出ません。"}},
     {"@type": "Question", "name": "書類の中身が外部に送られることはありますか？", "acceptedAnswer": {"@type": "Answer", "text": "勝手に送られることはありません。送られるのは、あなたが不具合の報告にファイルを添えて送ったときと、AI 機能を使ったとき（お手持ちの Claude Code を通じて送られ、作者には届きません）だけです。くわしくは利用規約の「データの取り扱い」をご覧ください。"}},
@@ -277,7 +277,8 @@ footer .x svg{width:13px; height:13px; fill:#fff}
 }
 .hero-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:44px; align-items:center; margin-top:34px}
 .hero-visual .frame{border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.35); box-shadow:0 20px 50px -18px rgba(6,40,70,.55)}
-.hero-visual img{display:block; width:100%; height:auto}
+.hero-visual img, .hero-visual video{display:block; width:100%; height:auto}
+.hero-cap{margin:12px 4px 0; font-size:13.5px; color:#fff; text-align:center}
 @media (max-width:880px){
   .hero-grid{grid-template-columns:1fr}
   /* 狭い画面では見出しとボタンを先に。写真が先だとボタンが画面の下に隠れる */
@@ -358,6 +359,9 @@ footer .x svg{width:13px; height:13px; fill:#fff}
   background:var(--card);
 }
 .caption{color:var(--muted); font-size:13.5px; margin:14px 2px 0}
+/* 実演の動画。写真と同じ枠に入れる */
+.demo{margin:26px 0 0; max-width:760px}
+.demo video{display:block; width:100%; height:auto}
 
 /* ────────── 節 ────────── */
 section{padding:88px 0}
@@ -607,7 +611,6 @@ footer{
     <h1>無料で、本当に消せる。<br>Windows の PDF 編集ソフト</h1>
     <p class="sub">
       墨消しは黒く塗るだけでなく、文字も画像の中身も取り除きます。
-      <strong>あなたの声で、PDF が進化します。</strong>
       「こうしてほしい」を集めて、AI と一緒に作っています。
     </p>
     <div class="actions">
@@ -622,14 +625,14 @@ footer{
       <!-- JS が切られていると上のボタンは「準備中」のまま。落とせる場所を1本だけ残す -->
       <noscript>
         <p class="meta">この画面でボタンが押せないときは、
-          <a href="https://github.com/pdf-marin/pdf-marin.github.io/releases/latest">GitHub の配布ページ</a>から最新版を落とせます。</p>
+          <a href="https://github.com/pdf-marin/pdf-marin.github.io/releases/latest">GitHub の配布ページ</a>から最新バージョンを落とせます。</p>
       </noscript>
       <!-- 押す直前の不安を減らす札。4つとも FAQ・規約で裏付けのある事実だけ -->
       <ul class="chips" aria-label="安心できる点">
-        <li>無料</li><li>登録不要</li><li>広告なし</li><li>書類は外に出ない</li>
+        <li>無料</li><li>登録不要</li><li>広告なし</li><li>書類は PC の中だけ</li>
       </ul>
       <!-- 「放置されていない」ことを示す。日付は publish.py が index.html を上げるたびに今日にする -->
-      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-06">2026-09-06</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
+      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-07">2026-09-07</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
       <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く。ただし脅かさない文にする -->
       <p class="meta dl-warn">
         はじめて入れるときだけ、警告が出ます。
@@ -647,9 +650,18 @@ footer{
     </div>
       </div>
       <div class="hero-visual">
+        <!-- 基本操作の実演（20秒・無音・架空見本）。開く→回す→書く→墨消し→背景色で消す→圧縮。
+             muted が無いと自動再生されない。動画が使えない環境では poster の静止画が出る -->
         <div class="frame">
-          <img src="assets/shots/home.jpg" width="1919" height="1025" alt="PDF に手書きで注釈を書き込んでいる画面。右にペンの色や太さを選べるパネル。">
+          <video width="1280" height="770" poster="assets/shots/basics-poster.jpg"
+                 autoplay muted loop playsinline preload="metadata"
+                 aria-label="PDF を開いてページを回し、ハイライトと墨消しをして、写真を背景色で消し、圧縮するまでの操作">
+            <source src="assets/shots/basics.webm" type="video/webm">
+            <source src="assets/shots/basics.mp4" type="video/mp4">
+            <img src="assets/shots/basics-poster.jpg" width="1280" height="770" alt="PDF MARIN で活動レポートの見本書類を開き、墨消しとハイライトをした画面">
+          </video>
         </div>
+        <p class="hero-cap">PDF を開いて、ページを回し、ハイライトと墨消し、圧縮まで。見本の書類（架空）でひと通りやってみたところです。</p>
       </div>
     </div>
   </div>
@@ -704,7 +716,7 @@ footer{
       <ul class="list">
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 10.5h10"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg></span>
-        墨消し（文字も画像の中身も本当に取り除きます）
+        墨消し（文字も画像の中身も本当に取り除きます。黒く塗るか、背景の色でなじませるかを選べます）
       </li>
       <li>
         <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/><path d="M6 9h2M6 12h2M16 9h2M16 12h2M16 15h2"/></svg></span>
@@ -757,12 +769,28 @@ footer{
         客先や社外に出す書類では、これが情報漏れになります。
       </p>
       <p>
-        PDF MARIN の<strong>墨消し</strong>は、黒く塗るのではなく、
+        PDF MARIN の<strong>墨消し</strong>は、黒く塗るだけでなく、
         <strong>文字そのものと、画像の中の画素まで PDF から取り除きます</strong>。
         消したあとにコピーしても、何も出てきません。
         大事な書類は、出す前にご自身の目でも確かめてください。
       </p>
     </div>
+    <!-- 墨消しの実演（7.5秒・無音・架空見本）。muted が無いと自動再生されない。
+         1280×770（16:9 ではない）。下の状態バーに出るお知らせを切らないため -->
+    <figure class="demo">
+      <div class="frame">
+        <video width="1280" height="770" poster="assets/shots/redact-poster.jpg"
+               autoplay muted loop playsinline preload="metadata"
+               aria-label="墨消しの範囲をなぞって実行し、消えた所をコピーしても何も出ないところまでの操作">
+          <source src="assets/shots/redact.webm" type="video/webm">
+          <source src="assets/shots/redact.mp4" type="video/mp4">
+          <img src="assets/shots/redact-poster.jpg" width="1280" height="770" alt="社名の行を墨消しした画面">
+        </video>
+      </div>
+      <figcaption class="caption">
+        社名の行をなぞって［墨消し］。黒い帯の所を選んでコピーしても、文字は出てきません（架空の見本書類）。黒く塗るほかに、背景の色でなじませて消すこともできます。
+      </figcaption>
+    </figure>
 
     <h3 class="safety-h">図面の寸法を、PDF のまま測りたい</h3>
     <div class="measure">
@@ -782,18 +810,17 @@ footer{
     <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>AI</p>
     <div class="split2">
       <div>
-        <h2>あなたの声が、そのまま次の版になります</h2>
+        <h2>このアプリの作り方</h2>
         <div class="measure">
           <p>
-            このアプリは AI と一緒に作っています。
-            だから直すのも作り足すのも速く出せます。
-            「ここが使いにくい」と言われた所を、そのまま次の版で直していく作り方です。
+            作っているのはひとりで、作業の多くは AI と組んで進めています。
+            「ここが使いにくい」と言われたら、そこを次のバージョンで直す、というやり方です。
           </p>
           <p>
             もうひとつ、<strong>AI が操作しやすい PDF ツール</strong>を目指して作っています。
             人が押すボタンも、AI への頼みごとも、中では同じひとつの入口を通ります。
             そのため <strong>AI が賢くなるほど、アプリを作り直さなくても頼めることが増えていきます。</strong>
-            できることは、AI の進化に合わせて日々ふやしていきます。
+            AI が進化した分だけ、できることも日々増やしていきます。
           </p>
           <p>
             使いやすさは当たり前として、そこにもう少しだけ足したい。
@@ -814,14 +841,14 @@ footer{
           <span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
           <div>
             <h3>直りが速い</h3>
-            <p>作り手が AI と組んでいるので、直しも作り足しも早く出せます。困ったまま何か月も待たせません。</p>
+            <p>直しや作り足しを早く出せます。直したものは自動更新で届くので、入れ直す手間はいりません。</p>
           </div>
         </li>
         <li>
           <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
           <div>
             <h3>できることが増え続ける</h3>
-            <p>新しい操作を足すと、その日から AI にも頼めるようになります。人と AI で別々に作り込む必要がないぶん、増やす速さがそのまま出ます。</p>
+            <p>新しい操作を足すと、その日から AI にも同じ操作を頼めます。人向けと AI 向けは中で同じ入口なので、別々に作らずに済みます。</p>
           </div>
         </li>
       </ul>
@@ -836,7 +863,7 @@ footer{
     <div class="measure">
       <p>
         「ここを消して」「もっとこうしたい」のように、AI と話しながら
-        細かい操作を進められる仕組みを育てています。
+        細かい操作を進められる仕組みを作っています。
         いまは墨消しから、少しずつ形にしているところです。
       </p>
     </div>
@@ -848,7 +875,7 @@ footer{
     </div>
     <p class="caption">
       墨消しの見本です。消したほうがよさそうな所を見つけ、赤い枠で示して確認してから消します。
-      黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。
+      消した文字や画像は、ファイルの中にも残りません。
     </p>
   </div>
 
@@ -875,8 +902,8 @@ footer{
     <div class="callout">
       <p class="note">
         管理者のパスワードは要りません。自分のパソコンのユーザー領域に入ります。<br>
-        新しい版が出ると、起動したときに知らせが出ます。ボタンを押せばその場で最新にできるので、
-        入れた版が少し古くても心配いりません。
+        新しいバージョンが出ると、起動したときに知らせが出ます。ボタンを押せばその場で最新にできるので、
+        入れたバージョンが少し古くても心配いりません。
       </p>
     </div>
 
@@ -902,7 +929,7 @@ footer{
     <div class="callout">
       <p class="note">
         この警告が出るのは<strong>最初に入れるときだけ</strong>です。
-        そのあとの新しい版は、アプリが自分で入れ替えるので警告は出ません。
+        そのあとの新しいバージョンは、知らせのボタンを押せばアプリの中で入れ替わるので、ふつうはこの警告は出ません。
       </p>
     </div>
     <div class="measure">
@@ -933,7 +960,7 @@ footer{
           <h3>v0.1.2</h3>
           <time>2026-09-05</time>
           <ul>
-            <li>最初の公開版です（同じ日の v0.1.0 / v0.1.1 は自動更新の確認用で、中身は同じです）。</li>
+            <li>最初に公開したバージョンです（同じ日の v0.1.0 / v0.1.1 は自動更新の確認用で、中身は同じです）。</li>
             <li class="hash">
               SHA-256
               <code>145c57914db4368a060bc3b632dfc793b191046b33b8e066ee764345fad6d7d7</code>
@@ -957,7 +984,7 @@ footer{
       </li>
       <li>
         <h3>オフラインで使えますか？</h3>
-        <p>使えます。PDF の編集はインターネットにつながなくても動きます。通信するのは、新しい版が出ていないかの確認（1日1回まで・書類の中身は送りません）、不具合の報告やご要望を送るとき、AI 機能を使うとき、Web ページの URL を指定して PDF にするとき（そのページのサイトへ）の4つだけです。</p>
+        <p>使えます。PDF の編集はインターネットにつながなくても動きます。通信するのは、新しいバージョンが出ていないかの確認（1日1回まで・書類の中身は送りません）、不具合の報告やご要望を送るとき、AI 機能を使うとき、Web ページの URL を指定して PDF にするとき（そのページのサイトへ）の4つだけです。</p>
       </li>
       <li>
         <h3>会員登録やアカウントは必要ですか？</h3>
@@ -988,7 +1015,7 @@ footer{
     <h2>うまく動かないとき・こうしてほしいとき</h2>
     <div class="measure">
       <p>
-        気づいたことを、ここからそのまま送れます。届いた声から順に直していきます。
+        気づいたことを、ここからそのまま送れます。ひとつずつ読んで、直せるところから直します。
         お名前は要りません。アプリの右上の吹き出しの絵（💬）からも同じものを送れます。
       </p>
     </div>
@@ -1052,7 +1079,7 @@ footer{
     <div class="callout tip-note">
       <p class="note">
         <strong>応援について。</strong>
-        PDF MARIN は無料です。気に入っていただけたら、上の「応援する」から
+        PDF MARIN は無料です。気に入っていただけたら、上の［応援する］から
         <strong>任意のチップ</strong>を送っていただけます。
         いただいたお金は、<strong>開発を続けるための資金</strong>として使います。
         送っても送らなくても<strong>使える機能は変わらず</strong>、見返りに何かをお渡しすることもありません。
@@ -1252,7 +1279,7 @@ footer{
     if (!meta) { return; }
     meta.innerHTML = 'ボタンが押せないときは、'
       + '<a href="https://github.com/pdf-marin/pdf-marin.github.io/releases/latest">GitHub の配布ページ</a>'
-      + 'から最新版を落とせます。<br>Windows 10 / 11（64bit）・インストーラー形式';
+      + 'から最新バージョンを落とせます。<br>Windows 10 / 11（64bit）・インストーラー形式';
   }
 })();
 </script>
