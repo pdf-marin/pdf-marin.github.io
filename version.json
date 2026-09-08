@@ -1,9 +1,9 @@
 {
-  "version": "0.1.3",
-  "date": "2026-09-07",
+  "version": "0.1.4",
+  "date": "2026-09-08",
   "size": "約110MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.3/PDF-MARIN-Setup-0.1.3.exe",
-  "notes": "表示品質と安定性の改善",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.4/PDF-MARIN-Setup-0.1.4.exe",
+  "notes": "太字の見出しのつぶれを修正・フォーム欄への入力に対応",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります"
 }
