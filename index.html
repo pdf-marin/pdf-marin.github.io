@@ -278,6 +278,17 @@ footer .x svg{width:13px; height:13px; fill:#fff}
   /* 狭い画面では見出しとボタンを先に。写真が先だとボタンが画面の下に隠れる */
   .hero-visual{max-width:480px; margin-inline:auto}
 }
+/* ダウンロードの横に並べる「ストアは近日公開」の札。行き先がまだ無いのでリンクにはしない */
+.dl-row{display:flex; flex-wrap:wrap; align-items:stretch; gap:14px}
+.store-badge{
+  display:inline-flex; align-items:center; gap:12px;
+  padding:12px 24px; border-radius:999px; color:#fff;
+  background:rgba(255,255,255,.10); border:1px dashed rgba(255,255,255,.55);
+}
+.store-badge svg{width:20px; height:20px; flex:none}
+.store-badge .sb-lines{display:flex; flex-direction:column; line-height:1.35}
+.store-badge .sb-small{font-size:12px; opacity:.88}
+.store-badge .sb-big{font-size:16px; font-weight:800}
 /* ボタン下の安心の札 */
 .updated{font-size:13px}
 .chips{display:flex; flex-wrap:wrap; gap:8px; margin:-4px 0 0; padding:0; list-style:none}
@@ -585,6 +596,7 @@ footer{
         </a>
         <a href="#report">問い合わせ・要望</a>
         <a href="terms.html">利用規約</a>
+        <a href="privacy.html">プライバシーポリシー</a>
         <a class="xlink" href="https://x.com/PDFMARIN" target="_blank" rel="noopener" aria-label="X（旧Twitter）の PDF MARIN 公式アカウント">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           最新情報
@@ -603,10 +615,25 @@ footer{
       <!-- 最初から「準備中」で置いておき、配布ファイルが用意できたら
            version.json を読んだ JS が押せる状態に変える。
            逆にすると、JS が動かない人に押せないボタンを見せてしまう -->
-      <a class="btn is-wait" id="dlbtn" role="button" aria-disabled="true" tabindex="-1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-        準備中
-      </a>
+      <div class="dl-row">
+        <a class="btn is-wait" id="dlbtn" role="button" aria-disabled="true" tabindex="-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+          準備中
+        </a>
+        <!-- 申請前なのでリンクは張らない。URL が決まったら a 要素にする -->
+        <span class="store-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="9" height="9" fill="#F35325"/>
+            <rect x="13" y="2" width="9" height="9" fill="#81BC06"/>
+            <rect x="2" y="13" width="9" height="9" fill="#05A6F0"/>
+            <rect x="13" y="13" width="9" height="9" fill="#FFBA08"/>
+          </svg>
+          <span class="sb-lines">
+            <span class="sb-small">近日公開</span>
+            <span class="sb-big">Microsoft Store</span>
+          </span>
+        </span>
+      </div>
       <p class="meta" id="dlmeta"><strong>いま準備中です。</strong>もうすぐ公開します<br>Windows 10 / 11（64bit）・インストーラー形式</p>
       <!-- JS が切られていると上のボタンは「準備中」のまま。落とせる場所を1本だけ残す -->
       <noscript>
@@ -618,7 +645,7 @@ footer{
         <li>無料</li><li>登録不要</li><li>広告なし</li><li>書類は PC の中だけ</li>
       </ul>
       <!-- 「放置されていない」ことを示す。日付は publish.py が index.html を上げるたびに今日にする -->
-      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-07">2026-09-07</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
+      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-08">2026-09-08</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
       <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く。ただし脅かさない文にする -->
       <p class="meta dl-warn">
         はじめて入れるときだけ、警告が出ます。
