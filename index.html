@@ -28,11 +28,11 @@
   "applicationCategory": "BusinessApplication",
   "applicationSubCategory": "PDF編集ソフト",
   "operatingSystem": "Windows 10, Windows 11",
-  "softwareVersion": "0.1.4",
+  "softwareVersion": "0.1.6",
   "description": "Windows 用の無料 PDF 編集ソフト。墨消しは黒く塗るだけでなく、文字も画像の中身も本当に取り除きます。ページの整理・書き込み・圧縮・図面の寸法測定・Excel / Word への書き出しに対応。",
   "url": "https://pdf-marin.github.io/",
-  "downloadUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.4/PDF-MARIN-Setup-0.1.4.exe",
-  "installUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.4/PDF-MARIN-Setup-0.1.4.exe",
+  "downloadUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.6/PDF-MARIN-Setup-0.1.6.exe",
+  "installUrl": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.6/PDF-MARIN-Setup-0.1.6.exe",
   "image": "https://pdf-marin.github.io/assets/ogp.png",
   "inLanguage": "ja",
   "isAccessibleForFree": true,
@@ -637,7 +637,7 @@ footer{
         <li>無料</li><li>登録不要</li><li>広告なし</li><li>書類は PC の中だけ</li>
       </ul>
       <!-- 「放置されていない」ことを示す。日付は publish.py が index.html を上げるたびに今日にする -->
-      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-09">2026-09-09</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
+      <p class="meta updated">最終更新 <time id="siteupdated" datetime="2026-09-10">2026-09-10</time> ・ <a href="https://x.com/PDFMARIN" target="_blank" rel="noopener">開発の記録は X で</a></p>
       <!-- 押した直後にブラウザが止めるので、入口をボタンのそばに置く。ただし脅かさない文にする -->
       <p class="meta dl-warn">
         はじめて入れるときだけ、警告が出ます。
@@ -935,6 +935,29 @@ footer{
       <div>
         <p class="eyebrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="21"/><line x1="8" y1="11" x2="16" y2="11"/><path d="M5 15a7 7 0 0 0 14 0"/></svg>Releases</p>
         <h2>更新履歴</h2>
+        <div class="rel">
+          <h3>v0.1.6</h3>
+          <time>2026-09-10</time>
+          <details>
+            <summary>詳しく見る</summary>
+            <ul>
+              <li>拡大縮小（Ctrl＋ホイール）が引っかからなくなりました。動かしている間は描き直さずに拡大表示し、手を止めた時点で本来の細かさに描き直します。止めたあとの画質は落ちません。</li>
+              <li>縮尺（拡大率）を変えたときに、紙の大きさや文字の大きさが一瞬ブレて見える不具合を直しました。</li>
+              <li>スクロール中の引っかかりを減らしました。紙の描画を画面の外へ回し、重い処理を細切れにして画面に制御を返すようにしています（大きな図面でとくに効きます）。</li>
+              <li>文字と線の輪郭がくっきり見えるようにしました。画面の2倍の細かさで描いてから縮める方式に変え、細い文字や線の濃さが適正になるよう調整しています。</li>
+              <li>Adobe と同じキー操作を追加しました。Alt＋← で前に見ていた場所（倍率と位置ごと）に戻り、Alt＋→ で進みます。Ctrl＋1 で実際の大きさ、Ctrl＋0 でページ全体、Ctrl＋2 で幅に合わせる。</li>
+              <li>PageDown／PageUp が「1画面ずつ送る」ようになりました。これまでは必ず次のページの先頭へ飛んでしまい、拡大した図面を少しずつ読み進められませんでした。</li>
+              <li>拡大・縮小ボタンやキーで拡大したとき、見ていた場所が画面の外へ逃げなくなりました。</li>
+              <li>リボンのアイコンの大きさ「自動」が、窓の幅に合わせて 小・中・大 の3段に切り替わるようになりました。</li>
+              <li>「細い線を強調」は標準の強さに固定し、強さを選ぶ項目をなくしました。既定が「強め」になっていて、表示と実際が食い違っていたのを直しています。</li>
+              <li>ご意見・ご要望の送信画面を整えました。「バグ・修正依頼」「追加機能のご要望」「操作性のご指摘」から選べ、それぞれ記入の枠を用意しています。</li>
+              <li class="hash">
+                SHA-256
+                <code>caa8ca6b150cd1a8bb9d04c2dcf9d913b8dd386f4c8e3e4cfbbbddff3c5732c5</code>
+              </li>
+            </ul>
+          </details>
+        </div>
         <div class="rel">
           <h3>v0.1.4</h3>
           <time>2026-09-08</time>
