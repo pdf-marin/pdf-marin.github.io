@@ -1,9 +1,9 @@
 {
-  "version": "0.1.6",
+  "version": "0.1.7",
   "date": "2026-09-10",
   "size": "約110MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.6/PDF-MARIN-Setup-0.1.6.exe",
-  "notes": "拡大縮小の引っかかりを解消・前の表示へ戻る(Alt+←)を追加・文字と線の見えかたを改善",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.7/PDF-MARIN-Setup-0.1.7.exe",
+  "notes": "［更新を確認］を押しても何も出なかった不具合を修正",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります"
 }
