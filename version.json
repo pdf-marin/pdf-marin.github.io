@@ -1,9 +1,9 @@
 {
-  "version": "0.1.7",
-  "date": "2026-09-10",
+  "version": "0.1.8",
+  "date": "2026-09-11",
   "size": "約110MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.7/PDF-MARIN-Setup-0.1.7.exe",
-  "notes": "［更新を確認］を押しても何も出なかった不具合を修正",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.8/PDF-MARIN-Setup-0.1.8.exe",
+  "notes": "文字枠の選択・回転、ページの傾き調整、OCR文字層の削除を改善",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります"
 }
