@@ -324,8 +324,18 @@ h2 {
 }
 .hero-actions {
   display:flex;
+  flex-wrap:wrap;
   justify-content:center;
   gap:12px
+}
+.btn.hero-support {
+  background:var(--mint);
+  border-color:#b9d4e0;
+  color:var(--teal-dark)
+}
+.btn.hero-support:hover {
+  background:#d4ebf5;
+  border-color:var(--teal)
 }
 .hero-meta {
   display:flex;
