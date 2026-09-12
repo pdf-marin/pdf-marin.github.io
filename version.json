@@ -1,9 +1,10 @@
 {
-  "version": "0.1.8",
-  "date": "2026-09-11",
-  "size": "約110MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.1.8/PDF-MARIN-Setup-0.1.8.exe",
-  "notes": "文字枠の選択・回転、ページの傾き調整、OCR文字層の削除を改善",
+  "version": "0.2.0",
+  "date": "2026-09-13",
+  "size": "約123MB",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.0/PDF-MARIN-Setup-0.2.0.exe",
+  "notes": "しおり・コメント、見開き分割、注釈・印鑑・ページ操作の使いやすさを改善",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
-  "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります"
+  "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
+  "sha256": "9b06ee847ae29089068c9dc546d05b398a45c9f285e0bf3cb3a6e46915d2b9ad"
 }
