@@ -1,10 +1,10 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "date": "2026-09-13",
   "size": "約123MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.0/PDF-MARIN-Setup-0.2.0.exe",
-  "notes": "しおり・コメント、見開き分割、注釈・印鑑・ページ操作の使いやすさを改善",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.1/PDF-MARIN-Setup-0.2.1.exe",
+  "notes": "傾き補正の表示品質、利用規約の確認記録、白紙ページ追加を改善",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "sha256": "9b06ee847ae29089068c9dc546d05b398a45c9f285e0bf3cb3a6e46915d2b9ad"
+  "sha256": "f071041ba683ac02ee62969b8009971d611c677a11ea8c3b4ddb74ac6aeafa3e"
 }
