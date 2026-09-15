@@ -116,7 +116,12 @@
       .then(response => { if (!response.ok) throw new Error('Version information unavailable'); return response.json(); })
       .then(version => {
         if (validUrl(version.url)) $$('[data-download]').forEach(link => { link.href = version.url; });
-        if (typeof version.version === 'string') $$('[data-version]').forEach(el => { el.textContent = 'v' + version.version; });
+        if (typeof version.version === 'string') {
+          $$('[data-version]').forEach(el => { el.textContent = 'v' + version.version; });
+          $$('[data-download]').forEach(link => {
+            link.dataset.umamiEventVersion = version.version;
+          });
+        }
         if (typeof version.size === 'string') $$('[data-size]').forEach(el => { el.textContent = version.size; });
         if (validUrl(version.sponsorUrl)) $$('a.support').forEach(link => { link.href = version.sponsorUrl; });
       }).catch(() => { /* Keep the working download links already present in the HTML. */ });
