@@ -1,10 +1,10 @@
 {
-  "version": "0.2.2",
-  "date": "2026-09-14",
-  "size": "約123MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.2/PDF-MARIN-Setup-0.2.2.exe",
-  "notes": "傾き補正のぼやけ、拡大時の文字の細り、微小な傾きの扱いを改善",
+  "version": "0.2.4",
+  "date": "2026-09-16",
+  "size": "約129MB",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.4/PDF-MARIN-Setup-0.2.4.exe",
+  "notes": "ページ一覧のドラッグと並べ替えの不具合、タブ切り替えの読み込み直し、文字枠と文字の大きさ、大きな CSV の変換などを改善",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "sha256": "25587fb3b47e5256372b1589a166aff42c75099bf790ca80251a647b5a698bdf"
+  "sha256": "b4bcbf61deb6d752d49d3dd6ad75a22046a79656a458eb151158c66e67f6c3db"
 }
