@@ -337,6 +337,21 @@ h2 {
   background:#d4ebf5;
   border-color:var(--teal)
 }
+.btn.hero-x {
+  background:#fff;
+  border-color:#b9d4e0;
+  color:var(--teal-dark)
+}
+.btn.hero-x:hover {
+  background:var(--mint);
+  border-color:var(--teal)
+}
+.hero-x .x-mark {
+  width:18px;
+  height:18px;
+  fill:currentColor;
+  flex:none
+}
 .hero-meta {
   display:flex;
   justify-content:center;
