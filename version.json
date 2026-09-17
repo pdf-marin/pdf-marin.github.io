@@ -1,10 +1,10 @@
 {
-  "version": "0.2.4",
-  "date": "2026-09-16",
+  "version": "0.2.5",
+  "date": "2026-09-18",
   "size": "約129MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.4/PDF-MARIN-Setup-0.2.4.exe",
-  "notes": "ページ一覧のドラッグと並べ替えの不具合、タブ切り替えの読み込み直し、文字枠と文字の大きさ、大きな CSV の変換などを改善",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.5/PDF-MARIN-Setup-0.2.5.exe",
+  "notes": "面積の囲みをあとから直せるように、道具を長押しして色を選べるように、ページを掴んで1枚だけ抽出できるように。注釈を選んだときに色が暗く見えるのも直しました",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "sha256": "b4bcbf61deb6d752d49d3dd6ad75a22046a79656a458eb151158c66e67f6c3db"
+  "sha256": "86d7aac8a93fb9bbd44d3a21d9501783dca9a2ad89ee7ae9d8695b747297a3b6"
 }
