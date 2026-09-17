@@ -329,28 +329,13 @@ h2 {
   gap:12px
 }
 .btn.hero-support {
-  background:#fff;
+  background:var(--mint);
   border-color:#b9d4e0;
   color:var(--teal-dark)
 }
 .btn.hero-support:hover {
-  background:var(--mint);
+  background:#d4ebf5;
   border-color:var(--teal)
-}
-.btn.hero-x {
-  background:#fff;
-  border-color:#b9d4e0;
-  color:var(--teal-dark)
-}
-.btn.hero-x:hover {
-  background:var(--mint);
-  border-color:var(--teal)
-}
-.hero-x .x-mark {
-  width:18px;
-  height:18px;
-  fill:currentColor;
-  flex:none
 }
 .hero-meta {
   display:flex;
@@ -2261,5 +2246,63 @@ h2 {
   }
   .stage-caption span:last-child {
     display:none;
+  }
+}
+
+/* 応援の節（2026-09-17）。アプリの［応援］ボタンはここへ来る。
+   ★手段を足す・やめるはこの節の中だけで済むようにしてある
+      （アプリに焼き込むと、更新が行き渡るまで届かないため） */
+.support-section {
+  text-align:center
+}
+.support-ways {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin:28px 0 20px
+}
+.support-note {
+  font-size:13px;
+  opacity:.75
+}
+
+/* Microsoft Store のバッジ（2026-09-18）。
+   ★画そのものは加工しない。比率を保ったまま、隣のボタンと高さだけ合わせる。 */
+.btn-store {
+  display:inline-flex;
+  align-items:center;
+  border-radius:8px;
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s
+}
+.btn-store:hover {
+  box-shadow:0 8px 22px #187da324;
+  transform:translateY(-2px)
+}
+.btn-store:focus-visible {
+  outline:2px solid var(--teal);
+  outline-offset:3px
+}
+.btn-store img {
+  display:block;
+  height:54px;
+  width:auto
+}
+/* ★ダウンロードの節は text-align:center の並び（flex ではない）なので、
+   何もしないとベースラインで揃って **16px 高く**出る（実測 349 対 333）。 */
+.download-actions .btn,.download-actions .btn-store {
+  vertical-align:middle;
+  margin:0 5px
+}
+.store-note {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:10px
+}
+@media(max-width:600px) {
+  .btn-store img {
+    height:48px
   }
 }
