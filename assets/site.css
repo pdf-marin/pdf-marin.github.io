@@ -2306,3 +2306,27 @@ h2 {
     height:48px
   }
 }
+
+/* X（旧 Twitter）へのリンク（2026-09-18）。
+   ★他のアイコンは線画なので、塗りのロゴはここで打ち消す。 */
+svg.icon.icon-solid {
+  fill:currentColor;
+  stroke:none
+}
+.btn.hero-x {
+  background:var(--mint);
+  border-color:#b9d4e0;
+  color:var(--teal-dark);
+  padding:14px;
+  width:54px
+}
+.btn.hero-x:hover {
+  background:#d4ebf5;
+  border-color:var(--teal)
+}
+@media(max-width:600px) {
+  .hero-actions .btn.hero-x {
+    width:49px;
+    padding:13px
+  }
+}
