@@ -27,13 +27,6 @@
     if (!event.target.closest('.site-header')) closeMenu();
   });
 
-  // Open the installation instructions before following the in-page link.
-  const warning = $('#keikoku');
-  function expandHashTarget() { if (location.hash === '#keikoku') warning.open = true; }
-  expandHashTarget();
-  window.addEventListener('hashchange', expandHashTarget);
-  $$('a[href="#keikoku"]').forEach(link => link.addEventListener('click', () => { warning.open = true; }));
-
   const dialog = $('#media-dialog');
   const video = $('#dialog-video');
   let mediaTrigger;
