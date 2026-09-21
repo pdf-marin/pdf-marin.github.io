@@ -954,88 +954,85 @@ h2 {
   font-weight:600;
   text-decoration:none
 }
-.x-timeline-consent {
-  height:500px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:45px 28px;
-  text-align:center;
-  background:linear-gradient(145deg,#fff 0%,#f1f9fc 100%)
-}
-.x-consent-mark {
-  display:grid;
-  place-items:center;
-  width:54px;
-  height:54px;
-  border:1px solid #bad9e5;
-  border-radius:50%;
-  background:#fff;
-  color:#17232d;
-  font-size:20px;
-  box-shadow:0 10px 30px -18px #164f66
-}
-.x-timeline-consent h3 {
-  margin-top:19px;
-  font-size:20px
-}
-.x-timeline-consent p {
-  max-width:420px;
-  margin-top:9px;
-  color:var(--body);
-  font-size:12px;
-  line-height:1.9
-}
-.x-load-button {
-  min-height:46px;
-  margin-top:21px;
-  padding:11px 24px;
-  font-size:12px
-}
-.x-timeline-consent small {
-  margin-top:12px;
-  color:var(--muted);
-  font-size:10px
-}
-.x-timeline-mount {
-  position:relative;
+.x-post-list {
   height:500px;
   overflow-y:auto;
   overscroll-behavior:contain;
   scrollbar-gutter:stable;
+  background:#fff;
+  scroll-behavior:smooth
+}
+.x-post-list::-webkit-scrollbar {
+  width:10px
+}
+.x-post-list::-webkit-scrollbar-track {
+  background:#f3f8fa
+}
+.x-post-list::-webkit-scrollbar-thumb {
+  border:3px solid #f3f8fa;
+  border-radius:10px;
+  background:#9fc5d2
+}
+.x-post {
+  padding:20px 22px 18px;
+  border-bottom:1px solid var(--line);
   background:#fff
 }
-.x-timeline-mount iframe {
-  display:block!important;
-  width:100%!important;
-  min-width:100%!important;
-  max-width:none!important;
-  height:500px!important
+.x-post:last-child {
+  border-bottom:0
 }
-.x-timeline-status {
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  padding:25px;
+.x-post header {
+  display:flex;
+  align-items:start;
+  justify-content:space-between;
+  gap:18px
+}
+.x-post header div {
+  display:flex;
+  align-items:baseline;
+  gap:7px
+}
+.x-post header strong {
+  color:#102f3d;
+  font-size:13px
+}
+.x-post header span,.x-post time {
   color:var(--muted);
-  background:#fff;
+  font-size:10px
+}
+.x-post p {
+  margin-top:12px;
+  color:#294c5c;
   font-size:12px;
-  text-align:center
+  line-height:1.82
 }
-.x-timeline-mount.is-ready .x-timeline-status {
-  display:none
+.x-post-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:13px;
+  color:var(--teal);
+  font-size:10px
 }
-.x-timeline-mount.is-error {
-  display:grid;
-  place-items:center;
-  padding:30px
+.x-post-footer a {
+  flex:none;
+  color:var(--teal-dark);
+  font-weight:650;
+  text-decoration:none
 }
-.x-timeline-mount.is-error .x-timeline-status {
-  position:static;
-  display:block;
-  line-height:1.9
+.x-post-footer a:hover {
+  text-decoration:underline
+}
+.x-pinned {
+  width:max-content;
+  margin-bottom:8px;
+  padding:2px 7px;
+  border-radius:999px;
+  background:#eaf7fa;
+  color:var(--teal-dark);
+  font-size:9px;
+  font-weight:650
 }
 .x-support {
   position:sticky;
@@ -2266,19 +2263,16 @@ h2 {
     height:64px;
     padding:11px 15px
   }
-  .x-timeline-consent,.x-timeline-mount {
+  .x-post-list {
     height:475px
   }
-  .x-timeline-mount iframe {
-    height:475px!important
+  .x-post {
+    padding:18px 17px 16px
   }
-  .x-timeline-consent {
-    padding:34px 22px
+  .x-post header div {
+    display:block
   }
-  .x-timeline-consent h3 {
-    font-size:18px
-  }
-  .x-timeline-consent p {
+  .x-post p {
     font-size:11px
   }
   .steps {
