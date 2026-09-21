@@ -926,16 +926,12 @@ h2 {
   align-items:center;
   gap:11px
 }
-.x-mark {
-  display:grid;
-  place-items:center;
-  width:37px;
-  height:37px;
-  border-radius:50%;
-  background:#15202b;
-  color:#fff;
-  font-size:15px;
-  font-weight:600
+.x-account-avatar {
+  width:40px;
+  height:40px;
+  flex:none;
+  border-radius:12px;
+  object-fit:cover
 }
 .x-timeline-top strong,.x-timeline-top span {
   display:block;
@@ -987,16 +983,28 @@ h2 {
   justify-content:space-between;
   gap:18px
 }
-.x-post header div {
+.x-post-author {
   display:flex;
-  align-items:baseline;
-  gap:7px
+  align-items:center;
+  gap:10px
+}
+.x-post-author>img {
+  width:34px;
+  height:34px;
+  flex:none;
+  border-radius:10px;
+  object-fit:cover
+}
+.x-post-author>div {
+  display:block
 }
 .x-post header strong {
+  display:block;
   color:#102f3d;
   font-size:13px
 }
 .x-post header span,.x-post time {
+  display:block;
   color:var(--muted);
   font-size:10px
 }
@@ -1005,6 +1013,16 @@ h2 {
   color:#294c5c;
   font-size:12px;
   line-height:1.82
+}
+.x-post-video {
+  display:block;
+  width:100%;
+  aspect-ratio:16 / 9;
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#e8f1f5;
+  object-fit:cover
 }
 .x-post-footer {
   display:flex;
@@ -1366,17 +1384,25 @@ h2 {
   margin-top:12px
 }
 .download-actions {
+  display:grid;
+  grid-template-columns:auto auto;
+  align-items:stretch;
+  gap:8px;
   text-align:center;
   flex:none
 }
+.download-actions .btn {
+  height:54px
+}
 .download-actions .btn+.btn {
-  margin-left:8px
+  margin-left:0
 }
 .download-actions small {
+  grid-column:1 / -1;
   display:block;
   color:var(--muted);
   font-size:10px;
-  margin-top:10px
+  margin-top:2px
 }
 .download-panel .eyebrow {
   margin-bottom:13px;
@@ -2269,9 +2295,6 @@ h2 {
   .x-post {
     padding:18px 17px 16px
   }
-  .x-post header div {
-    display:block
-  }
   .x-post p {
     font-size:11px
   }
@@ -2360,6 +2383,9 @@ h2 {
     font-size:11px
   }
   .download-actions {
+    grid-template-columns:1fr;
+    justify-items:center;
+    gap:0;
     margin-top:25px
   }
   .download-actions .btn {
@@ -2371,6 +2397,7 @@ h2 {
     margin:10px auto 0
   }
   .download-actions small {
+    grid-column:1;
     font-size:9px
   }
   .store-ready {
