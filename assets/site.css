@@ -271,7 +271,7 @@ h2 {
 .hero {
   position:relative;
   isolation:isolate;
-  padding:45px 0 0;
+  padding:45px 0 68px;
   overflow:hidden;
   background:radial-gradient(ellipse at 50% 65%,#dceff7 0,transparent 64%),var(--paper)
 }
