@@ -34,38 +34,7 @@
   window.addEventListener('hashchange', expandHashTarget);
   $$('a[href="#keikoku"]').forEach(link => link.addEventListener('click', () => { warning.open = true; }));
 
-  const screens = {
-    edit: {src:'assets/shots/home.jpg', alt:'PDF MARINの注釈画面。活動レポートにペンで書き込み、右側のパネルで色や太さを調整できます。'},
-    organize: {src:'assets/shots/organize.jpg', alt:'PDF MARINのページ整理画面。ページのサムネイルを一覧で確認し、並べ替えや回転などの操作ができます。'},
-    redact: {src:'assets/shots/redact-ai.jpg', alt:'PDF MARINの墨消し画面。サンプル文書内で処理する箇所を指定しています。'}
-  };
-  const tabs = $$('[data-screen]');
-  const productScreen = $('#product-screen');
-  function selectScreen(tab) {
-    const screen = screens[tab.dataset.screen];
-    if (!screen) return;
-    productScreen.src = screen.src;
-    productScreen.alt = screen.alt;
-    tabs.forEach(item => {
-      item.setAttribute('aria-selected', String(item === tab));
-      item.tabIndex = item === tab ? 0 : -1;
-    });
-    $('#screen-panel').setAttribute('aria-labelledby', tab.id);
-  }
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => selectScreen(tab));
-    tab.addEventListener('keydown', event => {
-      let next;
-      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-      if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
-      if (event.key === 'Home') next = 0;
-      if (event.key === 'End') next = tabs.length - 1;
-      if (next !== undefined) { event.preventDefault(); selectScreen(tabs[next]); tabs[next].focus(); }
-    });
-  });
-
   const dialog = $('#media-dialog');
-  const dialogImage = $('#dialog-image');
   const video = $('#dialog-video');
   let mediaTrigger;
   function showMedia(trigger) {
@@ -73,19 +42,11 @@
     dialog.showModal();
     document.body.style.overflow = 'hidden';
   }
-  $$('[data-zoom]').forEach(button => button.addEventListener('click', () => {
-    const image = document.getElementById(button.dataset.zoom);
-    dialogImage.src = image.currentSrc || image.src;
-    dialogImage.alt = image.alt;
-    dialogImage.hidden = false; video.hidden = true;
-    $('#dialog-title').textContent = 'PDF MARIN — ' + tabs.find(tab => tab.getAttribute('aria-selected') === 'true').textContent.trim();
-    showMedia(button);
-  }));
   $$('[data-video]').forEach(button => button.addEventListener('click', () => {
-    dialogImage.hidden = true; video.hidden = false;
+    video.hidden = false;
     video.poster = 'assets/shots/basics-poster.jpg';
     video.src = 'assets/shots/basics.mp4';
-    $('#dialog-title').textContent = 'PDF MARIN — 基本操作のデモ（音声なし）';
+    $('#dialog-title').textContent = 'PDF MARIN — 輪メニューから始まる操作デモ（音声なし）';
     showMedia(button);
     video.play().catch(() => { /* Native controls remain available. */ });
   }));
