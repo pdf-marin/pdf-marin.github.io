@@ -70,6 +70,23 @@ svg.icon {
   stroke-linejoin:round;
   flex:none
 }
+.microsoft-mark {
+  display:grid;
+  grid-template-columns:repeat(2,7px);
+  grid-template-rows:repeat(2,7px);
+  gap:1px;
+  width:20px;
+  height:20px;
+  padding:2px;
+  border-radius:3px;
+  background:#fff;
+  box-shadow:0 0 0 1px #163d5c18;
+  flex:none
+}
+.microsoft-mark i:nth-child(1) { background:#f25022 }
+.microsoft-mark i:nth-child(2) { background:#7fba00 }
+.microsoft-mark i:nth-child(3) { background:#00a4ef }
+.microsoft-mark i:nth-child(4) { background:#ffb900 }
 a,button,summary {
   outline-offset:5px
 }
