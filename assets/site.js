@@ -34,12 +34,10 @@
   window.addEventListener('hashchange', expandHashTarget);
   $$('a[href="#keikoku"]').forEach(link => link.addEventListener('click', () => { warning.open = true; }));
 
-  // Keep the page private by default. Connect to X only after the visitor asks to load the posts.
-  const xLoadButton = $('#x-timeline-load');
-  const xConsent = $('#x-timeline-consent');
+  // Load the official X timeline as soon as the page opens.
   const xMount = $('#x-timeline-mount');
   const xStatus = $('#x-timeline-status');
-  if (xLoadButton && xConsent && xMount && xStatus) {
+  if (xMount && xStatus) {
     let xLoadTimer;
     const markXReady = () => {
       const frame = xMount.querySelector('iframe');
@@ -67,26 +65,24 @@
       if (!window.twttr?.widgets) { showXError(); return; }
       Promise.resolve(window.twttr.widgets.load(xMount)).then(markXReady).catch(showXError);
     };
-    xLoadButton.addEventListener('click', () => {
-      xLoadButton.disabled = true;
-      xConsent.hidden = true;
-      xMount.hidden = false;
-      xLoadTimer = setTimeout(showXError, 15000);
-      if (window.twttr?.widgets) { renderXTimeline(); return; }
+    xLoadTimer = setTimeout(showXError, 15000);
+    if (window.twttr?.widgets) {
+      renderXTimeline();
+    } else {
       const existing = $('#x-wjs');
       if (existing) {
         existing.addEventListener('load', renderXTimeline, {once:true});
         existing.addEventListener('error', showXError, {once:true});
-        return;
+      } else {
+        const script = document.createElement('script');
+        script.id = 'x-wjs';
+        script.src = 'https://platform.twitter.com/widgets.js';
+        script.async = true;
+        script.onload = renderXTimeline;
+        script.onerror = showXError;
+        document.head.append(script);
       }
-      const script = document.createElement('script');
-      script.id = 'x-wjs';
-      script.src = 'https://platform.twitter.com/widgets.js';
-      script.async = true;
-      script.onload = renderXTimeline;
-      script.onerror = showXError;
-      document.head.append(script);
-    }, {once:true});
+    }
   }
 
   const screens = {
