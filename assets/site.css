@@ -481,7 +481,7 @@ h2 {
 }
 .trust-inner {
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   padding:26px 0
 }
 .trust-item {
@@ -877,6 +877,156 @@ h2 {
   font-size:12px;
   flex:none
 }
+.x-community {
+  background:#f6fbfd;
+  border-bottom:1px solid var(--line)
+}
+.x-community-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(280px,.75fr);
+  gap:32px;
+  align-items:start
+}
+.x-timeline-shell {
+  height:570px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid #cfe2ea;
+  border-radius:18px;
+  box-shadow:0 18px 48px -36px #174d644d
+}
+.x-timeline-top {
+  height:69px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:12px 19px;
+  border-bottom:1px solid var(--line)
+}
+.x-timeline-top>div {
+  display:flex;
+  align-items:center;
+  gap:11px
+}
+.x-mark {
+  display:grid;
+  place-items:center;
+  width:37px;
+  height:37px;
+  border-radius:50%;
+  background:#15202b;
+  color:#fff;
+  font-size:15px;
+  font-weight:600
+}
+.x-timeline-top strong,.x-timeline-top span {
+  display:block;
+  line-height:1.45
+}
+.x-timeline-top strong {
+  font-size:13px
+}
+.x-timeline-top div span {
+  color:var(--muted);
+  font-size:10px
+}
+.x-timeline-top a {
+  color:var(--teal);
+  font-size:11px;
+  font-weight:600;
+  text-decoration:none
+}
+.x-timeline-consent {
+  height:500px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:45px 28px;
+  text-align:center;
+  background:linear-gradient(145deg,#fff 0%,#f1f9fc 100%)
+}
+.x-consent-mark {
+  display:grid;
+  place-items:center;
+  width:54px;
+  height:54px;
+  border:1px solid #bad9e5;
+  border-radius:50%;
+  background:#fff;
+  color:#17232d;
+  font-size:20px;
+  box-shadow:0 10px 30px -18px #164f66
+}
+.x-timeline-consent h3 {
+  margin-top:19px;
+  font-size:20px
+}
+.x-timeline-consent p {
+  max-width:420px;
+  margin-top:9px;
+  color:var(--body);
+  font-size:12px;
+  line-height:1.9
+}
+.x-load-button {
+  min-height:46px;
+  margin-top:21px;
+  padding:11px 24px;
+  font-size:12px
+}
+.x-timeline-consent small {
+  margin-top:12px;
+  color:var(--muted);
+  font-size:10px
+}
+.x-timeline-mount {
+  position:relative;
+  height:500px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+  background:#fff
+}
+.x-timeline-mount iframe {
+  display:block!important;
+  width:100%!important;
+  min-width:100%!important;
+  max-width:none!important;
+  height:500px!important
+}
+.x-timeline-status {
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:25px;
+  color:var(--muted);
+  background:#fff;
+  font-size:12px;
+  text-align:center
+}
+.x-timeline-mount.is-ready .x-timeline-status {
+  display:none
+}
+.x-timeline-mount.is-error {
+  display:grid;
+  place-items:center;
+  padding:30px
+}
+.x-timeline-mount.is-error .x-timeline-status {
+  position:static;
+  display:block;
+  line-height:1.9
+}
+.x-support {
+  position:sticky;
+  top:100px;
+  margin-top:0;
+  min-height:305px;
+  padding:34px 31px
+}
 .setup {
   background:#fff
 }
@@ -935,6 +1085,63 @@ h2 {
   height:19px;
   color:var(--teal);
   margin-top:3px
+}
+.store-ready {
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:18px;
+  margin:0 0 22px;
+  padding:20px 22px;
+  border:1px solid #cbddea;
+  border-radius:12px;
+  background:linear-gradient(135deg,#fff 0%,#f3f8fc 100%);
+  box-shadow:0 8px 24px #163d5c0a
+}
+.store-ready[data-state="available"] {
+  border-color:#9ecedb;
+  background:linear-gradient(135deg,#f6fcff 0%,#e9f7f8 100%)
+}
+.store-ready-icon {
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  color:var(--teal-dark);
+  background:#e5f2f8
+}
+.store-ready-icon .icon {
+  width:25px;
+  height:25px
+}
+.store-ready-copy h3 {
+  margin:4px 0 3px;
+  font-size:15px
+}
+.store-ready-copy p {
+  color:var(--body);
+  font-size:11px;
+  line-height:1.75
+}
+.store-badge {
+  display:inline-flex;
+  align-items:center;
+  min-height:20px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#e9eef3;
+  color:#536878;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.04em
+}
+.store-ready[data-state="available"] .store-badge {
+  background:#d8f2ea;
+  color:#176c58
+}
+.store-ready-button {
+  min-width:132px
 }
 .warning-details {
   border:1px solid var(--line);
@@ -1148,6 +1355,9 @@ h2 {
   text-align:center;
   flex:none
 }
+.download-actions .btn+.btn {
+  margin-left:8px
+}
 .download-actions small {
   display:block;
   color:var(--muted);
@@ -1174,18 +1384,61 @@ h2 {
   font-size:31px
 }
 .support-block {
-  border-top:1px solid var(--line);
+  border:1px solid #d5e5ec;
+  border-radius:20px;
+  background:#fffaf7;
   margin-top:32px;
-  padding-top:23px
+  padding:27px 28px 29px
+}
+.support-eyebrow {
+  color:#0780a2!important;
+  font-size:10px!important;
+  font-weight:700;
+  letter-spacing:.17em;
+  line-height:1.5!important;
+  margin:0 0 13px!important
+}
+.support-block h3 {
+  color:#07334b;
+  font-size:22px;
+  letter-spacing:-.035em;
+  line-height:1.55
 }
 .support-block p {
-  font-size:11px;
-  color:var(--body);
-  margin-top:12px;
-  line-height:2
+  font-size:12px;
+  color:#607c89;
+  margin-top:15px;
+  line-height:1.9
 }
-.support-block .text-link {
-  font-size:12px
+.support-button {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:45px;
+  margin-top:20px;
+  padding:10px 15px;
+  border:1px solid #efc8c0;
+  border-radius:9px;
+  color:#b65349;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.4;
+  text-decoration:none;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease
+}
+.support-button:hover {
+  background:#fff2ed;
+  border-color:#dfa99f;
+  text-decoration:none;
+  transform:translateY(-1px)
+}
+.support-button .icon {
+  width:15px;
+  height:15px
+}
+.support-button .arrow {
+  width:13px;
+  height:13px
 }
 .feedback-form label {
   display:block;
@@ -1625,6 +1878,14 @@ h2 {
   .story-line {
     margin-top:35px
   }
+  .x-community-grid {
+    grid-template-columns:1fr;
+    gap:24px
+  }
+  .x-support {
+    position:static;
+    min-height:0
+  }
   .environment-release {
     gap:30px
   }
@@ -1655,16 +1916,12 @@ h2 {
     gap:35px
   }
   .feedback-intro {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px
+    display:block
   }
   .support-block {
     margin-top:0;
-    padding-top:0;
-    border:0;
-    border-left:1px solid var(--line);
-    padding-left:25px
+    padding:25px;
+    border:1px solid #d5e5ec
   }
   .feedback-intro h2 {
     font-size:27px
@@ -1824,7 +2081,7 @@ h2 {
     height:14px
   }
   .trust-inner {
-    grid-template-columns:1fr;
+    grid-template-columns:1fr 1fr;
     gap:0;
     padding:9px 0
   }
@@ -1832,11 +2089,14 @@ h2 {
     padding:14px 4px;
     justify-content:flex-start;
     gap:12px;
-    border:0;
-    border-bottom:1px solid var(--line)
+    border:0
   }
-  .trust-item:last-child {
-    border-bottom:0
+  .trust-item:nth-child(even) {
+    padding-left:17px;
+    border-left:1px solid var(--line)
+  }
+  .trust-item:nth-child(-n+2) {
+    border-bottom:1px solid var(--line)
   }
   .trust-item strong {
     font-size:11px
@@ -1981,6 +2241,29 @@ h2 {
   .story-line p {
     font-size:10px
   }
+  .x-timeline-shell {
+    height:539px;
+    border-radius:14px
+  }
+  .x-timeline-top {
+    height:64px;
+    padding:11px 15px
+  }
+  .x-timeline-consent,.x-timeline-mount {
+    height:475px
+  }
+  .x-timeline-mount iframe {
+    height:475px!important
+  }
+  .x-timeline-consent {
+    padding:34px 22px
+  }
+  .x-timeline-consent h3 {
+    font-size:18px
+  }
+  .x-timeline-consent p {
+    font-size:11px
+  }
   .steps {
     grid-template-columns:1fr;
     gap:24px
@@ -2073,8 +2356,19 @@ h2 {
     max-width:310px;
     min-height:52px
   }
+  .download-actions .btn+.btn {
+    margin:10px auto 0
+  }
   .download-actions small {
     font-size:9px
+  }
+  .store-ready {
+    grid-template-columns:auto 1fr;
+    text-align:left
+  }
+  .store-ready-button {
+    grid-column:1 / -1;
+    width:100%
   }
   .feedback-intro {
     grid-template-columns:1fr;
@@ -2084,12 +2378,18 @@ h2 {
     font-size:13px
   }
   .support-block {
-    padding:20px 0 0;
-    border:0;
-    border-top:1px solid var(--line)
+    padding:24px 22px;
+    border:1px solid #d5e5ec
   }
   .support-block p {
-    font-size:10px
+    font-size:11px
+  }
+  .support-block h3 {
+    font-size:20px
+  }
+  .support-button {
+    width:100%;
+    justify-content:center
   }
   .feedback-grid {
     gap:30px
@@ -2243,87 +2543,5 @@ h2 {
   }
   .stage-caption span:last-child {
     display:none;
-  }
-}
-
-/* 応援の節（2026-09-17）。アプリの［応援］ボタンはここへ来る。
-   ★手段を足す・やめるはこの節の中だけで済むようにしてある
-      （アプリに焼き込むと、更新が行き渡るまで届かないため） */
-.support-section {
-  text-align:center
-}
-.support-ways {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-  margin:28px 0 20px
-}
-.support-note {
-  font-size:13px;
-  opacity:.75
-}
-
-/* Microsoft Store のバッジ（2026-09-18）。
-   ★画そのものは加工しない。比率を保ったまま、隣のボタンと高さだけ合わせる。 */
-.btn-store {
-  display:inline-flex;
-  align-items:center;
-  border-radius:8px;
-  text-decoration:none;
-  transition:transform .2s,box-shadow .2s
-}
-.btn-store:hover {
-  box-shadow:0 8px 22px #187da324;
-  transform:translateY(-2px)
-}
-.btn-store:focus-visible {
-  outline:2px solid var(--teal);
-  outline-offset:3px
-}
-.btn-store img {
-  display:block;
-  height:54px;
-  width:auto
-}
-/* ★ダウンロードの節は text-align:center の並び（flex ではない）なので、
-   何もしないとベースラインで揃って **16px 高く**出る（実測 349 対 333）。 */
-.download-actions .btn,.download-actions .btn-store {
-  vertical-align:middle;
-  margin:0 5px
-}
-.store-note {
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  margin-top:10px
-}
-@media(max-width:600px) {
-  .btn-store img {
-    height:48px
-  }
-}
-
-/* X（旧 Twitter）へのリンク（2026-09-18）。
-   ★他のアイコンは線画なので、塗りのロゴはここで打ち消す。 */
-svg.icon.icon-solid {
-  fill:currentColor;
-  stroke:none
-}
-.btn.hero-x {
-  background:var(--mint);
-  border-color:#b9d4e0;
-  color:var(--teal-dark);
-  padding:14px;
-  width:54px
-}
-.btn.hero-x:hover {
-  background:#d4ebf5;
-  border-color:var(--teal)
-}
-@media(max-width:600px) {
-  .hero-actions .btn.hero-x {
-    width:49px;
-    padding:13px
   }
 }
