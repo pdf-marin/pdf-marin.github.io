@@ -419,9 +419,17 @@ h2 {
   color:var(--teal);
   margin-top:6px
 }
+.hero-media-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(330px,.75fr);
+  align-items:stretch;
+  gap:22px;
+  width:100%;
+  margin:34px auto 0
+}
 .hero-demo {
-  width:min(900px,100%);
-  margin:34px auto 0;
+  width:100%;
+  margin:0;
   padding:12px;
   border:1px solid #bad9e5;
   border-radius:18px;
@@ -451,6 +459,23 @@ h2 {
   border-radius:12px;
   background:#07394b;
   object-fit:cover
+}
+.hero-x {
+  height:auto;
+  min-height:0;
+  border-radius:18px;
+  box-shadow:0 24px 65px -34px #19566f5c
+}
+.hero-x .x-post-list {
+  height:calc(100% - 69px);
+  min-height:0
+}
+.hero-x .x-post {
+  padding:17px 18px 16px
+}
+.hero-x .x-post p {
+  font-size:11px;
+  line-height:1.72
 }
 .product-stage {
   position:relative;
@@ -1564,6 +1589,40 @@ h2 {
   height:15px;
   flex:none
 }
+.hero-media-grid .hero-x {
+  position:relative;
+  height:auto
+}
+.hero-media-grid .hero-x .x-post-list {
+  position:absolute;
+  inset:69px 0 0;
+  height:auto
+}
+.hero-support-card {
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) minmax(270px,330px);
+  align-items:center;
+  gap:20px;
+  width:100%;
+  margin:22px auto 0;
+  padding:20px 22px
+}
+.hero-support-card .support-mark {
+  margin:0
+}
+.hero-support-card .support-eyebrow {
+  margin:0 0 5px!important
+}
+.hero-support-card h3 {
+  font-size:20px;
+  line-height:1.45
+}
+.hero-support-card h3 br {
+  display:none
+}
+.hero-support-card .support-button {
+  margin-top:0
+}
 .feedback-form label {
   display:block;
   margin-bottom:19px
@@ -2564,6 +2623,45 @@ h2 {
   }
   .legal-page .wrap {
     width:calc(100% - 36px)
+  }
+}
+@media(max-width:800px) {
+  .hero-media-grid {
+    grid-template-columns:1fr;
+    gap:18px
+  }
+  .hero-media-grid .hero-x {
+    height:520px
+  }
+  .hero-support-card {
+    grid-template-columns:auto minmax(0,1fr)
+  }
+  .hero-support-card .support-button {
+    grid-column:1 / -1
+  }
+}
+@media(max-width:600px) {
+  .hero-media-grid {
+    margin-top:27px
+  }
+  .hero-media-grid .hero-x {
+    height:500px
+  }
+  .hero-support-card {
+    grid-template-columns:1fr;
+    gap:13px;
+    padding:22px
+  }
+  .hero-support-card .support-mark {
+    width:50px;
+    height:50px
+  }
+  .hero-support-card h3 br {
+    display:block
+  }
+  .hero-support-card .support-button {
+    grid-column:auto;
+    margin-top:5px
   }
 }
 @media(prefers-reduced-motion:reduce) {
