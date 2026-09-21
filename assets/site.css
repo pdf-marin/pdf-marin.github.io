@@ -1442,7 +1442,7 @@ h2 {
 }
 .download-actions {
   display:grid;
-  grid-template-columns:auto auto;
+  grid-template-columns:repeat(3,auto);
   align-items:stretch;
   gap:8px;
   text-align:center;
@@ -1454,7 +1454,7 @@ h2 {
 .download-actions .btn+.btn {
   margin-left:0
 }
-.download-actions small {
+.download-actions>small {
   grid-column:1 / -1;
   display:block;
   color:var(--muted);
@@ -2084,8 +2084,16 @@ h2 {
     margin-top:15px
   }
   .download-panel {
+    display:block;
     padding:35px;
-    gap:25px
+    text-align:center
+  }
+  .download-panel .eyebrow {
+    justify-content:center
+  }
+  .download-actions {
+    justify-content:center;
+    margin-top:25px
   }
   .download-panel h2 {
     font-size:23px
@@ -2528,7 +2536,7 @@ h2 {
   .download-actions .btn+.btn {
     margin:10px auto 0
   }
-  .download-actions small {
+  .download-actions>small {
     grid-column:1;
     font-size:9px
   }
