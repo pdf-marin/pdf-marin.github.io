@@ -498,7 +498,7 @@ h2 {
 }
 .trust-inner {
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   padding:26px 0
 }
 .trust-item {
@@ -2121,7 +2121,7 @@ h2 {
     height:14px
   }
   .trust-inner {
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr;
     gap:0;
     padding:9px 0
   }
@@ -2129,14 +2129,11 @@ h2 {
     padding:14px 4px;
     justify-content:flex-start;
     gap:12px;
-    border:0
-  }
-  .trust-item:nth-child(even) {
-    padding-left:17px;
-    border-left:1px solid var(--line)
-  }
-  .trust-item:nth-child(-n+2) {
+    border:0;
     border-bottom:1px solid var(--line)
+  }
+  .trust-item:last-child {
+    border-bottom:0
   }
   .trust-item strong {
     font-size:11px
