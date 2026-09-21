@@ -72,7 +72,7 @@
         if (validUrl(version.url)) $$('[data-download]').forEach(link => { link.href = version.url; });
         if (typeof version.version === 'string') $$('[data-version]').forEach(el => { el.textContent = 'v' + version.version; });
         if (typeof version.size === 'string') $$('[data-size]').forEach(el => { el.textContent = version.size; });
-        if (validUrl(version.sponsorUrl)) $$('a.support').forEach(link => { link.href = version.sponsorUrl; });
+        if (validUrl(version.sponsorUrl)) $$('[data-support-link]').forEach(link => { link.href = version.sponsorUrl; });
         const storeReady = version.storeAvailable === true && validUrl(version.storeUrl);
         if (storeReady) {
           $$('[data-store-link]').forEach(link => {
@@ -90,7 +90,7 @@
           $$('[data-web-download]').forEach(link => {
             link.classList.add('secondary');
             const label = $('span', link);
-            if (label) label.textContent = 'Web版をダウンロード';
+            if (label) label.textContent = '直接ダウンロード';
           });
         }
       }).catch(() => { /* Keep the working download links already present in the HTML. */ });
