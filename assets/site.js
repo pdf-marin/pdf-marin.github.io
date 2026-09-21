@@ -34,57 +34,6 @@
   window.addEventListener('hashchange', expandHashTarget);
   $$('a[href="#keikoku"]').forEach(link => link.addEventListener('click', () => { warning.open = true; }));
 
-  // Load the official X timeline as soon as the page opens.
-  const xMount = $('#x-timeline-mount');
-  const xStatus = $('#x-timeline-status');
-  if (xMount && xStatus) {
-    let xLoadTimer;
-    const markXReady = () => {
-      const frame = xMount.querySelector('iframe');
-      if (!frame || getComputedStyle(frame).visibility === 'hidden') return;
-      clearTimeout(xLoadTimer);
-      xMount.classList.remove('is-error');
-      xMount.classList.add('is-ready');
-    };
-    const xObserver = new MutationObserver(markXReady);
-    xObserver.observe(xMount, {childList:true, subtree:true, attributes:true, attributeFilter:['style','class']});
-    const showXError = () => {
-      if (xMount.classList.contains('is-ready')) return;
-      clearTimeout(xLoadTimer);
-      xMount.classList.add('is-error');
-      const timelineLink = $('.twitter-timeline', xMount);
-      if (timelineLink) timelineLink.hidden = true;
-      const directLink = document.createElement('a');
-      directLink.href = 'https://x.com/PDFMARIN';
-      directLink.target = '_blank';
-      directLink.rel = 'noopener noreferrer';
-      directLink.textContent = 'Xで公式アカウントを開く ↗';
-      xStatus.replaceChildren(document.createTextNode('投稿を読み込めませんでした。'), document.createElement('br'), directLink);
-    };
-    const renderXTimeline = () => {
-      if (!window.twttr?.widgets) { showXError(); return; }
-      Promise.resolve(window.twttr.widgets.load(xMount)).then(markXReady).catch(showXError);
-    };
-    xLoadTimer = setTimeout(showXError, 15000);
-    if (window.twttr?.widgets) {
-      renderXTimeline();
-    } else {
-      const existing = $('#x-wjs');
-      if (existing) {
-        existing.addEventListener('load', renderXTimeline, {once:true});
-        existing.addEventListener('error', showXError, {once:true});
-      } else {
-        const script = document.createElement('script');
-        script.id = 'x-wjs';
-        script.src = 'https://platform.twitter.com/widgets.js';
-        script.async = true;
-        script.onload = renderXTimeline;
-        script.onerror = showXError;
-        document.head.append(script);
-      }
-    }
-  }
-
   const screens = {
     edit: {src:'assets/shots/home.jpg', alt:'PDF MARINの注釈画面。活動レポートにペンで書き込み、右側のパネルで色や太さを調整できます。'},
     organize: {src:'assets/shots/organize.jpg', alt:'PDF MARINのページ整理画面。ページのサムネイルを一覧で確認し、並べ替えや回転などの操作ができます。'},
