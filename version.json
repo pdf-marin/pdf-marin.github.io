@@ -1,14 +1,14 @@
 {
-  "version": "0.2.5",
-  "date": "2026-09-18",
-  "size": "約129MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.5/PDF-MARIN-Setup-0.2.5.exe",
+  "version": "0.2.6",
+  "date": "2026-09-25",
+  "size": "約186MB",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.6/PDF-MARIN-Setup-0.2.6.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "面積の囲みをあとから直せるように、道具を長押しして色を選べるように、ページを掴んで1枚だけ抽出できるように。注釈を選んだときに色が暗く見えるのも直しました",
+  "notes": "墨消しの消し残りを大きく減らしました（スキャン紙の黒枠のずれ・添付やメタデータに残る字など）。Excel・Word・PowerPoint への書き出しを改良し、ハイライトと同時にコメントを付けられるようにしました",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
   "_store_memo": "Microsoft Storeで公開中です",
-  "sha256": "86d7aac8a93fb9bbd44d3a21d9501783dca9a2ad89ee7ae9d8695b747297a3b6"
+  "sha256": "bce40944e79a6a01ec66903c38513494e46a050d71af13eadf37bbf06b1f2fc7"
 }
