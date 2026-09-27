@@ -1,14 +1,14 @@
 {
-  "version": "0.2.6",
-  "date": "2026-09-25",
-  "size": "約186MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.6/PDF-MARIN-Setup-0.2.6.exe",
+  "version": "0.2.7",
+  "date": "2026-09-27",
+  "size": "約258MB",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.7/PDF-MARIN-Setup-0.2.7.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "墨消しの消し残りを大きく減らしました（スキャン紙の黒枠のずれ・添付やメタデータに残る字など）。Excel・Word・PowerPoint への書き出しを改良し、ハイライトと同時にコメントを付けられるようにしました",
+  "notes": "縦書きの文字起こしを大きく改良し、写真やスキャンの表も Excel にできるようにしました。ページの大きさの変更・見開き表示・タッチペンの手書きに対応しました",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
   "_store_memo": "Microsoft Storeで公開中です",
-  "sha256": "bce40944e79a6a01ec66903c38513494e46a050d71af13eadf37bbf06b1f2fc7"
+  "sha256": "34f747e570cd3fe97cfe8c01bfb644899e98243b4d0fd948e20f661274ca1512"
 }
