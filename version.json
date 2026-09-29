@@ -1,14 +1,14 @@
 {
-  "version": "0.2.7",
-  "date": "2026-09-27",
+  "version": "0.2.8",
+  "date": "2026-09-30",
   "size": "約258MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.7/PDF-MARIN-Setup-0.2.7.exe",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.2.8/PDF-MARIN-Setup-0.2.8.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "縦書きの文字起こしを大きく改良し、写真やスキャンの表も Excel にできるようにしました。ページの大きさの変更・見開き表示・タッチペンの手書きに対応しました",
+  "notes": "文字と段落をその場で直せるようになり、入力フォームを作れるようになりました。請求書などの名前付けを助ける［名前を付けて整理］、ショートカットの割り振りなどを加えました",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
   "_store_memo": "Microsoft Storeで公開中です",
-  "sha256": "34f747e570cd3fe97cfe8c01bfb644899e98243b4d0fd948e20f661274ca1512"
+  "sha256": "5310c681fd71a7f5830b0ba952328ab9beed0209eabf5f038a0ca5d4179b625c"
 }
