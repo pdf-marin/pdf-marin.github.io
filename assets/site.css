@@ -346,13 +346,13 @@ h2 {
   gap:12px
 }
 .btn.hero-support {
-  background:#fff8f4;
+  background:#fff;
   border-color:#e9b4a8;
   color:#a8443d;
   box-shadow:0 8px 22px -18px #9f4038
 }
 .btn.hero-support:hover {
-  background:#fff0ea;
+  background:#fffaf8;
   border-color:#d97a6c
 }
 .btn.hero-support small {
