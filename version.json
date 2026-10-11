@@ -1,14 +1,14 @@
 {
-  "version": "0.3.2",
+  "version": "0.3.3",
   "date": "2026-10-11",
   "size": "約266MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.3.2/PDF-MARIN-Setup-0.3.2.exe",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.3.3/PDF-MARIN-Setup-0.3.3.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "PDF内の範囲を読み取るOCRキャプチャーモードと、貼り付けた画像のPDF統合を追加しました。フォーム・Word・Excelなどの編集画面とプレビューを改善し、白い墨消しを追加。入力欄の元データを安全に消去できるか確認し、消去できない場合は処理を止めるようにしました。処理のキャンセルとページ表示の復帰も見直しました。",
+  "notes": "PDFファイルのアイコンが白い表示になる問題を修正しました。更新時にアイコンの登録を修復し、以前の登録にも対応しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.3.1を公開中です。v0.3.2は審査待ちです。",
-  "sha256": "a233579701f699ddda439307d3c30286330145740bdf6832443a9ff5b71ba3fa"
+  "_store_memo": "Microsoft Store版はv0.3.1を公開中です。v0.3.3は再申請済みで、審査待ちです。",
+  "sha256": "8fbbb0b9a92b37bf367cec55e361664efe63548f8cd309ce0572c7a63fd6f3bb"
 }
