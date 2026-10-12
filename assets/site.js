@@ -247,17 +247,7 @@
     if(state.done){textarea.disabled=true;checkbox.disabled=true;say(message,'コメントは受け付け済みです。内容の確認後に公開します。');}
     return form;
   }
-  function card(item) {
-    const article=node('article','idea-card');article.dataset.ideaId=item.id;
-    const choose=node('button','idea-select');choose.type='button';choose.dataset.selectIdea=item.id;choose.setAttribute('aria-controls','idea-detail');choose.setAttribute('aria-pressed',String(selectedId===item.id));
-    choose.append(node('span','idea-status',statuses[item.status]),node('strong','idea-title',item.title),node('span','idea-summary',item.body.length>95?item.body.slice(0,95)+'…':item.body));
-    choose.addEventListener('click',()=>selectIdea(item.id));
-    choose.addEventListener('keydown',event=>{
-      const all=[...ideaList.querySelectorAll('.idea-select')],index=all.indexOf(choose);
-      const target=event.key==='ArrowDown'?Math.min(index+1,all.length-1):event.key==='ArrowUp'?Math.max(index-1,0):event.key==='Home'?0:event.key==='End'?all.length-1:null;
-      if(target===null)return;event.preventDefault();all[target].focus();selectIdea(all[target].dataset.selectIdea);
-    });
-    article.append(choose);
+  function voteControls(item) {
     const actions=node('div','idea-actions'),vote=node('button','','応援する · '+count(item.votes)+'票'),message=node('p','public-message');message.setAttribute('role','status');vote.type='button';
     let state=votes.get(item.id);if(!state){state={};votes.set(item.id,state);}
     vote.disabled=!!state.busy||!!state.done||!crypto.randomUUID;
@@ -267,27 +257,38 @@
       try {
         const data=await api('/ideas/'+item.id+'/vote',requestPayload(state,{}));
         state.done=true;
-        if(number(data.votes)) {vote.textContent='投票済み · '+count(data.votes)+'票';item.votes=data.votes;updateDetail(item);}
+        if(number(data.votes)) {vote.textContent='投票済み · '+count(data.votes)+'票';const current=loadedIdeas.get(item.id)||item;current.votes=data.votes;updateDetail(current);}
         else vote.textContent='投票済み';
         say(message,data.message);
       }catch(error){say(message,error.message);}finally{state.busy=false;vote.disabled=!!state.done;}
     });
-    actions.append(vote,node('span','survey-note','公開コメント '+count(item.commentCount)+'件'));article.append(actions,message);
-    return article;
+    actions.append(vote,node('span','survey-note','公開コメント '+count(item.commentCount)+'件'));const box=node('div','idea-vote-controls');box.append(actions,message);return box;
+  }
+  function card(item) {
+    const article=node('article','idea-card');article.dataset.ideaId=item.id;
+    const choose=node('button','idea-select');choose.type='button';choose.dataset.selectIdea=item.id;choose.setAttribute('aria-controls','idea-detail-'+item.id);choose.setAttribute('aria-expanded',String(selectedId===item.id));choose.setAttribute('aria-pressed',String(selectedId===item.id));
+    const arrow=node('span','idea-chevron','⌄');arrow.setAttribute('aria-hidden','true');choose.append(node('strong','idea-title',item.title),arrow);
+    choose.addEventListener('click',()=>selectIdea(item.id));
+    choose.addEventListener('keydown',event=>{
+      const all=[...ideaList.querySelectorAll('.idea-select')],index=all.indexOf(choose);
+      const target=event.key==='ArrowDown'?Math.min(index+1,all.length-1):event.key==='ArrowUp'?Math.max(index-1,0):event.key==='Home'?0:event.key==='End'?all.length-1:null;
+      if(target===null)return;event.preventDefault();all[target].focus();
+    });
+    article.append(choose);return article;
   }
   const detailCache=new Map();
   function updateDetail(item) {
     const entry=detailCache.get(item.id);if(!entry)return;
-    entry.title.textContent=item.title;entry.body.textContent=item.body;entry.status.textContent=statuses[item.status];entry.meta.textContent=count(item.votes)+'票 · 公開コメント '+count(item.commentCount)+'件';
+    entry.title.textContent=item.title;entry.body.textContent=item.body;entry.status.textContent=statuses[item.status];entry.meta.textContent=count(item.votes)+'票 · 公開コメント '+count(item.commentCount)+'件';entry.vote.textContent=(votes.get(item.id)?.done?'投票済み · ':'応援する · ')+count(item.votes)+'票';
   }
   function detailFor(item) {
     if(detailCache.has(item.id)){updateDetail(item);return detailCache.get(item.id);}
-    const panel=node('div','idea-detail-content');panel.dataset.parentId=item.id;
+    const panel=node('div','idea-detail-content');panel.dataset.parentId=item.id;panel.id='idea-detail-'+item.id;
     const status=node('span','idea-status',statuses[item.status]),meta=node('p','survey-note',count(item.votes)+'票 · 公開コメント '+count(item.commentCount)+'件'),title=node('h3','',item.title),body=node('p','idea-body',item.body);
-    panel.append(status,meta,title,body);
+    panel.append(status,meta,title,body,voteControls(item));
     const details=node('section','idea-comments'),summary=node('h4','','コメント · 具体的な使い方'),list=node('div'),notice=node('p','public-message'),reload=node('button','public-refresh','コメントを読み直す'),more=node('button','public-refresh','さらに見る');
     notice.setAttribute('role','status');reload.type='button';more.type='button';more.hidden=true;
-    details.append(summary,list,notice,reload,more,commentForm(item.id));panel.append(details);
+    const compose=node('details','idea-comment-compose'),composeSummary=node('summary','','コメントを書く');compose.append(composeSummary,commentForm(item.id));details.append(summary,list,notice,reload,more,compose);panel.append(details);
     let loaded=false,busy=false,nextOffset=null;
     async function load(offset=0) {
       if(busy)return;busy=true;reload.disabled=true;more.disabled=true;say(notice,'コメントを読み込んでいます…');
@@ -302,17 +303,17 @@
       }catch(error){say(notice,error.message);}finally{busy=false;reload.disabled=false;more.disabled=false;}
     }
     reload.addEventListener('click',()=>load());more.addEventListener('click',()=>{if(nextOffset!==null)load(nextOffset);});
-    const entry={panel,status,meta,title,body,loadOnce(){if(!loaded)load();}};detailCache.set(item.id,entry);return entry;
+    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),loadOnce(){if(!loaded)load();}};detailCache.set(item.id,entry);return entry;
   }
   const ideaList=document.querySelector('#idea-list'),ideaNotice=document.querySelector('#ideas-message'),ideaRefresh=document.querySelector('#ideas-refresh'),ideaMore=document.querySelector('#ideas-more'),detailHost=document.querySelector('#idea-detail'),sortButtons=[...document.querySelectorAll('[data-idea-sort]')];
   let ideasBusy=false,nextOffset=null,selectedId=null,loadedIdeas=new Map(),currentSort='votes',desiredSort='votes';
   function mutationBusy() {return [...votes.values(),...commentStates.values()].some(state=>state.busy);}
   function selectIdea(id) {
-    if(id===selectedId)return;
     if(mutationBusy()){say(ideaNotice,'送信しています。完了後に別のアイデアを選べます。');return;}
     const item=loadedIdeas.get(id);if(!item)return;
-    selectedId=id;const entry=detailFor(item);detailHost.replaceChildren(entry.panel);entry.loadOnce();
-    ideaList.querySelectorAll('.idea-select').forEach(button=>{const active=button.dataset.selectIdea===id;button.setAttribute('aria-pressed',String(active));button.closest('.idea-card').classList.toggle('is-selected',active);});
+    if(id===selectedId){selectedId=null;ideaList.querySelectorAll('.idea-detail-content').forEach(panel=>panel.remove());ideaList.querySelectorAll('.idea-select').forEach(b=>{b.setAttribute('aria-expanded','false');b.setAttribute('aria-pressed','false');b.closest('.idea-card').classList.remove('is-selected');});say(ideaNotice,'');return;}
+    selectedId=id;const entry=detailFor(item);ideaList.querySelectorAll('.idea-detail-content').forEach(panel=>panel.remove());ideaList.querySelector('[data-idea-id="'+id+'"]').append(entry.panel);entry.loadOnce();
+    ideaList.querySelectorAll('.idea-select').forEach(button=>{const active=button.dataset.selectIdea===id;button.setAttribute('aria-expanded',String(active));button.setAttribute('aria-pressed',String(active));button.closest('.idea-card').classList.toggle('is-selected',active);});
     say(ideaNotice,'');
   }
   async function loadIdeas(offset=0,sort=currentSort) {
@@ -327,8 +328,8 @@
       for(const item of data.items){loadedIdeas.set(item.id,item);fragment.append(card(item));}
       if(offset===0)ideaList.replaceChildren(fragment);else ideaList.append(fragment);
       currentSort=sort;desiredSort=sort;sortButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.ideaSort===currentSort)));
-      if(selectedId&&loadedIdeas.has(selectedId)){updateDetail(loadedIdeas.get(selectedId));ideaList.querySelectorAll('.idea-select').forEach(button=>{const active=button.dataset.selectIdea===selectedId;button.setAttribute('aria-pressed',String(active));button.closest('.idea-card').classList.toggle('is-selected',active);});}
-      else {selectedId=null;detailHost.replaceChildren(node('p','public-message','一覧からアイデアを選ぶと、詳細とコメントが表示されます。'));if(data.items[0])selectIdea(data.items[0].id);}
+      if(selectedId&&loadedIdeas.has(selectedId)){const entry=detailFor(loadedIdeas.get(selectedId));ideaList.querySelector('[data-idea-id="'+selectedId+'"]').append(entry.panel);ideaList.querySelectorAll('.idea-select').forEach(button=>{const active=button.dataset.selectIdea===selectedId;button.setAttribute('aria-expanded',String(active));button.setAttribute('aria-pressed',String(active));button.closest('.idea-card').classList.toggle('is-selected',active);});}
+      else {selectedId=null;detailHost.replaceChildren();}
       nextOffset=data.nextOffset;ideaMore.hidden=nextOffset===null;say(ideaNotice,ideaList.children.length?'':'公開されたアイデアはまだありません。最初のアイデアを投稿できます。');
     }catch(error){say(ideaNotice,(ideaList.children.length?'前回取得した一覧を表示しています。 ':'')+error.message);}
     finally{ideasBusy=false;ideaRefresh.disabled=false;ideaMore.disabled=false;sortButtons.forEach(button=>button.disabled=false);}
