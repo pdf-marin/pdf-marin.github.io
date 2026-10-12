@@ -168,12 +168,11 @@
 
 // Public aggregate and moderated ideas; no contact data, browser storage or analytics.
 (() => {
-  const section=document.querySelector('#improvement-survey');
+  const section=document.querySelector('#public-ideas');
   if(!section) return;
   const API='https://pdf-marin-backend.pdfmarin.workers.dev';
-  const labels={speed:'起動速度・動作の安定性',ocr:'OCR・スキャン書類の補正',translation:'PDFの翻訳',ui:'使いやすさ・カスタマイズ',editing:'書き出し・PDF編集',mac:'Mac版',other:'その他'};
   const statuses={considering:'検討中',planned:'対応予定',implemented:'実装済み'};
-  const ids=Object.keys(labels),votes=new Map(),commentStates=new Map();
+  const votes=new Map(),commentStates=new Map();
   const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   const number=value=>Number.isSafeInteger(value)&&value>=0;
   const count=value=>value.toLocaleString('ja-JP');
@@ -216,38 +215,6 @@
       finally {state.busy=false;button.disabled=!!state.done;form.removeAttribute('aria-busy');}
     });
   }
-  const survey=section.querySelector('form'), surveyMessage=document.querySelector('#survey-results-message'),refresh=document.querySelector('#survey-refresh');
-  let resultBusy=false,hasResults=false;
-  function showResults(data) {
-    if(!number(data.totalResponses)||!Array.isArray(data.options)||data.options.length!==ids.length) throw Error('集計の形式を確認できません。再読み込みしてください。');
-    const seen=new Set();let sum=0;
-    for(const row of data.options) {
-      if(!ids.includes(row.id)||seen.has(row.id)||!number(row.votes)||!Number.isFinite(row.percent)||row.percent<0||row.percent>100) throw Error('集計の形式を確認できません。再読み込みしてください。');
-      seen.add(row.id);sum+=row.votes;
-      const expected=data.totalResponses?Math.round(row.votes/data.totalResponses*1000)/10:0;
-      if(row.percent!==expected) throw Error('集計の割合を確認できません。再読み込みしてください。');
-    }
-    if(sum!==data.totalResponses) throw Error('集計の回答数を確認できません。再読み込みしてください。');
-    const fragment=document.createDocumentFragment();
-    for(const id of ids) {
-      const item=data.options.find(row=>row.id===id),row=node('div','result-row'),line=node('div','result-label');
-      line.append(node('span','',labels[id]),node('span','',count(item.votes)+'票 · '+item.percent.toFixed(1)+'%'));
-      const bar=node('div','result-bar');bar.setAttribute('aria-hidden','true');const fill=node('span');fill.style.width=item.percent+'%';bar.append(fill);row.append(line,bar);fragment.append(row);
-    }
-    document.querySelector('#survey-result-list').replaceChildren(fragment);
-    document.querySelector('#survey-total').textContent='総回答数 '+count(data.totalResponses)+'件';
-    hasResults=true;say(surveyMessage,'最終取得 '+new Date().toLocaleTimeString('ja-JP')+'。割合は小数第1位に丸めています。');
-  }
-  async function loadResults() {
-    if(resultBusy) return;resultBusy=true;refresh.disabled=true;
-    try {showResults(await api('/survey/results'));}
-    catch(error) {if(!hasResults)document.querySelector('#survey-total').textContent='現在、集計を表示できません。';say(surveyMessage,(hasResults?'前回取得した集計を表示しています。 ':'')+error.message);}
-    finally {resultBusy=false;refresh.disabled=false;}
-  }
-  wireForm(survey,'/survey/vote',()=>({optionId:survey.querySelector('input[name=optionId]:checked')?.value,website:survey.elements.website.value}),data=>{
-    try {showResults(data);}catch(error) {say(surveyMessage,'回答は受け付けましたが、最新の集計を表示できません。再読み込みしてください。');}
-  });
-  refresh.addEventListener('click',loadResults);
   const compose=document.querySelector('.public-idea-form');
   wireForm(compose,'/ideas',()=>{
     const title=compose.elements.title.value.trim(),body=compose.elements.body.value.trim();
@@ -264,12 +231,12 @@
   }
   function commentForm(ideaId) {
     const form=node('form','public-comment-form'),label=node('label','','コメント（600文字まで）'),textarea=node('textarea');
-    const heading=node('h4','','どんな使い方だと助かりますか？'),help=node('p','survey-note','使う場面や、希望する動作を教えてください。');
+    const heading=node('h4','','どんな使い方だと助かりますか？'),help=node('p','survey-note','使う場面や、希望する動作を教えてください。送信内容は作者にメールで通知され、内容の確認後に公開されます。');
     textarea.name='body';textarea.required=true;textarea.maxLength=600;textarea.rows=3;label.append(textarea);
     const consent=node('label','public-consent'),checkbox=node('input');checkbox.type='checkbox';checkbox.name='publicConsent';checkbox.required=true;
     consent.append(checkbox,document.createTextNode('内容の確認後に、コメントが匿名で一般公開されることを了承します。'));
     const trap=node('div','hp');trap.setAttribute('aria-hidden','true');const trapInput=node('input');trapInput.name='website';trapInput.type='text';trapInput.tabIndex=-1;trapInput.autocomplete='off';trap.append(trapInput);
-    const message=node('p','public-message');message.setAttribute('role','status');const submit=node('button','btn','確認のために送る');submit.type='submit';
+    const message=node('p','public-message');message.setAttribute('role','status');const submit=node('button','btn','送信する');submit.type='submit';
     form.append(heading,help,label,consent,trap,message,submit);
     let state=commentStates.get(ideaId);if(!state){state={};commentStates.set(ideaId,state);}
     wireForm(form,'/ideas/'+ideaId+'/comments',()=>{
@@ -368,5 +335,5 @@
   }
   sortButtons.forEach(button=>button.addEventListener('click',()=>{if(button.dataset.ideaSort!==currentSort){desiredSort=button.dataset.ideaSort;loadIdeas(0,desiredSort);}}));
   ideaRefresh.addEventListener('click',()=>loadIdeas(0,desiredSort));ideaMore.addEventListener('click',()=>{if(nextOffset!==null)loadIdeas(nextOffset,currentSort);});
-  loadResults();loadIdeas();
+  loadIdeas();
 })();
