@@ -2639,7 +2639,7 @@ h2 {
     gap:18px
   }
   .hero-media-grid .hero-x {
-    height:520px
+    display:none
   }
   .hero-support-card {
     grid-template-columns:auto minmax(0,1fr)
