@@ -2890,3 +2890,13 @@ h2 {
 
 /* Compact idea list: reveal details only when a title is opened. */
 .ideas-board{display:block}.ideas-overview{min-width:0}.idea-card{padding:0;border-radius:10px;overflow:hidden}.idea-select{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;width:100%;min-width:0}.idea-select .idea-title{margin:0;font-size:15px;line-height:1.6;overflow-wrap:anywhere;text-align:left}.idea-chevron{flex:0 0 auto;font-size:20px;line-height:1;transition:transform .15s}.idea-select[aria-expanded=true] .idea-chevron{transform:rotate(180deg)}.idea-detail-content{padding:22px;border-top:1px solid var(--line);min-width:0}.idea-detail-content>h3{font-size:18px}.idea-comment-compose{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}.idea-comment-compose>summary{cursor:pointer;font-weight:700;color:var(--teal-dark)}@media(max-width:480px){.idea-select{padding:14px}.idea-detail-content{padding:16px}.idea-select .idea-title{font-size:14px}}
+
+/* Moderated attachments: file controls remain within small screens. */
+.public-attachments{min-width:0;margin:0;border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:12px;}
+.public-attachments legend{padding:0 6px;font-size:14px;font-weight:700;}
+.public-attachments input[type=file]{width:100%;max-width:100%;min-width:0;font:inherit;}
+.public-attachments .filelist li span{min-width:0;}
+.published-files{padding-left:20px;overflow-wrap:anywhere;font-size:13px;}
+.published-files li{margin:8px 0;}
+
+.idea-select .idea-title{flex:1;min-width:0}.idea-compose[hidden]{display:none}.idea-compose>h3{margin:0 0 12px}.idea-compose>#ideas-compose-close{margin-bottom:12px}
