@@ -103,11 +103,16 @@
     counter.textContent = textarea.value.length.toLocaleString('ja-JP') + ' / 4,000';
     textarea.setCustomValidity('');
   });
+  const kind=form.elements.kind;
+  const templates={want:'【ほしい機能】\n\n【使いたい場面】\n\n【できるとうれしいこと】\n',hard:'【使いにくいところ】\n\n【今の操作】\n\n【希望する動き】\n'};
+  const templateOnly=value=>Object.values(templates).some(template=>value.replace(/\s/g,'')===template.replace(/\s/g,''));
+  let lastTemplate=null;
+  kind.addEventListener('change',()=>{const template=templates[kind.value]||'';if(!textarea.value.trim()||textarea.value===lastTemplate||templateOnly(textarea.value)){textarea.value=template;lastTemplate=template||null;textarea.dispatchEvent(new Event('input',{bubbles:true}));}});
   // Keep the original multipart POST contract. Let the endpoint render its response.
   form.addEventListener('submit', event => {
-    if (!textarea.value.trim()) {
+    if (!textarea.value.trim()||templateOnly(textarea.value)) {
       event.preventDefault();
-      textarea.setCustomValidity('内容をご記入ください。');
+      textarea.setCustomValidity(templateOnly(textarea.value)?'見出しの下にご希望を記入してください。':'内容をご記入ください。');
       textarea.reportValidity();
     }
   });
@@ -166,24 +171,24 @@
   }
 })();
 
-// Public aggregate and moderated ideas; no contact data, browser storage or analytics.
+// Author-curated ideas and comments; anonymous poll identity uses browser storage.
 (() => {
   const section=document.querySelector('#public-ideas');
   if(!section) return;
   const API='https://pdf-marin-backend.pdfmarin.workers.dev';
   const statuses={considering:'検討中',planned:'対応予定',implemented:'実装済み'};
-  const votes=new Map(),commentStates=new Map();
+  const votes=new Map(),commentStates=new Map(),pollStates=new Map();
   const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   const number=value=>Number.isSafeInteger(value)&&value>=0;
   const count=value=>value.toLocaleString('ja-JP');
   const node=(tag,className,text)=>{const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;};
   const say=(el,text)=>{el.hidden=false;el.textContent=text;};
-  async function api(path,payload) {
+  async function api(path,payload,extraHeaders={}) {
     const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
     try {
-      const res=await fetch(API+path,{method:payload?'POST':'GET',headers:payload&&!(payload instanceof FormData)?{'Content-Type':'application/json'}:undefined,body:payload?(payload instanceof FormData?payload:JSON.stringify(payload)):undefined,credentials:'omit',referrerPolicy:'no-referrer',cache:'no-store',signal:controller.signal});
+      const res=await fetch(API+path,{method:payload?'POST':'GET',headers:{...(payload&&!(payload instanceof FormData)?{'Content-Type':'application/json'}:{}),...extraHeaders},body:payload?(payload instanceof FormData?payload:JSON.stringify(payload)):undefined,credentials:'omit',referrerPolicy:'no-referrer',cache:'no-store',signal:controller.signal});
       const data=await res.json();
-      if(!res.ok||data?.ok!==true) throw Error(typeof data?.message==='string'?data.message:'受付または表示を確認できません。再試行できます。');
+      if(!res.ok||data?.ok!==true){const error=Error(typeof data?.message==='string'?data.message:'受付または表示を確認できません。再試行できます。');error.status=res.status;throw error;}
       return data;
     } catch(error) {
       if(error.name==='AbortError'||error instanceof TypeError) throw Error('通信を確認できません。同じ内容で再試行してください。');
@@ -254,14 +259,6 @@
       finally {state.busy=false;if(state.repeatable&&!state.done)form.querySelectorAll('input,textarea').forEach(el=>{el.disabled=false;});attachments.lock(!!state.done);button.disabled=!!state.done;form.removeAttribute('aria-busy');}
     });
   }
-  const compose=document.querySelector('.public-idea-form'),composePanel=document.querySelector('#idea-submit'),composeOpen=document.querySelector('#ideas-compose-open');
-  composeOpen.addEventListener('click',()=>{composePanel.hidden=false;composeOpen.setAttribute('aria-expanded','true');composePanel.scrollIntoView?.({behavior:'smooth',block:'start'});compose.elements.title.focus();});
-  document.querySelector('#ideas-compose-close').addEventListener('click',()=>{if(compose.getAttribute('aria-busy')==='true')return;composePanel.hidden=true;composeOpen.setAttribute('aria-expanded','false');composeOpen.focus();});
-  wireForm(compose,'/ideas',()=>{
-    const title=compose.elements.title.value.trim(),body=compose.elements.body.value.trim();
-    if(!title||!body||compose.elements.title.value.length>80||compose.elements.body.value.length>400){say(compose.querySelector('[role=status]'),'タイトルは80文字、内容は400文字までで記入してください。');return null;}
-    return {title,body,publicConsent:compose.elements.publicConsent.checked,website:compose.elements.website.value};
-  });
   function validateItems(data,comments=false) {
     if(!Array.isArray(data.items)||data.items.length>50||(data.nextOffset!==null&&(!number(data.nextOffset)||data.nextOffset>1000000))) throw Error('一覧の形式を確認できません。');
     for(const item of data.items) {
@@ -274,7 +271,7 @@
     const form=node('form','public-comment-form'),label=node('label','','コメント（600文字まで）'),textarea=node('textarea');
     const heading=node('h4','','どんな使い方だと助かりますか？'),help=node('p','survey-note','使う場面や、希望する動作を教えてください。送信したコメントは、作者にもメールで通知されます。');
     textarea.name='body';textarea.required=true;textarea.maxLength=600;textarea.rows=3;label.append(textarea);
-    const publicNotice=node('p','survey-note','送信したコメントは匿名で公開されます。個人情報は記入しないでください。');
+    const publicNotice=node('p','survey-note','文字だけのコメントは投稿内容を自動で確認し、問題がなければ匿名で公開されます。画像やPDFを添えたコメントは、本文も作者が確認してから公開します。個人情報は記入しないでください。');
     const trap=node('div','hp');trap.setAttribute('aria-hidden','true');const trapInput=node('input');trapInput.name='website';trapInput.type='text';trapInput.tabIndex=-1;trapInput.autocomplete='off';trap.append(trapInput);
     const message=node('p','public-message');message.setAttribute('role','status');const submit=node('button','btn','送信する');submit.type='submit';
     form.append(heading,help,label,makeAttachmentFields(),trap,message,publicNotice,submit);
@@ -317,6 +314,28 @@
     });
     article.append(choose);return article;
   }
+  const pollTokenKey='pdfmarin.poll.identity.v1';let pollToken='',identityPromise=null;
+  function forgetPollIdentity(){pollToken='';try{localStorage.removeItem(pollTokenKey);}catch{}}
+  try{const value=localStorage.getItem(pollTokenKey);if(typeof value==='string'&&value.length>0&&value.length<=4096)pollToken=value;}catch{/* In-memory identity still permits voting in this tab. */}
+  async function pollIdentity(){if(pollToken)return pollToken;if(!identityPromise)identityPromise=api('/polls/identity',{}).then(data=>{if(typeof data.voterToken!=='string'||!data.voterToken||data.voterToken.length>4096)throw Error('投票の準備を確認できません。');pollToken=data.voterToken;try{localStorage.setItem(pollTokenKey,pollToken);}catch{}return pollToken;}).finally(()=>identityPromise=null);return identityPromise;}
+  function validPoll(poll){
+    if(poll===null)return null;
+    if(!poll||!uuid.test(poll.id)||typeof poll.question!=='string'||poll.question.length>120||!Array.isArray(poll.options)||poll.options.length<2||poll.options.length>6||!number(poll.totalVotes)||typeof poll.closed!=='boolean')throw Error('アンケートの内容を確認できません。');
+    const ids=new Set();for(const option of poll.options){if(!uuid.test(option.id)||ids.has(option.id)||typeof option.label!=='string'||option.label.length>80||!number(option.votes)||!Number.isFinite(option.percent)||option.percent<0||option.percent>100)throw Error('アンケートの内容を確認できません。');ids.add(option.id);if(option.imageUrl&&(option.imageFileId===null||!uuid.test(option.imageFileId)||option.imageUrl!=='/files/'+option.imageFileId+'/content'))throw Error('アンケートの画像を確認できません。');}
+    return poll;
+  }
+  function publicPoll(parent,host){
+    const state={busy:false,payload:null,fingerprint:null,poll:null,loaded:false,loading:false,selected:null};pollStates.set(parent,state);
+    async function load(preserveChoice=false){if(state.loading||state.loaded)return;state.loading=true;try{let data;try{data=await api('/ideas/'+parent+'/poll',undefined,pollToken?{'x-poll-voter':pollToken}:{});}catch(error){if(error.status!==403||!pollToken)throw error;forgetPollIdentity();data=await api('/ideas/'+parent+'/poll');}state.poll=validPoll(data.poll);state.selected=state.poll?.selectedOptionId||(preserveChoice&&state.poll?.options.some(o=>o.id===state.selected)?state.selected:null);state.loaded=true;render();}catch(error){host.replaceChildren(node('p','public-message',error.message));}finally{state.loading=false;}}
+    function render(){host.replaceChildren();const poll=state.poll;if(!poll)return;const form=node('form','poll-form'),heading=node('h4','',poll.question),options=node('div','poll-options'),message=node('p','public-message');message.setAttribute('role','status');
+      const radios=[];for(const option of poll.options){const card=node('div','poll-option'),label=node('label'),radio=node('input');radio.type='radio';radio.name='pollOption';radio.value=option.id;radio.checked=state.selected===option.id;radio.disabled=poll.closed||state.busy;radio.addEventListener('change',()=>{if(state.busy)return;state.selected=option.id;submit.disabled=false;});label.append(radio,node('span','',option.label));card.append(label);if(option.imageUrl){const img=node('img');img.src=API+option.imageUrl;img.alt=option.label;img.loading='lazy';card.append(img);}const bar=node('div','poll-bar'),fill=node('span');fill.style.width=option.percent+'%';bar.append(fill);card.append(bar,node('p','poll-meta',option.percent.toLocaleString('ja-JP',{maximumFractionDigits:1})+'% · '+count(option.votes)+'件'));options.append(card);radios.push(radio);}
+      const submit=node('button','btn poll-vote',poll.closed?'受付は終了しました':poll.hasVoted?'投票先を変更する':'投票する');submit.type='submit';submit.disabled=state.busy||poll.closed||!state.selected;
+      form.append(heading,node('p','survey-note','回答 '+count(poll.totalVotes)+'件'),options,message,submit,node('p','survey-note','このブラウザーの識別情報で1票にまとめます。投票先は選び直せます。保存情報の削除・期限切れや別のブラウザーによる重複は完全には防げません。'));
+      form.addEventListener('submit',async event=>{event.preventDefault();if(state.busy||poll.closed||!state.selected)return;state.busy=true;listMutationEpoch++;radios.forEach(r=>r.disabled=true);submit.disabled=true;say(message,'投票しています…');try{const token=await pollIdentity();const payload=requestPayload(state,{optionId:state.selected,voterToken:token});const data=await api('/ideas/'+parent+'/poll/vote',encodeAction(payload));state.poll=validPoll(data.poll);state.selected=state.poll?.selectedOptionId||state.selected;state.payload=null;state.fingerprint=null;render();}catch(error){if(error.status===403){forgetPollIdentity();state.payload=null;state.fingerprint=null;}if(error.status===409){state.loaded=false;await load(true);}say(message,error.message);}finally{state.busy=false;if(host.contains(form)){radios.forEach(r=>r.disabled=poll.closed);submit.disabled=poll.closed||!state.selected;}else render();}});host.append(form);
+    }
+    return {load};
+  }
+
   const detailCache=new Map();
   function updateDetail(item) {
     const entry=detailCache.get(item.id);if(!entry)return;
@@ -326,7 +345,7 @@
     if(detailCache.has(item.id)){updateDetail(item);return detailCache.get(item.id);}
     const panel=node('div','idea-detail-content');panel.dataset.parentId=item.id;panel.id='idea-detail-'+item.id;
     const status=node('span','idea-status',statuses[item.status]),meta=node('p','survey-note','公開コメント '+count(item.commentCount)+'件'),title=node('h3','',item.title),body=node('p','idea-body',item.body);
-    panel.append(status,meta,title,body,voteControls(item));
+    panel.append(status,meta,title,body,voteControls(item));const pollPanel=node('section','idea-poll');panel.append(pollPanel);const poll=publicPoll(item.id,pollPanel);
     const fileArea=node('section','idea-files'),fileNotice=node('p','public-message');fileNotice.setAttribute('role','status');fileArea.append(node('h4','','公開された添付'),fileNotice);panel.append(fileArea);let fileRows=[];
     async function loadFiles(){try{const data=await api('/ideas/'+item.id+'/files');fileRows=checkedFiles(data.items);renderFileLinks(fileArea,fileRows.filter(f=>!f.commentId));say(fileNotice,fileRows.length?'':'公開された添付はありません。');}catch(error){say(fileNotice,error.message);} }
     const details=node('section','idea-comments'),summary=node('h4','','コメント · 具体的な使い方'),list=node('div'),notice=node('p','public-message'),reload=node('button','public-refresh','コメントを読み直す'),more=node('button','public-refresh','さらに見る');
@@ -348,11 +367,11 @@
       }catch(error){say(notice,error.message);}finally{busy=false;reload.disabled=false;more.disabled=false;}
     }
     reload.addEventListener('click',()=>load());more.addEventListener('click',()=>{if(nextOffset!==null)load(nextOffset);});
-    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),commentCountLabel:panel.querySelector('.idea-actions .survey-note'),loadOnce(){if(!loaded)load();}};detailCache.set(item.id,entry);return entry;
+    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),commentCountLabel:panel.querySelector('.idea-actions .survey-note'),loadOnce(){if(!loaded)load();poll.load();}};detailCache.set(item.id,entry);return entry;
   }
-  const ideaList=document.querySelector('#idea-list'),ideaNotice=document.querySelector('#ideas-message'),ideaRefresh=document.querySelector('#ideas-refresh'),ideaMore=document.querySelector('#ideas-more'),detailHost=document.querySelector('#idea-detail'),sortButtons=[...document.querySelectorAll('[data-idea-sort]')];
+  const ideaList=document.querySelector('#idea-list'),ideaNotice=document.querySelector('#ideas-message'),ideaMore=document.querySelector('#ideas-more'),detailHost=document.querySelector('#idea-detail'),sortButtons=[...document.querySelectorAll('[data-idea-sort]')];
   let ideasBusy=false,nextOffset=null,selectedId=null,loadedIdeas=new Map(),currentSort='newest',desiredSort='newest',listMutationEpoch=0;
-  function mutationBusy() {return [...votes.values(),...commentStates.values()].some(state=>state.busy);}
+  function mutationBusy() {return [...votes.values(),...commentStates.values(),...pollStates.values()].some(state=>state.busy);}
   function selectIdea(id) {
     if(mutationBusy()){say(ideaNotice,'送信しています。完了後に別のアイデアを選べます。');return;}
     const item=loadedIdeas.get(id);if(!item)return;
@@ -364,7 +383,7 @@
   async function loadIdeas(offset=0,sort=currentSort) {
     if(ideasBusy)return;
     if(mutationBusy()){say(ideaNotice,'送信しています。完了後に一覧を読み直せます。');return;}
-    ideasBusy=true;const ownEpoch=listMutationEpoch;ideaRefresh.disabled=true;ideaMore.disabled=true;sortButtons.forEach(button=>button.disabled=true);
+    ideasBusy=true;const ownEpoch=listMutationEpoch;ideaMore.disabled=true;sortButtons.forEach(button=>button.disabled=true);
     try {
       const data=validateItems(await api('/ideas?sort='+sort+'&offset='+offset)),fragment=document.createDocumentFragment();
       // A vote/comment may have started while this GET was in flight. Preserve its form and status.
@@ -375,11 +394,11 @@
       currentSort=sort;desiredSort=sort;sortButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.ideaSort===currentSort)));
       if(selectedId&&loadedIdeas.has(selectedId)){const entry=detailFor(loadedIdeas.get(selectedId));ideaList.querySelector('[data-idea-id="'+selectedId+'"]').append(entry.panel);ideaList.querySelectorAll('.idea-select').forEach(button=>{const active=button.dataset.selectIdea===selectedId;button.setAttribute('aria-expanded',String(active));button.setAttribute('aria-pressed',String(active));button.closest('.idea-card').classList.toggle('is-selected',active);});}
       else {selectedId=null;detailHost.replaceChildren();}
-      nextOffset=data.nextOffset;ideaMore.hidden=nextOffset===null;say(ideaNotice,ideaList.children.length?'':'公開されたアイデアはまだありません。最初のアイデアを投稿できます。');
+      nextOffset=data.nextOffset;ideaMore.hidden=nextOffset===null;say(ideaNotice,ideaList.children.length?'':'作者が掲載した案はまだありません。新しい要望はお問い合わせからお送りください。');
     }catch(error){say(ideaNotice,(ideaList.children.length?'前回取得した一覧を表示しています。 ':'')+error.message);}
-    finally{ideasBusy=false;ideaRefresh.disabled=false;ideaMore.disabled=false;sortButtons.forEach(button=>button.disabled=false);}
+    finally{ideasBusy=false;ideaMore.disabled=false;sortButtons.forEach(button=>button.disabled=false);}
   }
   sortButtons.forEach(button=>button.addEventListener('click',()=>{if(button.dataset.ideaSort!==currentSort){desiredSort=button.dataset.ideaSort;loadIdeas(0,desiredSort);}}));
-  ideaRefresh.addEventListener('click',()=>loadIdeas(0,desiredSort));ideaMore.addEventListener('click',()=>{if(nextOffset!==null)loadIdeas(nextOffset,currentSort);});
+ideaMore.addEventListener('click',()=>{if(nextOffset!==null)loadIdeas(nextOffset,currentSort);});
   loadIdeas();
 })();
