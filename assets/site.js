@@ -181,7 +181,7 @@
   async function api(path,payload) {
     const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
     try {
-      const res=await fetch(API+path,{method:payload?'POST':'GET',headers:payload?{'Content-Type':'application/json'}:undefined,body:payload?JSON.stringify(payload):undefined,credentials:'omit',referrerPolicy:'no-referrer',cache:'no-store',signal:controller.signal});
+      const res=await fetch(API+path,{method:payload?'POST':'GET',headers:payload&&!(payload instanceof FormData)?{'Content-Type':'application/json'}:undefined,body:payload?(payload instanceof FormData?payload:JSON.stringify(payload)):undefined,credentials:'omit',referrerPolicy:'no-referrer',cache:'no-store',signal:controller.signal});
       const data=await res.json();
       if(!res.ok||data?.ok!==true) throw Error(typeof data?.message==='string'?data.message:'受付または表示を確認できません。再試行できます。');
       return data;
@@ -191,31 +191,72 @@
     } finally {clearTimeout(timer);}
   }
   function requestPayload(state,payload) {
-    const fingerprint=JSON.stringify(payload);
-    if(!state.payload||state.fingerprint!==fingerprint) {
-      state.payload={...payload,requestId:crypto.randomUUID()};state.fingerprint=fingerprint;
+    const {files=[],...fields}=payload;
+    const fingerprint=JSON.stringify(fields);
+    const sameFiles=state.payload&&files.length===(state.payload.files||[]).length&&files.every((file,i)=>file===state.payload.files[i]);
+    if(!state.payload||state.fingerprint!==fingerprint||!sameFiles) {
+      state.payload={...fields,...(files.length?{files:files.slice()}:{}),requestId:crypto.randomUUID()};state.fingerprint=fingerprint;
     }
     // The same action keeps its UUID after a timeout or server failure.
     return state.payload;
   }
+  function encodeAction(payload) {
+    const {files=[],...fields}=payload;
+    if(!files.length){delete fields.attachmentPublicConsent;return fields;}
+    const data=new FormData();for(const[key,value]of Object.entries(fields))data.append(key,String(value));
+    files.forEach(file=>data.append('files',file,file.name));return data;
+  }
+  function makeAttachmentFields() {
+    const box=node('fieldset','public-attachments');box.append(node('legend','','添付（任意）'),node('p','survey-note','PNG・JPEG・PDFを3件まで。1件5MB、合計10MBまで。1つのアイデア全体ではコメントの添付を含め150件までです。個人情報や機密情報は取り除いてください。保存容量に余裕があるときに受け付けます。'));
+    const label=node('label','','ファイルを選ぶ'),input=node('input');input.type='file';input.name='files';input.multiple=true;input.accept='image/png,image/jpeg,application/pdf,.png,.jpg,.jpeg,.pdf';label.append(input);
+    const list=node('ul','filelist');list.dataset.selectedFiles='';const consent=node('label','public-consent'),check=node('input');check.type='checkbox';check.name='attachmentPublicConsent';consent.append(check,document.createTextNode('添付も公開してよい'));
+    const message=node('p','public-message');message.dataset.fileMessage='';message.setAttribute('role','status');box.append(label,list,consent,node('p','survey-note','チェックしない添付は作者だけが確認できます。チェックした添付も、作者が個別に承認してから公開します。'),message);return box;
+  }
+  function attachmentControl(form,state) {
+    const input=form.elements.files,consent=form.elements.attachmentPublicConsent,list=form.querySelector('[data-selected-files]'),message=form.querySelector('[data-file-message]');
+    if(!input)return {files:()=>[],consent:()=>false,lock(){}};
+    state.files=state.files||[];if(state.payload)consent.checked=state.payload.attachmentPublicConsent===true;
+    function redraw(){list.replaceChildren();state.files.forEach((file,i)=>{const row=node('li'),remove=node('button','','外す');remove.type='button';remove.disabled=!!state.busy||!!state.done;row.append(node('span','',file.name+'（'+(file.size/1048576).toFixed(1)+' MB）'),remove);remove.addEventListener('click',()=>{if(state.busy||state.done)return;state.files.splice(i,1);state.payload=null;redraw();});list.append(row);});}
+    input.addEventListener('change',()=>{
+      if(state.busy||state.done){input.value='';return;}
+      const files=[...input.files],merged=state.files.slice();let error='';
+      for(const file of files){if(!['image/png','image/jpeg','application/pdf'].includes(file.type)){error='PNG・JPEG・PDFを選んでください。';break;}if(file.size===0||file.size>5*1048576){error='添付は1件5MBまでです。空のファイルは送れません。';break;}if(merged.length>=3||merged.reduce((n,f)=>n+f.size,0)+file.size>10*1048576){error='添付は3件、合計10MBまでです。';break;}merged.push(file);}
+      input.value='';if(error){say(message,error);return;}state.files=merged;state.payload=null;say(message,'');redraw();
+    });
+    consent.addEventListener('change',()=>{if(!state.busy&&!state.done)state.payload=null;});redraw();
+    return {files:()=>state.files.slice(),consent:()=>consent.checked,reset(){state.files=[];consent.checked=false;input.value='';redraw();},lock(value){input.disabled=value;consent.disabled=value;list.querySelectorAll('button').forEach(b=>b.disabled=value);}};
+  }
+  function checkedFiles(items) {
+    if(!Array.isArray(items)||items.length>150)throw Error('添付の一覧を確認できません。');
+    for(const f of items){if(!uuid.test(f.id)||typeof f.name!=='string'||!number(f.size)||!['image/png','image/jpeg','application/pdf'].includes(f.mime)||f.url!=='/files/'+f.id+'/content'||(f.commentId!==null&&!uuid.test(f.commentId)))throw Error('添付の一覧を確認できません。');}return items;
+  }
+  function renderFileLinks(parent,files) {
+    parent.querySelector(':scope > .published-files')?.remove();if(!files.length)return;
+    const list=node('ul','published-files');for(const file of files){const row=node('li'),link=node('a','',file.name+'（'+(file.size/1048576).toFixed(1)+' MB）');link.href=API+file.url;link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';row.append(link);list.append(row);}parent.append(list);
+  }
+
   function wireForm(form,path,read,onSuccess,state={}) {
-    const button=form.querySelector('button[type=submit]'),message=form.querySelector('[role=status]');
-    button.disabled=!crypto.randomUUID||!!state.done||!!state.busy;
+    const button=form.querySelector('button[type=submit]'),message=form.querySelector(':scope > [role=status]');
+    const attachments=attachmentControl(form,state);
+    button.disabled=!crypto.randomUUID||!!state.done||!!state.busy;attachments.lock(!!state.done||!!state.busy);
     form.addEventListener('submit',async event=>{
       event.preventDefault();if(state.busy||state.done) return;
       if(!form.reportValidity()) return;
       const payload=read();if(!payload) return;
-      state.busy=true;button.disabled=true;form.setAttribute('aria-busy','true');say(message,'送信しています…');
+      Object.assign(payload,{files:attachments.files(),attachmentPublicConsent:attachments.consent()});
+      state.busy=true;listMutationEpoch++;button.disabled=true;attachments.lock(true);if(state.repeatable)form.querySelectorAll('input,textarea').forEach(el=>{el.disabled=true;});form.setAttribute('aria-busy','true');say(message,'送信しています…');
       try {
-        const data=await api(path,requestPayload(state,payload));
+        const data=await api(path,encodeAction(requestPayload(state,payload)));
         state.done=true;
         form.querySelectorAll('input,textarea').forEach(el=>{el.disabled=true;});
-        say(message,data.message);onSuccess?.(data);
+        say(message,data.message);await onSuccess?.(data);if(state.repeatable){state.done=false;state.payload=null;state.fingerprint=null;form.reset();attachments.reset();form.querySelectorAll('input,textarea').forEach(el=>{el.disabled=false;});}
       } catch(error) {say(message,error.message);}
-      finally {state.busy=false;button.disabled=!!state.done;form.removeAttribute('aria-busy');}
+      finally {state.busy=false;if(state.repeatable&&!state.done)form.querySelectorAll('input,textarea').forEach(el=>{el.disabled=false;});attachments.lock(!!state.done);button.disabled=!!state.done;form.removeAttribute('aria-busy');}
     });
   }
-  const compose=document.querySelector('.public-idea-form');
+  const compose=document.querySelector('.public-idea-form'),composePanel=document.querySelector('#idea-submit'),composeOpen=document.querySelector('#ideas-compose-open');
+  composeOpen.addEventListener('click',()=>{composePanel.hidden=false;composeOpen.setAttribute('aria-expanded','true');composePanel.scrollIntoView?.({behavior:'smooth',block:'start'});compose.elements.title.focus();});
+  document.querySelector('#ideas-compose-close').addEventListener('click',()=>{if(compose.getAttribute('aria-busy')==='true')return;composePanel.hidden=true;composeOpen.setAttribute('aria-expanded','false');composeOpen.focus();});
   wireForm(compose,'/ideas',()=>{
     const title=compose.elements.title.value.trim(),body=compose.elements.body.value.trim();
     if(!title||!body||compose.elements.title.value.length>80||compose.elements.body.value.length>400){say(compose.querySelector('[role=status]'),'タイトルは80文字、内容は400文字までで記入してください。');return null;}
@@ -229,36 +270,36 @@
     }
     return data;
   }
-  function commentForm(ideaId) {
+  function commentForm(ideaId,onSent) {
     const form=node('form','public-comment-form'),label=node('label','','コメント（600文字まで）'),textarea=node('textarea');
-    const heading=node('h4','','どんな使い方だと助かりますか？'),help=node('p','survey-note','使う場面や、希望する動作を教えてください。送信内容は作者にメールで通知され、内容の確認後に公開されます。');
+    const heading=node('h4','','どんな使い方だと助かりますか？'),help=node('p','survey-note','使う場面や、希望する動作を教えてください。送信したコメントは、作者にもメールで通知されます。');
     textarea.name='body';textarea.required=true;textarea.maxLength=600;textarea.rows=3;label.append(textarea);
-    const consent=node('label','public-consent'),checkbox=node('input');checkbox.type='checkbox';checkbox.name='publicConsent';checkbox.required=true;
-    consent.append(checkbox,document.createTextNode('内容の確認後に、コメントが匿名で一般公開されることを了承します。'));
+    const publicNotice=node('p','survey-note','送信したコメントは匿名で公開されます。個人情報は記入しないでください。');
     const trap=node('div','hp');trap.setAttribute('aria-hidden','true');const trapInput=node('input');trapInput.name='website';trapInput.type='text';trapInput.tabIndex=-1;trapInput.autocomplete='off';trap.append(trapInput);
     const message=node('p','public-message');message.setAttribute('role','status');const submit=node('button','btn','送信する');submit.type='submit';
-    form.append(heading,help,label,consent,trap,message,submit);
+    form.append(heading,help,label,makeAttachmentFields(),trap,message,publicNotice,submit);
     let state=commentStates.get(ideaId);if(!state){state={};commentStates.set(ideaId,state);}
+    state.repeatable=true;
     wireForm(form,'/ideas/'+ideaId+'/comments',()=>{
       const body=textarea.value.trim();if(!body||textarea.value.length>600){say(message,'コメントは600文字までで記入してください。');return null;}
-      return {body,publicConsent:checkbox.checked,website:trapInput.value};
-    },null,state);
-    if(state.payload){textarea.value=state.payload.body;checkbox.checked=state.payload.publicConsent;}
-    if(state.done){textarea.disabled=true;checkbox.disabled=true;say(message,'コメントは受け付け済みです。内容の確認後に公開します。');}
+      return {body,publicConsent:true,website:trapInput.value};
+    },onSent,state);
+    if(state.payload){textarea.value=state.payload.body;}
+    if(state.done){textarea.disabled=true;say(message,'コメントは送信済みです。');}
     return form;
   }
   function voteControls(item) {
-    const actions=node('div','idea-actions'),vote=node('button','','応援する · '+count(item.votes)+'票'),message=node('p','public-message');message.setAttribute('role','status');vote.type='button';
+    const actions=node('div','idea-actions'),vote=node('button','','応援する'),message=node('p','public-message');message.setAttribute('role','status');vote.type='button';
     let state=votes.get(item.id);if(!state){state={};votes.set(item.id,state);}
     vote.disabled=!!state.busy||!!state.done||!crypto.randomUUID;
-    if(state.done)vote.textContent='投票済み · '+count(item.votes)+'票';
+    if(state.done)vote.textContent='応援済み';
     vote.addEventListener('click',async()=>{
-      if(state.busy||state.done)return;state.busy=true;vote.disabled=true;say(message,'送信しています…');
+      if(state.busy||state.done)return;state.busy=true;listMutationEpoch++;vote.disabled=true;say(message,'送信しています…');
       try {
         const data=await api('/ideas/'+item.id+'/vote',requestPayload(state,{}));
         state.done=true;
-        if(number(data.votes)) {vote.textContent='投票済み · '+count(data.votes)+'票';const current=loadedIdeas.get(item.id)||item;current.votes=data.votes;updateDetail(current);}
-        else vote.textContent='投票済み';
+        if(number(data.votes)) {vote.textContent='応援済み';const current=loadedIdeas.get(item.id)||item;current.votes=data.votes;updateDetail(current);}
+        else vote.textContent='応援済み';
         say(message,data.message);
       }catch(error){say(message,error.message);}finally{state.busy=false;vote.disabled=!!state.done;}
     });
@@ -279,34 +320,38 @@
   const detailCache=new Map();
   function updateDetail(item) {
     const entry=detailCache.get(item.id);if(!entry)return;
-    entry.title.textContent=item.title;entry.body.textContent=item.body;entry.status.textContent=statuses[item.status];entry.meta.textContent=count(item.votes)+'票 · 公開コメント '+count(item.commentCount)+'件';entry.vote.textContent=(votes.get(item.id)?.done?'投票済み · ':'応援する · ')+count(item.votes)+'票';
+    entry.title.textContent=item.title;entry.body.textContent=item.body;entry.status.textContent=statuses[item.status];entry.meta.textContent='公開コメント '+count(item.commentCount)+'件';entry.vote.textContent=(votes.get(item.id)?.done?'応援済み':'応援する');entry.commentCountLabel.textContent='公開コメント '+count(item.commentCount)+'件';
   }
   function detailFor(item) {
     if(detailCache.has(item.id)){updateDetail(item);return detailCache.get(item.id);}
     const panel=node('div','idea-detail-content');panel.dataset.parentId=item.id;panel.id='idea-detail-'+item.id;
-    const status=node('span','idea-status',statuses[item.status]),meta=node('p','survey-note',count(item.votes)+'票 · 公開コメント '+count(item.commentCount)+'件'),title=node('h3','',item.title),body=node('p','idea-body',item.body);
+    const status=node('span','idea-status',statuses[item.status]),meta=node('p','survey-note','公開コメント '+count(item.commentCount)+'件'),title=node('h3','',item.title),body=node('p','idea-body',item.body);
     panel.append(status,meta,title,body,voteControls(item));
+    const fileArea=node('section','idea-files'),fileNotice=node('p','public-message');fileNotice.setAttribute('role','status');fileArea.append(node('h4','','公開された添付'),fileNotice);panel.append(fileArea);let fileRows=[];
+    async function loadFiles(){try{const data=await api('/ideas/'+item.id+'/files');fileRows=checkedFiles(data.items);renderFileLinks(fileArea,fileRows.filter(f=>!f.commentId));say(fileNotice,fileRows.length?'':'公開された添付はありません。');}catch(error){say(fileNotice,error.message);} }
     const details=node('section','idea-comments'),summary=node('h4','','コメント · 具体的な使い方'),list=node('div'),notice=node('p','public-message'),reload=node('button','public-refresh','コメントを読み直す'),more=node('button','public-refresh','さらに見る');
     notice.setAttribute('role','status');reload.type='button';more.type='button';more.hidden=true;
-    const compose=node('details','idea-comment-compose'),composeSummary=node('summary','','コメントを書く');compose.append(composeSummary,commentForm(item.id));details.append(summary,list,notice,reload,more,compose);panel.append(details);
-    let loaded=false,busy=false,nextOffset=null;
-    async function load(offset=0) {
+    const compose=node('details','idea-comment-compose'),composeSummary=node('summary','','コメントを書く');compose.append(composeSummary,commentForm(item.id,async data=>{const current=loadedIdeas.get(item.id)||item;if(number(data.commentCount)){current.commentCount=data.commentCount;updateDetail(current);}await load(0,true);}));details.append(summary,list,notice,reload,more,compose);panel.append(details);
+    let loaded=false,busy=false,nextOffset=null,loadChain=Promise.resolve();
+    function load(offset=0,force=false){if(force){const job=loadChain.then(()=>runLoad(offset));loadChain=job.catch(()=>{});return job;}if(busy)return Promise.resolve();const job=runLoad(offset);loadChain=job.catch(()=>{});return job;}
+    async function runLoad(offset=0) {
       if(busy)return;busy=true;reload.disabled=true;more.disabled=true;say(notice,'コメントを読み込んでいます…');
       try {
+        await loadFiles();
         const data=validateItems(await api('/ideas/'+item.id+'/comments?offset='+offset),true),fragment=document.createDocumentFragment();
         for(const comment of data.items) {
           const row=node('div','comment-item'),date=node('time','',comment.createdAt.slice(0,10));date.dateTime=comment.createdAt;
-          row.append(date,node('p','comment-body',comment.body));fragment.append(row);
+          row.append(date,node('p','comment-body',comment.body));row.dataset.commentId=comment.id;renderFileLinks(row,fileRows.filter(f=>f.commentId===comment.id));fragment.append(row);
         }
         if(offset===0)list.replaceChildren(fragment);else list.append(fragment);
         loaded=true;nextOffset=data.nextOffset;more.hidden=nextOffset===null;say(notice,list.children.length?'':'公開されたコメントはまだありません。');
       }catch(error){say(notice,error.message);}finally{busy=false;reload.disabled=false;more.disabled=false;}
     }
     reload.addEventListener('click',()=>load());more.addEventListener('click',()=>{if(nextOffset!==null)load(nextOffset);});
-    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),loadOnce(){if(!loaded)load();}};detailCache.set(item.id,entry);return entry;
+    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),commentCountLabel:panel.querySelector('.idea-actions .survey-note'),loadOnce(){if(!loaded)load();}};detailCache.set(item.id,entry);return entry;
   }
   const ideaList=document.querySelector('#idea-list'),ideaNotice=document.querySelector('#ideas-message'),ideaRefresh=document.querySelector('#ideas-refresh'),ideaMore=document.querySelector('#ideas-more'),detailHost=document.querySelector('#idea-detail'),sortButtons=[...document.querySelectorAll('[data-idea-sort]')];
-  let ideasBusy=false,nextOffset=null,selectedId=null,loadedIdeas=new Map(),currentSort='votes',desiredSort='votes';
+  let ideasBusy=false,nextOffset=null,selectedId=null,loadedIdeas=new Map(),currentSort='newest',desiredSort='newest',listMutationEpoch=0;
   function mutationBusy() {return [...votes.values(),...commentStates.values()].some(state=>state.busy);}
   function selectIdea(id) {
     if(mutationBusy()){say(ideaNotice,'送信しています。完了後に別のアイデアを選べます。');return;}
@@ -319,11 +364,11 @@
   async function loadIdeas(offset=0,sort=currentSort) {
     if(ideasBusy)return;
     if(mutationBusy()){say(ideaNotice,'送信しています。完了後に一覧を読み直せます。');return;}
-    ideasBusy=true;ideaRefresh.disabled=true;ideaMore.disabled=true;sortButtons.forEach(button=>button.disabled=true);
+    ideasBusy=true;const ownEpoch=listMutationEpoch;ideaRefresh.disabled=true;ideaMore.disabled=true;sortButtons.forEach(button=>button.disabled=true);
     try {
       const data=validateItems(await api('/ideas?sort='+sort+'&offset='+offset)),fragment=document.createDocumentFragment();
       // A vote/comment may have started while this GET was in flight. Preserve its form and status.
-      if(mutationBusy()){say(ideaNotice,'送信しています。完了後に一覧を読み直せます。');return;}
+      if(mutationBusy()||ownEpoch!==listMutationEpoch){say(ideaNotice,'送信後の一覧を確認しています。');return;}
       if(offset===0)loadedIdeas=new Map();
       for(const item of data.items){loadedIdeas.set(item.id,item);fragment.append(card(item));}
       if(offset===0)ideaList.replaceChildren(fragment);else ideaList.append(fragment);
