@@ -305,7 +305,10 @@
   function card(item) {
     const article=node('article','idea-card');article.dataset.ideaId=item.id;
     const choose=node('button','idea-select');choose.type='button';choose.dataset.selectIdea=item.id;choose.setAttribute('aria-controls','idea-detail-'+item.id);choose.setAttribute('aria-expanded',String(selectedId===item.id));choose.setAttribute('aria-pressed',String(selectedId===item.id));
-    const arrow=node('span','idea-chevron','⌄');arrow.setAttribute('aria-hidden','true');choose.append(node('strong','idea-title',item.title),arrow);
+    const topic=node('span','idea-topic');topic.setAttribute('aria-hidden','true');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS('http://www.w3.org/2000/svg','use');svg.setAttribute('class','icon');use.setAttribute('href','#i-spark');svg.append(use);topic.append(svg);
+    const titleBlock=node('span','idea-title-block');titleBlock.append(node('strong','idea-title',item.title),node('span','idea-summary-meta','応援 '+count(item.votes)+' · コメント '+count(item.commentCount)));
+    const arrow=node('span','idea-chevron','⌄');arrow.setAttribute('aria-hidden','true');choose.append(topic,titleBlock,node('span','idea-status',statuses[item.status]),arrow);
     choose.addEventListener('click',()=>selectIdea(item.id));
     choose.addEventListener('keydown',event=>{
       const all=[...ideaList.querySelectorAll('.idea-select')],index=all.indexOf(choose);
@@ -338,6 +341,8 @@
 
   const detailCache=new Map();
   function updateDetail(item) {
+    const row=ideaList.querySelector('[data-idea-id="'+item.id+'"] .idea-select');
+    if(row){row.querySelector('.idea-summary-meta').textContent='応援 '+count(item.votes)+' · コメント '+count(item.commentCount);row.querySelector('.idea-status').textContent=statuses[item.status];}
     const entry=detailCache.get(item.id);if(!entry)return;
     entry.title.textContent=item.title;entry.body.textContent=item.body;entry.status.textContent=statuses[item.status];entry.meta.textContent='公開コメント '+count(item.commentCount)+'件';entry.vote.textContent=(votes.get(item.id)?.done?'応援済み':'応援する');entry.commentCountLabel.textContent='公開コメント '+count(item.commentCount)+'件';
   }

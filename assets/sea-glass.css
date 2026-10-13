@@ -1,0 +1,134 @@
+/* Shared polish only. Each direction supplies its own visual language. */
+:root{--wrap:1160px}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.wrap{width:min(var(--wrap),calc(100% - 80px))}
+.header-inner{height:80px}
+.brand{letter-spacing:-.035em;font-size:22px;gap:12px}
+.brand img{width:38px;height:38px}
+.brand span span{font-weight:600}
+.hero{padding:76px 0 46px}
+.hero:before,.hero:after{content:none}
+.hero h1{font-size:clamp(40px,5.7vw,76px);line-height:1.27;letter-spacing:-.066em;font-weight:700}
+.release-pill{margin-bottom:26px;padding:7px 14px;font-size:11px}
+.hero-lead{margin:26px auto 27px;font-size:15px;line-height:2.1}
+.hero-actions{gap:14px}
+.hero-actions .btn{min-height:56px;padding:15px 26px;font-size:13px}
+.hero-meta{font-size:11px}
+.hero-assurance{margin-top:18px}
+.hero-media-grid{margin-top:50px;gap:24px}
+.hero-demo{padding:14px}
+.hero-demo-head{padding:3px 6px 13px}
+.hero-support-card{margin-top:24px}
+.section{padding:100px 0}
+.section-head{margin-bottom:48px}
+h2{line-height:1.5;letter-spacing:-.055em}
+.eyebrow{font-size:10px;letter-spacing:.2em;margin-bottom:17px}
+.section-desc{line-height:2.1}
+.btn,a,button,summary{touch-action:manipulation}
+.btn,.feature-card,.support-button{transition:background .2s,border-color .2s,box-shadow .2s,transform .2s}
+.btn:hover{transform:translateY(-2px)}
+:focus-visible{outline:3px solid #23aec9;outline-offset:5px}
+.feature-card{padding:30px 24px}
+.feature-card h3{margin-top:25px;font-size:20px}
+.feature-card ul{line-height:1.9}
+.feature-card li+li{margin-top:9px}
+.trust-inner{padding:30px 0}
+.feedback-form{box-shadow:0 16px 60px -45px #14394745}
+
+
+.ideas-board{grid-template-columns:1fr;margin-top:30px}
+
+
+.filelist{overflow-wrap:anywhere}
+@media(max-width:1000px){.wrap{width:calc(100% - 48px)}.nav{gap:20px}.hero h1{font-size:64px}.hero-media-grid{grid-template-columns:minmax(0,1.6fr) minmax(300px,.9fr)}}
+@media(max-width:800px){.hero{padding:54px 0 30px}.hero h1{font-size:clamp(38px,8vw,58px)}.hero-media-grid{grid-template-columns:1fr;margin-top:36px}.section{padding:72px 0}.section-head{margin-bottom:30px}.hero-support-card{grid-template-columns:auto minmax(0,1fr)}.hero-support-card .support-button{grid-column:1/-1}.header-inner{height:70px}.nav.is-open{display:flex}.feature-card{padding:26px 22px}.trust-inner{padding:22px 0}}
+@media(max-width:600px){.wrap{width:calc(100% - 40px)}.hero{padding-top:42px}.hero h1{font-size:clamp(34px,8.7vw,50px)}.hero-lead{font-size:12px;line-height:2;margin:22px auto}.hero-actions{gap:10px}.hero-actions .btn{min-height:51px;font-size:11px;padding:12px 16px;flex:1 1 auto}.hero-assurance{gap:15px;font-size:11px}.hero-meta{font-size:10px;gap:8px}.hero-meta span+span{padding-left:8px}.hero-demo{padding:8px}.hero-demo-head{padding:5px 6px 10px}.hero-support-card{padding:20px;gap:14px}.hero-support-card h3{font-size:17px}.hero-support-card .support-mark{width:44px;height:44px}.feature-card h3{margin-top:20px}.section-head{gap:18px}.brand{font-size:20px}.header-inner{gap:12px}.release-pill{margin-bottom:24px}.download-panel{padding:30px 24px}.download-panel h2{font-size:27px}.download-actions{min-width:0;width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* A / Sea Glass — a considered evolution of the existing identity. */
+:root{--ink:#153747;--body:#506c78;--muted:#687f89;--teal:#0e829e;--teal-dark:#076d88;--paper:#f6fbfc;--mint:#eaf6f8;--line:#d9eaed;--radius:22px}
+body{background:#f9fcfc}
+.site-header{background:#fcfefeee;border-color:#dfedf0}
+.brand img{filter:drop-shadow(0 4px 6px #178e9c1a)}
+.nav>a:not(.btn){font-weight:600}
+.nav .btn{background:white;border-color:#b6d5df;color:#176880;box-shadow:none;border-radius:10px}
+.hero{background:radial-gradient(ellipse at 85% 24%,#c7eeef75,transparent 44%),radial-gradient(ellipse at 10% 70%,#cfe6ff60,transparent 46%),linear-gradient(#f9fdfd,#eef9fb)}
+.hero:before{content:"";position:absolute;z-index:-1;pointer-events:none;left:-25%;top:360px;width:145%;height:600px;border:1px solid #aadbe365;border-radius:50%;transform:rotate(-10deg);box-shadow:0 36px 0 -35px #abd6df66,0 72px 0 -71px #abd6df44}
+.hero:after{content:"";position:absolute;z-index:-1;pointer-events:none;left:-10%;top:500px;width:125%;height:450px;border:1px solid #bcdfe766;border-radius:50%;transform:rotate(9deg)}
+.release-pill{background:#ffffffbd;border-color:#cbe6ec;box-shadow:0 3px 10px #2d798506;color:#3e7886}
+.status-dot{background:#17aab9;box-shadow:0 0 0 4px #17aab915}
+.hero h1{color:#143847;text-shadow:0 2px 0 white}
+.hero h1 span{color:#0f86a0;background:linear-gradient(100deg,#137195,#079da7);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none}
+.hero-lead{color:#527784}
+.btn{border-radius:11px;background:linear-gradient(130deg,#188da9,#0e7294);border-color:#0f819d;box-shadow:0 9px 20px -14px #005577aa}
+.btn:hover{background:#086984;border-color:#086984;box-shadow:0 12px 24px -14px #005577aa}
+.hero-actions .btn:not(.store-primary){background:#ffffffb8;color:#1e6e84;border-color:#bbdbe4;box-shadow:0 3px 8px #4a9cb308}
+.hero-actions .btn:not(.store-primary):hover{background:white;border-color:#78bccb}
+.hero-media-grid{position:relative}
+.hero-demo{border:1px solid #d0e7ed;background:#ffffffd9;border-radius:22px;box-shadow:0 28px 64px -35px #126e8890,0 1px 0 white inset;backdrop-filter:blur(14px)}
+.hero-demo video{border-radius:12px;border:1px solid #e5eff3}
+.hero-demo-head strong:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#1cacb7;margin-right:8px;vertical-align:2px}
+.hero-x{border:1px solid #d0e7ed;border-radius:22px;box-shadow:0 28px 64px -45px #126e8870}
+.x-timeline-head{background:#fcfefe}
+.x-post{border-color:#e4eef1}
+.support-block{border:1px solid #d1e8eb;border-radius:18px;background:#ffffffb3;box-shadow:0 8px 24px -20px #14728b30}
+.support-block:before{width:0}
+.support-mark{border-color:#cee6e7;color:#278b97;background:#effafb;box-shadow:none;border-radius:15px}
+.support-eyebrow{color:#52818b!important}
+.support-block h3{color:#254954;font-weight:600}
+.support-button{background:#fff;border-color:#d3e5e8;color:#266674;border-radius:11px;box-shadow:0 3px 12px #11657606}
+.support-button:hover{background:#f2fbfb;border-color:#8fc5cd;box-shadow:none}
+.support-button-mark{background:#eaf7f7;color:#2e8c93}
+.support-button-copy small{color:#668991}
+.trust-strip{background:#fff;border-color:#e1eef0}
+.trust-item>.icon{color:#15899d;width:28px;height:28px;stroke-width:1.5}
+.trust-item strong{color:#325462;font-weight:600}
+.features{background:#fbfdfd}
+.eyebrow{color:#25889c}
+.feature-grid{gap:16px;border:0}
+.feature-card,.feature-card:first-child{border:1px solid #dcebef;border-radius:18px;background:linear-gradient(140deg,white,#f4fafb);box-shadow:0 12px 35px -30px #22556c50}
+.feature-card:hover{background:#fff;border-color:#a6ced8;transform:translateY(-5px);box-shadow:0 16px 38px -26px #24657950}
+.feature-icon{width:48px;height:48px;border:1px solid #cfe9eb;border-radius:14px;color:#16849a;background:linear-gradient(145deg,#ecfafa,#dbf2f6)}
+.feature-number{color:#68949f;font-size:11px;letter-spacing:.12em}
+.feature-card>p{font-size:12px;line-height:1.8;color:#607c85}
+.feature-card ul{font-size:12px;border-top:1px solid #dfedef;padding-top:20px;margin-top:22px}
+.feature-card li:before{background:#78b6c1}
+.workflow{background:#edf7f9;border-top:1px solid #e1edf1;border-bottom:1px solid #e1edf1}
+.redact-visual{background:linear-gradient(135deg,#d4edf1,#e4f3f7);border:1px solid #c4e2e8;border-radius:22px;box-shadow:0 25px 65px -50px #1b6076}
+.document-preview{border-radius:5px;box-shadow:0 20px 40px -20px #23607045}
+.redact-status{background:#fff;border-color:#d1e7eb;border-radius:12px;box-shadow:0 8px 30px -20px #195568}
+.use-card{background:#ffffffb8;border:1px solid #d5e7ec;border-radius:18px}
+.public-ideas{background:#fbfdfd}
+.feedback{background:#f1f8fa}
+.feedback-form{background:white;border-color:#d8e9ed;border-radius:22px;padding:32px}
+.feedback-form input,.feedback-form textarea,.feedback-form select{background:#f8fbfc;border-color:#d4e6eb;border-radius:9px}
+.updates{background:#fff;border-color:#e1ecef}
+.release-entry{background:#fbfdfd;border-radius:14px;border-color:#dbe9ee}
+.release-entry[open]>summary{background:#edf8fa}
+.download-section{background:#f5fafb;padding-top:64px}
+.download-panel{background:radial-gradient(ellipse at 95% 20%,#cceef0,transparent 60%),#e8f5f8;border:1px solid #cce3ea;border-radius:24px;box-shadow:0 20px 50px -38px #1a6b8550}
+.download-panel h2{color:#174250}.download-panel p{color:#557581}.download-panel .eyebrow{color:#32889b}
+.site-footer{background:#f5fafb;border-color:#e2ecef}
+@media(max-width:800px){.hero:before{top:300px}.nav{background:#fff}.feature-grid{gap:14px}}
+@media(max-width:600px){.hero:before{top:220px}.hero-demo,.hero-x{border-radius:15px}.feedback-form{padding:22px}.feature-card,.feature-card:first-child{border-radius:15px}.support-block{border-radius:15px}.hero-support-card .support-button{min-height:57px}.trust-item strong{font-size:12px}}
+
+/* A1 — Marine accent. Scope limited to the support strip. */
+.support-one .hero-support-card{padding:28px 30px;gap:24px;grid-template-columns:auto minmax(0,1fr) minmax(260px,320px);border:1px solid #94cdd9;border-radius:20px;background:radial-gradient(ellipse at 18% 0%,#fff9,transparent 65%),linear-gradient(115deg,#d9f3f5,#eaf9fc 67%,#d5edf4);box-shadow:0 15px 35px -24px #197a9580,inset 0 1px 0 #ffffffd9}
+.support-one .hero-support-card:before{width:4px;background:linear-gradient(#45b7c5,#167f9f)}
+.support-one .hero-support-card .support-mark{width:68px;height:68px;border:1px solid #abd8df;border-radius:19px;background:linear-gradient(145deg,#fff,#e9f9fb);box-shadow:0 8px 18px -10px #168aa43b;color:#087d98}
+.support-one .hero-support-card .support-mark .icon{width:32px;height:32px;stroke-width:1.5}
+.support-one .hero-support-card .support-eyebrow{color:#287183!important;letter-spacing:.18em;font-weight:750}
+.support-one .hero-support-card h3{font-size:22px;font-weight:700;color:#163f50;letter-spacing:-.04em;line-height:1.6}
+.support-one .hero-support-card .support-button{min-height:72px;background:linear-gradient(125deg,#168ba5,#0b708e);color:#fff;border:1px solid #0c7893;border-radius:13px;padding:14px 18px;box-shadow:0 10px 20px -12px #00607c9c;gap:14px}
+.support-one .hero-support-card .support-button:hover{background:linear-gradient(125deg,#117c96,#065e7c);border-color:#086c84;box-shadow:0 12px 25px -13px #00607ca8;transform:translateY(-2px)}
+.support-one .hero-support-card .support-button-mark{width:42px;height:42px;background:#ffffff21;color:#e8ffff;border-radius:11px}
+.support-one .hero-support-card .support-button-mark .icon{width:22px;height:22px}
+.support-one .hero-support-card .support-button-copy strong{font-size:15px;letter-spacing:.03em;font-weight:650}
+.support-one .hero-support-card .support-button-copy small{color:#d3f0f6;font-size:10px;margin-top:5px}
+.support-one .hero-support-card .support-button .arrow{width:19px;height:19px;color:#e6fbff}
+.support-one .hero-support-card .support-button:focus-visible{outline:3px solid #075975;outline-offset:5px}
+@media(max-width:900px){.support-one .hero-support-card{grid-template-columns:auto minmax(0,1fr) minmax(230px,280px);padding:24px;gap:20px}.support-one .hero-support-card h3{font-size:19px}.support-one .hero-support-card .support-mark{width:58px;height:58px}}
+@media(max-width:800px){.support-one .hero-support-card{grid-template-columns:auto minmax(0,1fr);gap:18px;padding:24px}.support-one .hero-support-card .support-button{grid-column:1/-1;width:100%;min-height:66px}.support-one .hero-support-card .support-mark{width:54px;height:54px;border-radius:16px}.support-one .hero-support-card h3{font-size:18px}.support-one .hero-support-card h3 br{display:block}.support-one .hero-support-card .support-eyebrow{font-size:9px!important}}
+@media(max-width:380px){.support-one .hero-support-card{padding:20px;gap:14px}.support-one .hero-support-card .support-mark{width:45px;height:45px}.support-one .hero-support-card h3{font-size:16px}.support-one .hero-support-card .support-button{padding:12px;gap:10px}}
+@media(prefers-reduced-motion:reduce){.support-one .hero-support-card .support-button{transition:none}.support-one .hero-support-card .support-button:hover{transform:none}}
