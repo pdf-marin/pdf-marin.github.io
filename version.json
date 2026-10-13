@@ -9,6 +9,6 @@
   "notes": "大きなPDFの読み込みと、文字の読み取り・編集を改善しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.3.3を公開中です。v0.3.4は申請済み・審査中です。",
+  "_store_memo": "Microsoft Store版はv0.3.4を公開中です。",
   "sha256": "843f3ea5a57f6d96bdf82bc9ef87f47cafb2cc2a32255fe48a99a556d181b303"
 }
