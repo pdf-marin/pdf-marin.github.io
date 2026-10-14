@@ -1,14 +1,14 @@
 {
-  "version": "0.3.4",
-  "date": "2026-10-13",
+  "version": "0.3.5",
+  "date": "2026-10-15",
   "size": "約266MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.3.4/PDF-MARIN-Setup-0.3.4.exe",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.3.5/PDF-MARIN-Setup-0.3.5.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "大きなPDFの読み込みと、文字の読み取り・編集を改善しました。",
+  "notes": "メモリ使用・表示の復旧・更新処理を改善しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
   "_store_memo": "Microsoft Store版はv0.3.4を公開中です。",
-  "sha256": "843f3ea5a57f6d96bdf82bc9ef87f47cafb2cc2a32255fe48a99a556d181b303"
+  "sha256": "d1289a900568273bb625df23ad52832659c2991b2538375801977c7f00a76e4c"
 }
