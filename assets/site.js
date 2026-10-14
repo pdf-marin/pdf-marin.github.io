@@ -315,7 +315,9 @@
       const target=event.key==='ArrowDown'?Math.min(index+1,all.length-1):event.key==='ArrowUp'?Math.max(index-1,0):event.key==='Home'?0:event.key==='End'?all.length-1:null;
       if(target===null)return;event.preventDefault();all[target].focus();
     });
-    article.append(choose);return article;
+    const poll=pollFor(item.id);article.append(choose,poll.host);
+    if(pollObserver)pollObserver.observe(article);else poll.load();
+    return article;
   }
   const pollTokenKey='pdfmarin.poll.identity.v1';let pollToken='',identityPromise=null;
   function forgetPollIdentity(){pollToken='';try{localStorage.removeItem(pollTokenKey);}catch{}}
@@ -328,16 +330,73 @@
     return poll;
   }
   function publicPoll(parent,host){
-    const state={busy:false,payload:null,fingerprint:null,poll:null,loaded:false,loading:false,selected:null};pollStates.set(parent,state);
-    async function load(preserveChoice=false){if(state.loading||state.loaded)return;state.loading=true;try{let data;try{data=await api('/ideas/'+parent+'/poll',undefined,pollToken?{'x-poll-voter':pollToken}:{});}catch(error){if(error.status!==403||!pollToken)throw error;forgetPollIdentity();data=await api('/ideas/'+parent+'/poll');}state.poll=validPoll(data.poll);state.selected=state.poll?.selectedOptionId||(preserveChoice&&state.poll?.options.some(o=>o.id===state.selected)?state.selected:null);state.loaded=true;render();}catch(error){host.replaceChildren(node('p','public-message',error.message));}finally{state.loading=false;}}
-    function render(){host.replaceChildren();const poll=state.poll;if(!poll)return;const form=node('form','poll-form'),heading=node('h4','',poll.question),options=node('div','poll-options'),message=node('p','public-message');message.setAttribute('role','status');
-      const radios=[];for(const option of poll.options){const card=node('div','poll-option'),label=node('label'),radio=node('input');radio.type='radio';radio.name='pollOption';radio.value=option.id;radio.checked=state.selected===option.id;radio.disabled=poll.closed||state.busy;radio.addEventListener('change',()=>{if(state.busy)return;state.selected=option.id;submit.disabled=false;});label.append(radio,node('span','',option.label));card.append(label);if(option.imageUrl){const img=node('img');img.src=API+option.imageUrl;img.alt=option.label;img.loading='lazy';card.append(img);}const bar=node('div','poll-bar'),fill=node('span');fill.style.width=option.percent+'%';bar.append(fill);card.append(bar,node('p','poll-meta',option.percent.toLocaleString('ja-JP',{maximumFractionDigits:1})+'% · '+count(option.votes)+'件'));options.append(card);radios.push(radio);}
-      const submit=node('button','btn poll-vote',poll.closed?'受付は終了しました':poll.hasVoted?'投票先を変更する':'投票する');submit.type='submit';submit.disabled=state.busy||poll.closed||!state.selected;
-      form.append(heading,node('p','survey-note','回答 '+count(poll.totalVotes)+'件'),options,message,submit,node('p','survey-note','このブラウザーの識別情報で1票にまとめます。投票先は選び直せます。保存情報の削除・期限切れや別のブラウザーによる重複は完全には防げません。'));
-      form.addEventListener('submit',async event=>{event.preventDefault();if(state.busy||poll.closed||!state.selected)return;state.busy=true;listMutationEpoch++;radios.forEach(r=>r.disabled=true);submit.disabled=true;say(message,'投票しています…');try{const token=await pollIdentity();const payload=requestPayload(state,{optionId:state.selected,voterToken:token});const data=await api('/ideas/'+parent+'/poll/vote',encodeAction(payload));state.poll=validPoll(data.poll);state.selected=state.poll?.selectedOptionId||state.selected;state.payload=null;state.fingerprint=null;render();}catch(error){if(error.status===403){forgetPollIdentity();state.payload=null;state.fingerprint=null;}if(error.status===409){state.loaded=false;await load(true);}say(message,error.message);}finally{state.busy=false;if(host.contains(form)){radios.forEach(r=>r.disabled=poll.closed);submit.disabled=poll.closed||!state.selected;}else render();}});host.append(form);
+    const state={busy:false,payload:null,fingerprint:null,poll:null,loaded:false,loading:false,selected:null,editing:false,notice:''};pollStates.set(parent,state);
+    async function load(preserveChoice=false){
+      if(state.loading||state.loaded)return;state.loading=true;
+      try{
+        const sentToken=pollToken;let data;try{data=await api('/ideas/'+parent+'/poll',undefined,sentToken?{'x-poll-voter':sentToken}:{});}catch(error){if(error.status!==403||!sentToken)throw error;if(pollToken===sentToken)forgetPollIdentity();data=await api('/ideas/'+parent+'/poll');}
+        state.poll=validPoll(data.poll);state.selected=state.poll?.selectedOptionId||(preserveChoice&&state.poll?.options.some(o=>o.id===state.selected)?state.selected:null);state.loaded=true;render();
+      }catch(error){
+        const notice=node('p','public-message',error.message),retry=node('button','public-refresh poll-retry','アンケートを読み直す');notice.setAttribute('role','status');retry.type='button';retry.addEventListener('click',()=>load());host.replaceChildren(notice,retry);
+      }finally{state.loading=false;}
     }
-    return {load};
+    function render(){
+      host.replaceChildren();const poll=state.poll;if(!poll)return;
+      const results=poll.closed||(poll.hasVoted&&!state.editing),form=node('form','poll-form');form.dataset.view=results?'results':'choice';form.setAttribute('aria-busy',String(state.busy));
+      const header=node('header','poll-heading');header.append(node('span','poll-kicker','アンケート'),node('span','poll-state',poll.closed?'受付終了':results?'投票済み':state.editing?'投票先を変更':'投票受付中'));
+      const heading=node('h4','poll-question',poll.question);heading.id='poll-question-'+parent;form.setAttribute('aria-labelledby',heading.id);
+      const options=node('div','poll-options');options.setAttribute('role','radiogroup');options.setAttribute('aria-labelledby',heading.id);
+      const message=node('p','public-message',state.notice);message.setAttribute('role','status');
+      const submit=node('button','btn poll-vote',state.busy?'投票しています…':state.editing?'投票先を変更する':'投票する');submit.type='submit';submit.hidden=results;
+      const canSubmit=()=>!state.busy&&!poll.closed&&!results&&!!state.selected&&(!poll.hasVoted||state.selected!==poll.selectedOptionId);
+      submit.disabled=!canSubmit();const radios=[];
+      const highest=Math.max(...poll.options.map(option=>option.votes));
+      for(const option of poll.options){
+        const selected=results?poll.selectedOptionId===option.id:state.selected===option.id;
+        const row=node('label','poll-option'+(selected?' is-selected':'')+(results&&highest>0&&option.votes===highest?' is-leading':''));
+        const radio=node('input');radio.type='radio';radio.name='pollOption';radio.value=option.id;radio.checked=state.selected===option.id;radio.disabled=state.busy||results;
+        const copy=node('span','poll-option-copy');copy.append(node('span','poll-option-text',option.label));
+        if(option.imageUrl){const img=node('img','poll-option-image');img.src=API+option.imageUrl;img.alt=option.label;img.loading='lazy';copy.append(img);}
+        const check=node('span','poll-option-check',selected?'✓':'');check.setAttribute('aria-hidden','true');row.append(radio,copy,check);
+        if(results){
+          const percent=node('span','poll-percent',option.percent.toLocaleString('ja-JP',{maximumFractionDigits:1})+'%');
+          const bar=node('span','poll-bar'),fill=node('span');bar.setAttribute('aria-hidden','true');fill.style.width=option.percent+'%';bar.append(fill);row.append(percent,bar);
+          if(selected)row.append(node('span','poll-sr-only','あなたの投票'));
+        }
+        radio.addEventListener('change',()=>{
+          if(state.busy||results)return;state.selected=option.id;submit.disabled=!canSubmit();
+          options.querySelectorAll('.poll-option').forEach(label=>{const active=label.querySelector('input').value===state.selected;label.classList.toggle('is-selected',active);label.querySelector('.poll-option-check').textContent=active?'✓':'';});
+        });options.append(row);radios.push(radio);
+      }
+      const footer=node('div','poll-footer'),total=node('p','poll-total',count(poll.totalVotes)+'票');footer.append(total);
+      const change=node('button','poll-change','投票先を変更');change.type='button';change.disabled=state.busy;change.hidden=!results||poll.closed;
+      change.addEventListener('click',()=>{if(state.busy||poll.closed)return;state.editing=true;state.notice='';render();host.querySelector('input:checked')?.focus();});footer.append(change);
+      if(state.editing){const cancel=node('button','poll-change poll-cancel','結果に戻る');cancel.type='button';cancel.disabled=state.busy;cancel.addEventListener('click',()=>{if(state.busy)return;state.editing=false;state.selected=poll.selectedOptionId;state.notice='';render();});footer.append(cancel);}
+      const privacy=node('details','poll-privacy');privacy.append(node('summary','','投票について'),node('p','survey-note','このブラウザーの識別情報で1票にまとめます。投票先は選び直せます。保存情報の削除・期限切れや別のブラウザーによる重複は完全には防げません。'));
+      form.append(header,heading,options,submit,message,footer,privacy);
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();if(!canSubmit())return;
+        state.busy=true;listMutationEpoch++;radios.forEach(radio=>radio.disabled=true);submit.disabled=true;submit.textContent='投票しています…';change.disabled=true;form.querySelector('.poll-cancel')?.setAttribute('disabled','');form.setAttribute('aria-busy','true');state.notice='投票しています…';say(message,state.notice);
+        let success=false;
+        try{
+          const token=await pollIdentity(),payload=requestPayload(state,{optionId:state.selected,voterToken:token});
+          const data=await api('/ideas/'+parent+'/poll/vote',encodeAction(payload)),next=validPoll(data.poll);if(!next)throw Error('投票結果を確認できません。同じ内容で再試行してください。');
+          state.poll=next;state.selected=next.selectedOptionId||state.selected;state.payload=null;state.fingerprint=null;state.editing=false;state.notice='投票しました。';success=true;
+        }catch(error){
+          if(error.status===403){if(!state.payload||pollToken===state.payload.voterToken)forgetPollIdentity();state.payload=null;state.fingerprint=null;}
+          if(error.status===409){state.loaded=false;await load(true);}
+          state.notice=error.message;
+        }finally{
+          state.busy=false;render();if(success)host.querySelector('.poll-change:not([hidden])')?.focus();
+        }
+      });host.append(form);
+    }
+    return {host,load};
   }
+  // One poll view per idea, retained when sorting or opening the discussion.
+  const pollViews=new Map();
+  function pollFor(id){if(!pollViews.has(id)){const host=node('section','idea-poll poll-card');host.setAttribute('aria-label','アンケート');pollViews.set(id,publicPoll(id,host));}return pollViews.get(id);}
+  const pollObserver=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>{for(const entry of entries){if(!entry.isIntersecting)continue;pollObserver.unobserve(entry.target);pollFor(entry.target.dataset.ideaId).load();}},{rootMargin:'300px 0px'}):null;
 
   const detailCache=new Map();
   function updateDetail(item) {
@@ -350,7 +409,7 @@
     if(detailCache.has(item.id)){updateDetail(item);return detailCache.get(item.id);}
     const panel=node('div','idea-detail-content');panel.dataset.parentId=item.id;panel.id='idea-detail-'+item.id;
     const status=node('span','idea-status',statuses[item.status]),meta=node('p','survey-note','公開コメント '+count(item.commentCount)+'件'),title=node('h3','',item.title),body=node('p','idea-body',item.body);
-    panel.append(status,meta,title,body,voteControls(item));const pollPanel=node('section','idea-poll');panel.append(pollPanel);const poll=publicPoll(item.id,pollPanel);
+    panel.append(status,meta,title,body,voteControls(item));
     const fileArea=node('section','idea-files'),fileNotice=node('p','public-message');fileNotice.setAttribute('role','status');fileArea.append(node('h4','','公開された添付'),fileNotice);panel.append(fileArea);let fileRows=[];
     async function loadFiles(){try{const data=await api('/ideas/'+item.id+'/files');fileRows=checkedFiles(data.items);renderFileLinks(fileArea,fileRows.filter(f=>!f.commentId));say(fileNotice,fileRows.length?'':'公開された添付はありません。');}catch(error){say(fileNotice,error.message);} }
     const details=node('section','idea-comments'),summary=node('h4','','コメント · 具体的な使い方'),list=node('div'),notice=node('p','public-message'),reload=node('button','public-refresh','コメントを読み直す'),more=node('button','public-refresh','さらに見る');
@@ -372,7 +431,7 @@
       }catch(error){say(notice,error.message);}finally{busy=false;reload.disabled=false;more.disabled=false;}
     }
     reload.addEventListener('click',()=>load());more.addEventListener('click',()=>{if(nextOffset!==null)load(nextOffset);});
-    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),commentCountLabel:panel.querySelector('.idea-actions .survey-note'),loadOnce(){if(!loaded)load();poll.load();}};detailCache.set(item.id,entry);return entry;
+    const entry={panel,status,meta,title,body,vote:panel.querySelector('.idea-vote-controls button'),commentCountLabel:panel.querySelector('.idea-actions .survey-note'),loadOnce(){if(!loaded)load();pollFor(item.id).load();}};detailCache.set(item.id,entry);return entry;
   }
   const ideaList=document.querySelector('#idea-list'),ideaNotice=document.querySelector('#ideas-message'),ideaMore=document.querySelector('#ideas-more'),detailHost=document.querySelector('#idea-detail'),sortButtons=[...document.querySelectorAll('[data-idea-sort]')];
   let ideasBusy=false,nextOffset=null,selectedId=null,loadedIdeas=new Map(),currentSort='newest',desiredSort='newest',listMutationEpoch=0;
