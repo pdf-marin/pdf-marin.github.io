@@ -9,6 +9,6 @@
   "notes": "ページの一部を切り取ってコピー・保存・印刷できる「スナップショット」を追加しました。翻訳と文字の読み取り（OCR）も使いやすくしました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.3.6です（0.3.7 は申請準備中）。",
+  "_store_memo": "Microsoft Store版もv0.3.7です（2026-10-19 公開）。",
   "sha256": "9cded68c0ca3d56fa7bc4996156d380ed3f57dc87dbd24b3284a5aca4ad8e5f2"
 }
