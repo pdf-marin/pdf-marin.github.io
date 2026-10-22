@@ -9,6 +9,6 @@
   "notes": "機能の探しやすさ、翻訳・OCR・大容量PDFの圧縮などを改善しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.3.7です。v0.3.8のストア提出はまだ完了していません。",
+  "_store_memo": "Microsoft Store版もv0.3.8です（2026-10-22 認定・配信を確認）。",
   "sha256": "ef3eb961d75b5bd34201c8c2074da0a2683c6e225236e90df32332189c6e292d"
 }
