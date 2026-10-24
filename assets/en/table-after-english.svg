@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800" role="img" aria-labelledby="title description">
+  <title id="title">Illustrated table output with text-formatted item codes</title>
+  <desc id="description">A generic cell layout containing the same fictional five-row office supply table and total JPY 27,840. Item codes 00101 to 00105 retain their leading zeros as text. An illustration, not an Excel or PDF MARIN screenshot or an actual conversion result.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef9fc"/><stop offset="1" stop-color="#f8fdfd"/></linearGradient>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="145%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#173b4a" flood-opacity="0.07"/></filter>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#173b4a}
+      .muted{fill:#526e7b}.label{font-size:13px;letter-spacing:1.5px;font-weight:700}
+      .body{font-size:22px}.number{font-size:22px;font-variant-numeric:tabular-nums}
+      .code{font-family:Consolas,'Courier New',monospace;font-size:23px}
+      .grid{stroke:#d8e7ed;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1440" height="800" rx="24" fill="url(#background)"/>
+  <text x="70" y="55" class="label" fill="#137fa4">ILLUSTRATED OUTPUT</text>
+  <text x="70" y="106" font-size="37" font-weight="700">A table you can work with.</text>
+  <text x="70" y="143" font-size="20" class="muted">Values in separate cells. Item codes kept as text.</text>
+  <rect x="70" y="181" width="1300" height="487" rx="14" fill="#fff" filter="url(#shadow)"/>
+  <text x="100" y="222" font-size="18" font-weight="700">Office supply summary</text>
+  <text x="1338" y="222" text-anchor="end" class="label muted">CURRENCY: JPY</text>
+  <rect x="100" y="248" width="1240" height="42" rx="3" fill="#f1f7f9"/>
+  <g font-size="15" font-weight="700" text-anchor="middle" class="muted">
+    <text x="141" y="275">Row</text><text x="280" y="275">A</text><text x="610" y="275">B</text>
+    <text x="920" y="275">C</text><text x="1070" y="275">D</text><text x="1240" y="275">E</text>
+  </g>
+  <rect x="180" y="290" width="200" height="305" fill="#edf9fa"/>
+  <rect x="100" y="290" width="1240" height="50" fill="#edf5f8"/>
+  <rect x="100" y="595" width="1240" height="44" fill="#f5fafc"/>
+  <g class="grid">
+    <path d="M100 290H1340M100 340H1340M100 391H1340M100 442H1340M100 493H1340M100 544H1340M100 595H1340M100 639H1340"/>
+    <path d="M100 290V639M180 248V639M380 248V639M840 248V639M1000 248V639M1140 248V639M1340 290V639"/>
+  </g>
+  <g font-size="17" font-weight="700">
+    <text x="200" y="322">Item code</text><text x="400" y="322">Description</text>
+    <text x="978" y="322" text-anchor="end">Qty</text><text x="1118" y="322" text-anchor="end">Unit price</text><text x="1318" y="322" text-anchor="end">Amount</text>
+  </g>
+  <g font-size="15" text-anchor="middle" class="muted">
+    <text x="140" y="321">1</text><text x="140" y="373">2</text><text x="140" y="424">3</text>
+    <text x="140" y="475">4</text><text x="140" y="526">5</text><text x="140" y="577">6</text><text x="140" y="624">7</text>
+  </g>
+  <g>
+    <text x="200" y="373" class="code">00101</text><text x="400" y="373" class="body">Cable clips</text><text x="978" y="373" text-anchor="end" class="number">24</text><text x="1118" y="373" text-anchor="end" class="number">140</text><text x="1318" y="373" text-anchor="end" class="number">3,360</text>
+    <text x="200" y="424" class="code">00102</text><text x="400" y="424" class="body">Desk trays</text><text x="978" y="424" text-anchor="end" class="number">6</text><text x="1118" y="424" text-anchor="end" class="number">980</text><text x="1318" y="424" text-anchor="end" class="number">5,880</text>
+    <text x="200" y="475" class="code">00103</text><text x="400" y="475" class="body">Label sheets</text><text x="978" y="475" text-anchor="end" class="number">12</text><text x="1118" y="475" text-anchor="end" class="number">450</text><text x="1318" y="475" text-anchor="end" class="number">5,400</text>
+    <text x="200" y="526" class="code">00104</text><text x="400" y="526" class="body">Storage boxes</text><text x="978" y="526" text-anchor="end" class="number">8</text><text x="1118" y="526" text-anchor="end" class="number">1,250</text><text x="1318" y="526" text-anchor="end" class="number">10,000</text>
+    <text x="200" y="577" class="code">00105</text><text x="400" y="577" class="body">Marker pens</text><text x="978" y="577" text-anchor="end" class="number">10</text><text x="1118" y="577" text-anchor="end" class="number">320</text><text x="1318" y="577" text-anchor="end" class="number">3,200</text>
+    <text x="200" y="624" font-size="20" font-weight="700">Total</text><text x="1318" y="624" text-anchor="end" font-size="24" font-weight="700">27,840</text>
+  </g>
+  <rect x="181" y="341" width="198" height="253" fill="none" stroke="#17b8bb" stroke-width="2.5"/>
+  <rect x="373" y="588" width="9" height="9" fill="#17b8bb" stroke="#fff" stroke-width="1.5"/>
+  <path d="M280 669V693H316" fill="none" stroke="#17b8bb" stroke-width="2"/>
+  <rect x="332" y="681" width="56" height="27" rx="5" fill="#e4f6f7"/>
+  <text x="360" y="700" text-anchor="middle" font-size="13" font-weight="700" fill="#137fa4">Text</text>
+  <text x="402" y="701" font-size="18" font-weight="700">Leading zeros stay in place.</text>
+  <text x="1370" y="757" text-anchor="end" font-size="12" class="muted" letter-spacing="1">CELL LAYOUT ILLUSTRATION / FICTIONAL DATA</text>
+</svg>
