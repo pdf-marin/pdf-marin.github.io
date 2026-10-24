@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="#173b4a" role="img" aria-labelledby="hero-title hero-description">
+  <title id="hero-title">An English activity report, highlighted and annotated</title>
+  <desc id="hero-description">An original illustration of a fictional MARIN STUDIO business document. The 2026 activity report contains three key figures, a quarterly bar chart, a summary table and a review comment. This is an English sample document, not an application screenshot. All figures are illustrative.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f5fbfd"/><stop offset=".54" stop-color="#eaf6fa"/><stop offset="1" stop-color="#f2faf9"/>
+    </linearGradient>
+    <radialGradient id="aqua-light" cx="0" cy="0" r="1" gradientTransform="translate(1320 110) rotate(110) scale(750 670)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#bcecea" stop-opacity=".6"/><stop offset="1" stop-color="#d9f1f4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="teal-bars" x1="0" y1="500" x2="0" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17b8bb"/><stop offset="1" stop-color="#137fa4"/>
+    </linearGradient>
+    <linearGradient id="paper-edge" x1="210" y1="56" x2="1324" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#137fa4"/><stop offset=".7" stop-color="#17b8bb"/><stop offset="1" stop-color="#a9e5e4"/>
+    </linearGradient>
+    <filter id="paper-shadow" x="110" y="10" width="1320" height="990" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#21576b" flood-opacity=".12"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#21576b" flood-opacity=".05"/>
+    </filter>
+    <filter id="comment-shadow" x="1180" y="290" width="390" height="240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#16485b" flood-opacity=".14"/>
+    </filter>
+    <style>
+      text{font-family:Inter,"Segoe UI",Arial,sans-serif}
+      .eyebrow{font-size:13px;font-weight:700;letter-spacing:2px}
+      .muted{fill:#66838f}
+      .label{font-size:15px;font-weight:500}
+      .small{font-size:13px}
+      .number{font-variant-numeric:tabular-nums}
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#background)"/>
+  <rect width="1600" height="1000" fill="url(#aqua-light)"/>
+  <path d="M0 828C248 738 351 959 640 974M1134 0c40 98 215 153 466 138" fill="none" stroke="#c3e3eb" stroke-width="1.5" opacity=".65"/>
+  <path d="M73 130h32m-16-16v32M1453 813h32m-16-16v32" stroke="#b5dbe5" stroke-width="1.5"/>
+  <circle cx="1469" cy="207" r="4" fill="#17b8bb" opacity=".32"/>
+  <circle cx="131" cy="881" r="3" fill="#137fa4" opacity=".28"/>
+
+  <g filter="url(#paper-shadow)">
+    <rect x="210" y="54" width="1114" height="892" rx="9" fill="#fff" stroke="#d5e6ed"/>
+    <path d="M219 54h1096a9 9 0 0 1 9 9H210a9 9 0 0 1 9-9Z" fill="url(#paper-edge)"/>
+  </g>
+
+  <!-- The report is a standalone fictional document, not an imitation of app chrome. -->
+  <g>
+    <path d="M270 101h20v18h-20Z" fill="#edf8fa"/>
+    <path d="M272 107c4-4 7 4 11 0s6 2 6 2m-17 5c4-4 7 4 11 0s6 2 6 2" fill="none" stroke="#137fa4" stroke-width="2"/>
+    <text x="302" y="115" class="eyebrow">MARIN STUDIO</text>
+    <text x="1264" y="115" class="small muted" text-anchor="end" letter-spacing="1.6">ANNUAL REVIEW / 2026</text>
+    <text x="270" y="185" font-size="45" font-weight="750" letter-spacing="-1.6">2026 ACTIVITY REPORT</text>
+    <text x="270" y="221" font-size="18" class="muted">A clear view of the work. More room for what comes next.</text>
+    <line x1="270" y1="250" x2="1264" y2="250" stroke="#e1ecf0"/>
+
+    <!-- Key figures -->
+    <rect x="270" y="278" width="306" height="122" rx="6" fill="#f5fafc" stroke="#e0edf2"/>
+    <rect x="594" y="278" width="306" height="122" rx="6" fill="#f5fafc" stroke="#e0edf2"/>
+    <rect x="918" y="278" width="346" height="122" rx="6" fill="#f1faf9" stroke="#d8eeec"/>
+    <text x="294" y="307" class="label muted">Pages organized</text>
+    <text x="618" y="307" class="label muted">Projects delivered</text>
+    <text x="942" y="307" class="label muted">On-time delivery</text>
+    <text x="294" y="357" font-size="42" font-weight="700" letter-spacing="-1.8" class="number">1,284</text>
+    <text x="618" y="357" font-size="42" font-weight="700" letter-spacing="-1.8" class="number">190</text>
+    <path d="M939 342c43-4 116-3 175-1l-2 20c-60-2-124 0-171 2Z" fill="#fce98f" opacity=".85"/>
+    <text x="942" y="357" font-size="42" font-weight="700" letter-spacing="-1.8" class="number">98.6<tspan font-size="27">%</tspan></text>
+    <text x="294" y="383" font-size="13" fill="#16826f">+24% from last year</text>
+    <text x="618" y="383" font-size="13" fill="#16826f">+39% from last year</text>
+    <text x="942" y="383" font-size="13" fill="#16826f">Consistent, from start to finish</text>
+
+    <!-- Quarterly chart -->
+    <rect x="270" y="428" width="642" height="296" rx="6" fill="#fff" stroke="#dfebf0"/>
+    <text x="294" y="462" font-size="20" font-weight="650" letter-spacing="-.35">A year of steady progress</text>
+    <text x="294" y="487" class="small muted">Projects delivered each quarter</text>
+    <rect x="704" y="452" width="11" height="11" rx="2" fill="#c7dce5"/>
+    <text x="721" y="462" font-size="12" class="muted">2025</text>
+    <rect x="790" y="452" width="11" height="11" rx="2" fill="#17b8bb"/>
+    <text x="807" y="462" font-size="12" class="muted">2026</text>
+    <g stroke="#e7eff3" stroke-width="1">
+      <line x1="329" y1="535" x2="879" y2="535"/>
+      <line x1="329" y1="581" x2="879" y2="581"/>
+      <line x1="329" y1="627" x2="879" y2="627"/>
+      <line x1="329" y1="673" x2="879" y2="673"/>
+    </g>
+    <g font-size="11" class="number" text-anchor="end">
+      <text x="316" y="539" class="muted">60</text><text x="316" y="585" class="muted">40</text>
+      <text x="316" y="631" class="muted">20</text><text x="316" y="677" class="muted">0</text>
+    </g>
+    <g fill="#c7dce5">
+      <rect x="348" y="618" width="31" height="55" rx="3"/>
+      <rect x="486" y="602" width="31" height="71" rx="3"/>
+      <rect x="624" y="586" width="31" height="87" rx="3"/>
+      <rect x="762" y="572" width="31" height="101" rx="3"/>
+    </g>
+    <g fill="url(#teal-bars)">
+      <rect x="386" y="602" width="31" height="71" rx="3"/>
+      <rect x="524" y="574" width="31" height="99" rx="3"/>
+      <rect x="662" y="553" width="31" height="120" rx="3"/>
+      <rect x="800" y="526" width="31" height="147" rx="3"/>
+    </g>
+    <g font-size="13" font-weight="650" text-anchor="middle" class="number">
+      <text x="401.5" y="592" fill="#137fa4">31</text><text x="539.5" y="564" fill="#137fa4">43</text>
+      <text x="677.5" y="543" fill="#137fa4">52</text><text x="815.5" y="516" fill="#137fa4">64</text>
+    </g>
+    <g font-size="13" text-anchor="middle">
+      <text x="382.5" y="701" class="muted">Q1</text><text x="520.5" y="701" class="muted">Q2</text>
+      <text x="658.5" y="701" class="muted">Q3</text><text x="796.5" y="701" class="muted">Q4</text>
+    </g>
+
+    <!-- Editorial summary -->
+    <rect x="936" y="428" width="328" height="296" rx="6" fill="#f4fafb" stroke="#dfedf1"/>
+    <text x="960" y="462" class="eyebrow" fill="#137fa4">THE YEAR, IN FOCUS</text>
+    <text x="960" y="504" font-size="24" font-weight="650" letter-spacing="-.5">Less friction.</text>
+    <text x="960" y="535" font-size="24" font-weight="650" letter-spacing="-.5">Better outcomes.</text>
+    <path d="M958 548c73-1 160-2 240 0" fill="none" stroke="#71d5cf" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+    <g font-size="14">
+      <circle cx="965" cy="583" r="8" fill="#def2ee"/><path d="m961 583 3 3 5-6" fill="none" stroke="#16826f" stroke-width="1.6"/>
+      <text x="984" y="588">Simpler document workflows</text>
+      <circle cx="965" cy="625" r="8" fill="#def2ee"/><path d="m961 625 3 3 5-6" fill="none" stroke="#16826f" stroke-width="1.6"/>
+      <text x="984" y="630">More consistent delivery</text>
+      <circle cx="965" cy="667" r="8" fill="#def2ee"/><path d="m961 667 3 3 5-6" fill="none" stroke="#16826f" stroke-width="1.6"/>
+      <text x="984" y="672">A stronger finish to the year</text>
+    </g>
+
+    <!-- Compact business table -->
+    <text x="270" y="764" font-size="18" font-weight="650">Quarterly overview</text>
+    <text x="1264" y="764" class="small muted" text-anchor="end">A consistent record of progress</text>
+    <rect x="270" y="781" width="994" height="29" fill="#f4f8fa"/>
+    <g font-size="12" font-weight="600" class="muted">
+      <text x="288" y="800">QUARTER</text><text x="614" y="800" text-anchor="end">PROJECTS</text>
+      <text x="878" y="800" text-anchor="end">ON-TIME DELIVERY</text><text x="1080" y="800">REVIEW</text>
+    </g>
+    <g stroke="#e8eff2"><line x1="270" y1="835" x2="1264" y2="835"/><line x1="270" y1="861" x2="1264" y2="861"/><line x1="270" y1="887" x2="1264" y2="887"/></g>
+    <g font-size="13" class="number">
+      <text x="288" y="828">Q1 / January–March</text><text x="614" y="828" text-anchor="end">31</text><text x="878" y="828" text-anchor="end">97.8%</text><text x="1080" y="828" fill="#16826f">Complete</text>
+      <text x="288" y="854">Q2 / April–June</text><text x="614" y="854" text-anchor="end">43</text><text x="878" y="854" text-anchor="end">98.4%</text><text x="1080" y="854" fill="#16826f">Complete</text>
+      <text x="288" y="880">Q3 / July–September</text><text x="614" y="880" text-anchor="end">52</text><text x="878" y="880" text-anchor="end">98.7%</text><text x="1080" y="880" fill="#16826f">Complete</text>
+      <text x="288" y="906">Q4 / October–December</text><text x="614" y="906" text-anchor="end">64</text><text x="878" y="906" text-anchor="end">99.5%</text><text x="1080" y="906" fill="#16826f">Complete</text>
+    </g>
+    <text x="270" y="931" font-size="10" class="muted" letter-spacing="1.4">FICTIONAL SAMPLE DOCUMENT · ALL FIGURES ARE ILLUSTRATIVE</text>
+    <text x="1264" y="931" font-size="10" class="muted" text-anchor="end">MARIN STUDIO / 01</text>
+  </g>
+
+  <!-- A document annotation, deliberately without application controls. -->
+  <path d="M1183 338h35q17 0 24 15" fill="none" stroke="#137fa4" stroke-width="2"/>
+  <circle cx="1183" cy="338" r="12" fill="#137fa4" stroke="#fff" stroke-width="3"/>
+  <text x="1183" y="342" font-size="11" font-weight="700" text-anchor="middle" fill="#fff">1</text>
+  <g filter="url(#comment-shadow)">
+    <rect x="1238" y="326" width="288" height="126" rx="8" fill="#fff" stroke="#b7dce7"/>
+    <path d="M1238 346v-12a8 8 0 0 1 8-8h272a8 8 0 0 1 8 8v12Z" fill="#f0f8fb"/>
+  </g>
+  <path d="M1259 345h14v9h-7l-4 4v-4h-3Z" fill="none" stroke="#137fa4" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="1284" y="354" font-size="11" font-weight="650" fill="#137fa4" letter-spacing="1.6">REVIEW NOTE</text>
+  <text x="1259" y="387" font-size="18" font-weight="650">Ready to share.</text>
+  <text x="1259" y="413" font-size="14" class="muted">Clear, consistent results.</text>
+  <text x="1259" y="434" font-size="12" fill="#137fa4">Highlight what matters.</text>
+</svg>
