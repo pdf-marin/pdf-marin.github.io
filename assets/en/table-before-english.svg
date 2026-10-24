@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="950" viewBox="0 0 1040 950" role="img" aria-labelledby="title description">
+  <title id="title">English sample PDF table before conversion</title>
+  <desc id="description">Illustrated fictional office supply summary. Five item codes from 00101 to 00105, descriptions, quantities, unit prices and amounts. Total JPY 27,840. Not an application screenshot.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#eef9fc"/><stop offset="1" stop-color="#f9fdfd"/>
+    </linearGradient>
+    <filter id="paper-shadow" x="-20%" y="-15%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#173b4a" flood-opacity="0.09"/>
+    </filter>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#173b4a}
+      .muted{fill:#526e7b}.label{font-size:13px;letter-spacing:1.6px;font-weight:700}
+      .body{font-size:20px}.number{font-size:20px;font-variant-numeric:tabular-nums}
+      .code{font-family:Consolas,'Courier New',monospace;font-size:20px}
+      .rule{stroke:#dbe7ec;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1040" height="950" rx="24" fill="url(#background)"/>
+  <rect x="60" y="38" width="920" height="874" rx="9" fill="#fff" filter="url(#paper-shadow)"/>
+  <rect x="60" y="38" width="920" height="6" rx="3" fill="#137fa4"/>
+  <g transform="translate(108 92)">
+    <rect width="54" height="28" rx="5" fill="#e9f6fb"/>
+    <text x="27" y="19" text-anchor="middle" font-size="13" font-weight="700" fill="#137fa4">PDF</text>
+    <text x="70" y="19" class="label muted">SAMPLE DOCUMENT</text>
+    <text x="824" y="19" text-anchor="end" class="label muted">CURRENCY: JPY</text>
+  </g>
+  <text x="108" y="184" font-size="34" font-weight="700">Office supply summary</text>
+  <text x="108" y="221" font-size="17" class="muted">A simple purchasing table, shown as a PDF document.</text>
+  <line x1="108" y1="254" x2="932" y2="254" stroke="#137fa4" stroke-width="2"/>
+  <text x="108" y="289" class="label muted">REFERENCE</text>
+  <text x="108" y="316" font-size="18">SAMPLE-001</text>
+  <text x="932" y="289" text-anchor="end" class="label muted">ITEMS</text>
+  <text x="932" y="316" text-anchor="end" font-size="18">5 line items</text>
+  <rect x="108" y="354" width="824" height="60" rx="5" fill="#f0f6f8"/>
+  <g font-size="16" font-weight="700">
+    <text x="125" y="391">Item code</text><text x="270" y="391">Description</text>
+    <text x="640" y="391" text-anchor="end">Qty</text>
+    <text x="780" y="391" text-anchor="end">Unit price</text>
+    <text x="915" y="391" text-anchor="end">Amount</text>
+  </g>
+  <g class="rule">
+    <line x1="108" y1="482" x2="932" y2="482"/><line x1="108" y1="550" x2="932" y2="550"/>
+    <line x1="108" y1="618" x2="932" y2="618"/><line x1="108" y1="686" x2="932" y2="686"/>
+    <line x1="108" y1="754" x2="932" y2="754"/>
+  </g>
+  <g>
+    <text x="125" y="456" class="code">00101</text><text x="270" y="456" class="body">Cable clips</text>
+    <text x="640" y="456" text-anchor="end" class="number">24</text><text x="780" y="456" text-anchor="end" class="number">140</text><text x="915" y="456" text-anchor="end" class="number">3,360</text>
+    <text x="125" y="524" class="code">00102</text><text x="270" y="524" class="body">Desk trays</text>
+    <text x="640" y="524" text-anchor="end" class="number">6</text><text x="780" y="524" text-anchor="end" class="number">980</text><text x="915" y="524" text-anchor="end" class="number">5,880</text>
+    <text x="125" y="592" class="code">00103</text><text x="270" y="592" class="body">Label sheets</text>
+    <text x="640" y="592" text-anchor="end" class="number">12</text><text x="780" y="592" text-anchor="end" class="number">450</text><text x="915" y="592" text-anchor="end" class="number">5,400</text>
+    <text x="125" y="660" class="code">00104</text><text x="270" y="660" class="body">Storage boxes</text>
+    <text x="640" y="660" text-anchor="end" class="number">8</text><text x="780" y="660" text-anchor="end" class="number">1,250</text><text x="915" y="660" text-anchor="end" class="number">10,000</text>
+    <text x="125" y="728" class="code">00105</text><text x="270" y="728" class="body">Marker pens</text>
+    <text x="640" y="728" text-anchor="end" class="number">10</text><text x="780" y="728" text-anchor="end" class="number">320</text><text x="915" y="728" text-anchor="end" class="number">3,200</text>
+  </g>
+  <rect x="596" y="774" width="336" height="66" rx="6" fill="#edf8fa"/>
+  <text x="618" y="815" font-size="19" font-weight="700">Total</text>
+  <text x="910" y="815" text-anchor="end" font-size="27" font-weight="700">27,840</text>
+  <text x="108" y="873" font-size="12" class="muted" letter-spacing="1">ILLUSTRATED EXAMPLE / FICTIONAL DATA</text>
+  <text x="932" y="873" text-anchor="end" font-size="13" class="muted">1 / 1</text>
+</svg>
