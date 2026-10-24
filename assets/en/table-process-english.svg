@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title description">
+  <title id="title">Illustrated table recognition and selection process</title>
+  <desc id="description">The same fictional office supply table with blue column and row guides. A separate schematic shows the selected table area. This is an illustrated workflow, not the PDF MARIN interface or a conversion result.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eff9fc"/><stop offset="1" stop-color="#f8fdfd"/></linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="145%"><feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#173b4a" flood-opacity="0.07"/></filter>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#173b4a}
+      .muted{fill:#526e7b}.label{font-size:14px;letter-spacing:1.5px;font-weight:700}
+      .body{font-size:21px}.number{font-size:21px;font-variant-numeric:tabular-nums}
+      .code{font-family:Consolas,'Courier New',monospace;font-size:21px}
+      .grid{stroke:#d8e6ed;stroke-width:1}.guide{stroke:#137fa4;stroke-width:1.7;stroke-dasharray:5 5;opacity:.66}
+    </style>
+  </defs>
+  <rect width="1600" height="1000" rx="26" fill="url(#background)"/>
+  <text x="66" y="58" class="label" fill="#137fa4">ILLUSTRATED WORKFLOW</text>
+  <text x="66" y="111" font-size="39" font-weight="700">Map the rows. Align the columns.</text>
+  <text x="66" y="148" font-size="20" class="muted">One table, shown with recognition guides and a selected area.</text>
+  <rect x="66" y="186" width="1094" height="686" rx="14" fill="#fff" filter="url(#shadow)"/>
+  <rect x="92" y="212" width="1042" height="634" rx="5" fill="#fff" stroke="#dce9ee"/>
+  <rect x="124" y="240" width="47" height="25" rx="4" fill="#eaf6fa"/>
+  <text x="147" y="258" text-anchor="middle" font-size="12" font-weight="700" fill="#137fa4">PDF</text>
+  <text x="184" y="258" class="label muted">SAMPLE DOCUMENT</text>
+  <text x="1102" y="258" text-anchor="end" class="label muted">JPY</text>
+  <text x="124" y="306" font-size="29" font-weight="700">Office supply summary</text>
+  <rect x="124" y="342" width="978" height="55" fill="#edf5f8"/>
+  <g font-size="18" font-weight="700">
+    <text x="142" y="377">Item code</text><text x="312" y="377">Description</text>
+    <text x="796" y="377" text-anchor="end">Qty</text><text x="946" y="377" text-anchor="end">Unit price</text><text x="1084" y="377" text-anchor="end">Amount</text>
+  </g>
+  <g class="grid">
+    <path d="M124 457H1102M124 517H1102M124 577H1102M124 637H1102M124 697H1102M124 757H1102"/>
+  </g>
+  <g>
+    <text x="142" y="435" class="code">00101</text><text x="312" y="435" class="body">Cable clips</text><text x="796" y="435" text-anchor="end" class="number">24</text><text x="946" y="435" text-anchor="end" class="number">140</text><text x="1084" y="435" text-anchor="end" class="number">3,360</text>
+    <text x="142" y="495" class="code">00102</text><text x="312" y="495" class="body">Desk trays</text><text x="796" y="495" text-anchor="end" class="number">6</text><text x="946" y="495" text-anchor="end" class="number">980</text><text x="1084" y="495" text-anchor="end" class="number">5,880</text>
+    <text x="142" y="555" class="code">00103</text><text x="312" y="555" class="body">Label sheets</text><text x="796" y="555" text-anchor="end" class="number">12</text><text x="946" y="555" text-anchor="end" class="number">450</text><text x="1084" y="555" text-anchor="end" class="number">5,400</text>
+    <text x="142" y="615" class="code">00104</text><text x="312" y="615" class="body">Storage boxes</text><text x="796" y="615" text-anchor="end" class="number">8</text><text x="946" y="615" text-anchor="end" class="number">1,250</text><text x="1084" y="615" text-anchor="end" class="number">10,000</text>
+    <text x="142" y="675" class="code">00105</text><text x="312" y="675" class="body">Marker pens</text><text x="796" y="675" text-anchor="end" class="number">10</text><text x="946" y="675" text-anchor="end" class="number">320</text><text x="1084" y="675" text-anchor="end" class="number">3,200</text>
+    <text x="142" y="735" font-size="21" font-weight="700">Total</text><text x="1084" y="735" text-anchor="end" font-size="25" font-weight="700">27,840</text>
+  </g>
+  <rect x="124" y="342" width="978" height="415" fill="#137fa4" fill-opacity=".025" stroke="#137fa4" stroke-width="2.5"/>
+  <g class="guide">
+    <path d="M294 332V767M694 332V767M814 332V767M964 332V767"/>
+    <path d="M114 397H1112M114 457H1112M114 517H1112M114 577H1112M114 637H1112M114 697H1112"/>
+  </g>
+  <g fill="#fff" stroke="#137fa4" stroke-width="2">
+    <rect x="119" y="337" width="10" height="10" rx="2"/><rect x="1097" y="337" width="10" height="10" rx="2"/>
+    <rect x="119" y="752" width="10" height="10" rx="2"/><rect x="1097" y="752" width="10" height="10" rx="2"/>
+  </g>
+  <text x="124" y="808" font-size="15" class="muted">Blue guides illustrate the table structure.</text>
+  <rect x="1200" y="216" width="334" height="550" rx="16" fill="#fff" stroke="#d0e9ef"/>
+  <text x="1232" y="257" class="label" fill="#137fa4">SELECTED AREA</text>
+  <text x="1232" y="295" font-size="25" font-weight="700">Focus on the table</text>
+  <text x="1232" y="326" font-size="17" class="muted">A simple selection concept.</text>
+  <rect x="1250" y="360" width="232" height="274" rx="5" fill="#f9fcfd" stroke="#d7e7ed"/>
+  <g fill="#d9e5eb">
+    <rect x="1272" y="382" width="136" height="6" rx="3"/><rect x="1272" y="398" width="176" height="5" rx="2.5"/>
+    <rect x="1272" y="575" width="160" height="5" rx="2.5"/><rect x="1272" y="591" width="116" height="5" rx="2.5"/>
+  </g>
+  <rect x="1270" y="433" width="192" height="112" fill="#e7f6fc" stroke="#137fa4" stroke-width="2"/>
+  <path d="M1270 456H1462M1270 478H1462M1270 500H1462M1270 522H1462M1312 433V545M1384 433V545M1426 433V545" stroke="#137fa4" stroke-opacity=".42"/>
+  <g fill="#fff" stroke="#137fa4" stroke-width="2">
+    <rect x="1266" y="429" width="8" height="8" rx="1"/><rect x="1458" y="429" width="8" height="8" rx="1"/>
+    <rect x="1266" y="541" width="8" height="8" rx="1"/><rect x="1458" y="541" width="8" height="8" rx="1"/>
+  </g>
+  <text x="1232" y="685" font-size="18" font-weight="700">Columns + rows</text>
+  <text x="1232" y="714" font-size="16" class="muted">Keep each value in its place.</text>
+  <path d="M1168 490H1186" stroke="#137fa4" stroke-width="2" stroke-dasharray="4 4"/>
+  <rect x="66" y="900" width="10" height="10" rx="2" fill="#137fa4"/>
+  <text x="88" y="911" font-size="16" class="muted">Recognition guides</text>
+  <text x="1534" y="941" text-anchor="end" font-size="13" class="muted" letter-spacing="1">ILLUSTRATED EXAMPLE / NOT AN APPLICATION SCREENSHOT</text>
+</svg>
