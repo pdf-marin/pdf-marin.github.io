@@ -1,0 +1,18 @@
+/* Language navigation and English text adjustments; shared Japanese layout stays intact. */
+.language-switch{max-width:1280px;margin:0 auto;padding:12px 24px;display:flex;justify-content:flex-end;align-items:center;gap:16px;font:600 14px/1.5 Inter,system-ui,sans-serif;flex-wrap:wrap}
+.language-switch a{color:#155e63;text-decoration:underline;text-underline-offset:4px}.language-switch [aria-current]{color:#223c3b}
+.language-switch a:focus-visible{outline:3px solid #157b80;outline-offset:4px;border-radius:2px}
+.language-notice{margin:20px 0;padding:16px 18px;border:1px solid #b2d7d2;border-radius:12px;background:#eef7f5;color:#284943;font-size:14px;line-height:1.7}
+.language-notice strong{display:block;margin-bottom:4px}.language-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}.language-details h2{font-size:clamp(24px,3vw,36px);margin:0 0 24px}.language-details h3{font-size:20px;line-height:1.4}.language-details p{line-height:1.8;max-width:65ch}.language-details a{color:#155e63;text-decoration:underline}
+html[lang=en] .hero-copy h1{font-size:clamp(46px,5.4vw,76px);letter-spacing:-.045em;line-height:1.08}
+html[lang=en] .hero-copy{min-width:0}html[lang=en] .nav{gap:18px}html[lang=en] .nav a{white-space:normal}
+html[lang=en] .hero-actions .btn{white-space:normal;text-align:center;min-width:0}html[lang=en] .hero-actions{flex-wrap:wrap}
+html[lang=en] .more-capabilities,html[lang=en] .hero-meta,html[lang=en] .footer-links{flex-wrap:wrap}
+html[lang=en] .release-title,html[lang=en] .feature-card,html[lang=en] .public-idea-title,html[lang=en] .feedback-form{min-width:0;overflow-wrap:anywhere}
+html[lang=en] .support-card-copy h3{font-size:clamp(20px,2.3vw,30px)}html[lang=en] .download-actions .btn{white-space:normal;text-align:center}
+/* Preserve focus visibility and wrapping for translated controls and long legal text. */
+html[lang=en]{overflow-wrap:anywhere}html[lang=en] :where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #157b80;outline-offset:4px}
+html[lang=en] :where(button,input,select,textarea){max-width:100%}
+@media(forced-colors:active){.language-switch a:focus-visible,html[lang=en] :where(a,button,input,select,textarea,summary):focus-visible{outline-color:Highlight}}
+@media(max-width:900px){html[lang=en] .header-inner{gap:12px}html[lang=en] .excel-steps{flex-wrap:wrap}.language-detail-grid{grid-template-columns:1fr;gap:18px}}
+@media(max-width:600px){.language-switch{padding:12px 18px;gap:12px}html[lang=en] .hero-copy h1{font-size:clamp(42px,12vw,64px)}html[lang=en] .hero-assurance{flex-wrap:wrap;gap:8px 16px}html[lang=en] .hero-actions{display:grid;grid-template-columns:1fr}html[lang=en] .showcase-topline{flex-wrap:wrap}html[lang=en] .ideas-toolbar{align-items:flex-start;flex-direction:column;gap:12px}html[lang=en] .ideas-sort{flex-wrap:wrap}html[lang=en] .support-button{min-width:0;max-width:100%}html[lang=en] .attachment-details summary{flex-wrap:wrap}html[lang=en] .form-footer{align-items:stretch}html[lang=en] .form-footer .btn{white-space:normal}html[lang=en] .download-actions{min-width:0}.language-notice{padding:14px}}
