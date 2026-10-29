@@ -61,12 +61,12 @@
           $$('[data-store-panel]').forEach(el => { el.dataset.state = 'available'; });
           $$('[data-store-status]').forEach(el => { el.textContent = 'Available'; });
           $$('[data-store-copy]').forEach(el => {
-            el.textContent = 'Install the current Japanese-language app from Microsoft Store. The Store also manages app updates.';
+            el.textContent = 'Install PDF MARIN from Microsoft Store. The Store also manages app updates.';
           });
           $$('[data-web-download]').forEach(link => {
             link.classList.add('secondary');
             const label = $('span', link);
-            if (label) label.textContent = 'Download current Japanese version';
+            if (label) label.textContent = 'Download for Windows';
           });
         }
       }).catch(() => { /* Keep the working download links already present in the HTML. */ });
