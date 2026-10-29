@@ -1,15 +1,15 @@
 {
-  "version": "0.3.9",
-  "date": "2026-10-28",
+  "version": "0.4.0",
+  "date": "2026-10-29",
   "size": "約269MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.3.9/PDF-MARIN-Setup-0.3.9.exe",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.0/PDF-MARIN-Setup-0.4.0.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "表示言語の日英切替と、検索・設定・狭い画面での操作を改善しました。",
+  "notes": "文字の注釈スタイルを保存すると次の起動から起動できなくなる不具合などを修正しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.3.8です。v0.3.9は更新申請準備中で、審査通過・配信開始とは別です。",
-  "sha256": "2cfec218f2d1a078f4059484fd9d047d837fcf6ab3dd4fe5863d7ff2f7e8737b",
-  "storeVersion": "0.3.8"
+  "_store_memo": "Microsoft Store版はv0.3.9です。v0.3.9・v0.4.0 の Store 更新は申請・審査の状況により配信時期が異なります（審査通過・配信開始とは別）。",
+  "sha256": "b51682345a5e6305942443a11a844699b5f36fb1c169ff611006b55b96ee1761",
+  "storeVersion": "0.3.9"
 }
