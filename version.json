@@ -1,15 +1,15 @@
 {
-  "version": "0.4.0",
-  "date": "2026-10-29",
+  "version": "0.4.1",
+  "date": "2026-11-03",
   "size": "約269MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.0/PDF-MARIN-Setup-0.4.0.exe",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.1/PDF-MARIN-Setup-0.4.1.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "文字の注釈スタイルを保存すると次の起動から起動できなくなる不具合などを修正しました。",
+  "notes": "インストーラー版から外部の生成AIと連携する機能を外し、印刷された枠への文字入力などを追加しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.3.9です。v0.3.9・v0.4.0 の Store 更新は申請・審査の状況により配信時期が異なります（審査通過・配信開始とは別）。",
-  "sha256": "b51682345a5e6305942443a11a844699b5f36fb1c169ff611006b55b96ee1761",
+  "_store_memo": "Microsoft Store版はv0.3.9です。v0.4.0・v0.4.1 の Store 更新は申請・審査の状況により配信時期が異なります（審査通過・配信開始とは別）。",
+  "sha256": "36d2f032e0d6c06e6620711609cba81c431c4111b834c15fcf878e2c0fce073c",
   "storeVersion": "0.3.9"
 }
