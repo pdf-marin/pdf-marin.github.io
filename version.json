@@ -9,7 +9,7 @@
   "notes": "インストーラー版から外部の生成AIと連携する機能を外し、印刷された枠への文字入力などを追加しました。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版はv0.4.0です。v0.4.1 の Store 更新は申請・審査の状況により配信時期が異なります（審査通過・配信開始とは別）。",
+  "_store_memo": "Microsoft Store版もv0.4.1です（Store の配信は審査・反映の状況で端末ごとに数時間ずれることがあります）。",
   "sha256": "36d2f032e0d6c06e6620711609cba81c431c4111b834c15fcf878e2c0fce073c",
-  "storeVersion": "0.4.0"
+  "storeVersion": "0.4.1"
 }
