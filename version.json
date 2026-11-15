@@ -1,15 +1,15 @@
 {
-  "version": "0.4.3",
-  "date": "2026-11-09",
+  "version": "0.4.4",
+  "date": "2026-11-16",
   "size": "約270MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.3/PDF-MARIN-Setup-0.4.3.exe",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.4/PDF-MARIN-Setup-0.4.4.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "設定画面を作り直し、8つの分類から探せるようにしました。言語の切り替えは［設定］→［見た目と着せ替え］に移り、アクセント色・背景の絵・字の大きさも選べます。プレゼンモード（F5）は全画面で始まり、右長押しのクイックサークルでレーザーや丸を選べます。発表者の画面ではメモや次のページを見られます。my注釈ボックスには［最近使った］タブ、ドック表示、窓の外への配置を追加しました。ネットワーク上（NAS）の PDF は止まらずに開いて上書き保存できるようにしました。完了のお知らせを減らし、墨消しの消し残しや印刷のはみ出しなど大事な知らせだけを残すようにしました。印刷画面の説明を短くし、電子署名の無い PDF では［電子署名］を灰色にして理由を表示します。",
+  "notes": "下のファイルタブとmy注釈のドックを作り直し、プレゼンモードに帯の自由移動・スポットライト・ぼかし・ペン・拡大・全ページの一覧・持ち時間・発表者メモを加えました。文字や図面の四角へのリンク、フローチャートの［＋］で次の箱、重ねて比較の自動合わせと違いの一覧、段落の縦中横・箇条の印、寸法値を線に沿わせる機能、傾き補正の［他のソフトでもくっきり］、焼き込みの「_確定」保存も加えました。大きいファイルの結合とメモリの使い方を改善し、墨消し・文字の書き換え・印刷・更新など多くの不具合を直しました。0.4.3 をお使いの方は、更新のお知らせで［今すぐ更新］を選んでください。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版もv0.4.3です（2026-11-09 に審査を通過し公開・Partner Center で確認）。",
-  "sha256": "8fae337f417ce3b4f39f754776dfe8166c83e848c90b60fc18c7a2bb3f6babd3",
+  "_store_memo": "Microsoft Store版はv0.4.3です（v0.4.4はこのあと審査に出します・審査通過や公開完了は未確認です）。",
+  "sha256": "ea2e5a8a22a94693f39dd546cdbbde0d2ce33fa0711b33eef3c6d95fd1d61838",
   "storeVersion": "0.4.3"
 }
