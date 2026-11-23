@@ -1,15 +1,15 @@
 {
-  "version": "0.4.4",
-  "date": "2026-11-16",
-  "size": "約270MB",
-  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.4/PDF-MARIN-Setup-0.4.4.exe",
+  "version": "0.4.5",
+  "date": "2026-11-23",
+  "size": "約250MB",
+  "url": "https://github.com/pdf-marin/pdf-marin.github.io/releases/download/v0.4.5/PDF-MARIN-Setup-0.4.5.exe",
   "storeUrl": "https://apps.microsoft.com/detail/9PM25X8RGJFT",
   "storeAvailable": true,
   "storeProductId": "9PM25X8RGJFT",
-  "notes": "下のファイルタブとmy注釈のドックを作り直し、プレゼンモードに帯の自由移動・スポットライト・ぼかし・ペン・拡大・全ページの一覧・持ち時間・発表者メモを加えました。文字や図面の四角へのリンク、フローチャートの［＋］で次の箱、重ねて比較の自動合わせと違いの一覧、段落の縦中横・箇条の印、寸法値を線に沿わせる機能、傾き補正の［他のソフトでもくっきり］、焼き込みの「_確定」保存も加えました。大きいファイルの結合とメモリの使い方を改善し、墨消し・文字の書き換え・印刷・更新など多くの不具合を直しました。0.4.3 をお使いの方は、更新のお知らせで［今すぐ更新］を選んでください。",
+  "notes": "左上の［メニュー］を窓いっぱいの画面にし、設定もその中で開くようにしました。my注釈のドックは道具やコマンドも置ける「マイドック」に、プレゼンモードは右の縦の帯といつも出る［× 終了］に作り直しました。測定の半径・直径・直列寸法・座標、複製して展開、付箋のはみ出し表示、フォルダをまとめて圧縮、印刷の仕上がりサイズの初期値を加えました。メモリの使い方を大きく改善し、着せ替えのアート9種を外して軽くし、多くの画面と不具合を直しました。0.4.3 以前をお使いの方は、更新のお知らせで［今すぐ更新］を選んでください。",
   "sponsorUrl": "https://ko-fi.com/pdfmarin",
   "_url_memo": "Release を作ったら、ここに .exe の URL を入れるとボタンが有効になります",
-  "_store_memo": "Microsoft Store版もv0.4.4です（2026-11-16 に審査を通過し公開を開始・Partner Center で確認）。",
-  "sha256": "ea2e5a8a22a94693f39dd546cdbbde0d2ce33fa0711b33eef3c6d95fd1d61838",
+  "_store_memo": "Microsoft Store版はv0.4.4です（v0.4.5はこのあと審査に出します・審査通過や公開完了は未確認です）。",
+  "sha256": "2de8236f52f358a434a8119dff1c42a84746bd265408b66587ce19aa2b1ef3f9",
   "storeVersion": "0.4.4"
 }
