@@ -11,15 +11,47 @@
     nav.classList.remove('is-open');
     menu.setAttribute('aria-expanded', 'false');
     menu.setAttribute('aria-label', 'Open menu');
+    menu.querySelector('use').setAttribute('href', '#i-menu');
   }
   menu.addEventListener('click', () => {
     const open = menu.getAttribute('aria-expanded') !== 'true';
     nav.classList.toggle('is-open', open);
     menu.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
   });
   nav.addEventListener('click', event => { if (event.target.closest('a')) closeMenu(); });
-  matchMedia('(max-width: 600px)').addEventListener('change', closeMenu);
+  const compactHeader = matchMedia('(max-width: 960px)');
+  const headerActions = menu.closest('.header-actions');
+  function syncHeaderOrder() {
+    const focusedAction = headerActions.contains(document.activeElement) ? document.activeElement : null;
+    // Match reading and Tab order to each layout: desktop links before language,
+    // compact language and toggle before the disclosed links.
+    if (compactHeader.matches && headerActions.nextElementSibling !== nav) nav.before(headerActions);
+    else if (!compactHeader.matches && nav.nextElementSibling !== headerActions) nav.after(headerActions);
+    focusedAction?.focus();
+  }
+  syncHeaderOrder();
+  compactHeader.addEventListener('change', () => {
+    // A resize must not leave keyboard focus in a newly hidden menu.
+    const focusWasInNav = nav.contains(document.activeElement);
+    const focusWasOnToggle = document.activeElement === menu;
+    closeMenu();
+    syncHeaderOrder();
+    if (compactHeader.matches && focusWasInNav) menu.focus();
+    else if (!compactHeader.matches && focusWasOnToggle) nav.querySelector('a').focus();
+  });
+  nav.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const target = document.getElementById(link.hash.slice(1));
+    if (!target) return;
+    // Keep native fragment scrolling, while moving focus out of the closed menu.
+    const temporary = !target.hasAttribute('tabindex');
+    if (temporary) target.setAttribute('tabindex', '-1');
+    target.focus({preventScroll: true});
+    if (temporary) target.addEventListener('blur', () => target.removeAttribute('tabindex'), {once: true});
+  });
   const header = menu.closest('.site-header');
   document.addEventListener('focusin', event => {
     if (menu.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) closeMenu();
@@ -32,16 +64,33 @@
   document.addEventListener('click', event => {
     if (!event.target.closest('.site-header')) closeMenu();
   });
+  document.body.classList.add('en-nav-ready');
+  // Include the actual border and wrapped-header height in short landscape views.
+  function updateHeaderHeight() {
+    header.style.setProperty('--en-header-height', Math.ceil(header.getBoundingClientRect().height) + 'px');
+  }
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
+  if (typeof ResizeObserver === 'function') new ResizeObserver(updateHeaderHeight).observe(header);
 
   // This English homepage uses illustrated still images; no video is loaded.
 
   if (!/Windows/.test(navigator.userAgent) || /Windows Phone/.test(navigator.userAgent)) $('#pcnote').hidden = false;
-  $('#copylink').addEventListener('click', async () => {
+  $('#copylink').addEventListener('click', async event => {
+    const button = event.currentTarget;
+    const status = $('#copydone');
+    button.disabled = true;
+    button.textContent = 'Copying…';
+    status.hidden = true;
     const url = ['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname) ? location.href : 'https://pdf-marin.github.io/en/';
     try {
       await navigator.clipboard.writeText(url);
-      $('#copydone').hidden = false;
+      status.hidden = false;
     } catch { window.prompt('Copy this link:', url); }
+    finally {
+      button.disabled = false;
+      button.textContent = status.hidden ? 'Copy this page’s link' : 'Copy link again';
+    }
   });
   function validUrl(value) {
     try { const url = new URL(value); return url.protocol === 'https:'; } catch { return false; }
