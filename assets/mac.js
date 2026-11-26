@@ -4,29 +4,27 @@
   if (!button || !nav) return;
   document.documentElement.classList.add('js');
   button.hidden = false;
-  const close = () => {
-    button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-label', 'メニューを開く');
-    nav.classList.remove('is-open');
-  };
-  button.addEventListener('click', () => {
-    const open = button.getAttribute('aria-expanded') !== 'true';
+  const setOpen = open => {
     button.setAttribute('aria-expanded', String(open));
     button.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
     nav.classList.toggle('is-open', open);
-  });
+  };
+  const isOpen = () => button.getAttribute('aria-expanded') === 'true';
+  button.addEventListener('click', () => setOpen(!isOpen()));
   nav.addEventListener('click', event => {
-    if (event.target.closest('a')) close();
+    if (isOpen() && event.target.closest('a')) setOpen(false);
   });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
-      close();
+    if (event.key === 'Escape' && isOpen()) {
+      setOpen(false);
       button.focus();
     }
   });
-  document.addEventListener('click', event => {
-    if (!event.target.closest('.header-inner')) close();
-  });
+  const closeOutside = event => {
+    if (isOpen() && !button.contains(event.target) && !nav.contains(event.target)) setOpen(false);
+  };
+  document.addEventListener('focusin', closeOutside);
+  document.addEventListener('click', closeOutside);
   const wide = window.matchMedia('(min-width: 761px)');
-  wide.addEventListener('change', event => { if (event.matches) close(); });
+  wide.addEventListener('change', event => { if (event.matches) setOpen(false); });
 })();

@@ -18,6 +18,11 @@
     menu.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
   });
   nav.addEventListener('click', event => { if (event.target.closest('a')) closeMenu(); });
+  matchMedia('(max-width: 600px)').addEventListener('change', closeMenu);
+  const header = menu.closest('.site-header');
+  document.addEventListener('focusin', event => {
+    if (menu.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) closeMenu();
+  });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
       closeMenu(); menu.focus();
@@ -51,7 +56,7 @@
   dialog.addEventListener('close', () => {
     video.pause(); video.removeAttribute('src'); video.load();
     document.body.style.overflow = '';
-    mediaTrigger?.focus();
+    mediaTrigger?.focus({preventScroll: true});
   });
 
   if (!/Windows/.test(navigator.userAgent) || /Windows Phone/.test(navigator.userAgent)) $('#pcnote').hidden = false;

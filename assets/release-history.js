@@ -9,7 +9,7 @@
     for (let item = target; item; item = item.parentElement) {
       if (item.tagName === 'DETAILS') item.open = true;
     }
-    requestAnimationFrame(() => target.scrollIntoView({block: 'start'}));
+    requestAnimationFrame(() => target.scrollIntoView({behavior: 'instant', block: 'start'}));
   }
   addEventListener('hashchange', revealRelease);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', revealRelease, {once:true});

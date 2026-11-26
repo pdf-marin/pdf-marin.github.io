@@ -1,7 +1,7 @@
 /* PDF MARIN for Mac — Sea Glass, shared with the Windows identity. */
 :root{--ink:#153747;--body:#506c78;--muted:#55727e;--teal:#0e829e;--teal-dark:#076d88;--paper:#f6fbfc;--mint:#eaf6f8;--line:#d9eaed;--wrap:1160px;font-family:Inter,"Noto Sans JP",sans-serif;color:var(--ink);background:#f9fcfc;font-synthesis:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:104px}
+html{scroll-padding-top:104px}
 body{margin:0;font-size:14px;line-height:1.8}
 button,input,textarea{font:inherit}
 a{color:inherit;text-decoration:none;touch-action:manipulation}
@@ -48,11 +48,9 @@ h1,h2,h3{font-weight:700;overflow-wrap:anywhere}
 .hero h1 span{color:#0f86a0;background:linear-gradient(100deg,#137195,#079da7);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none}
 .hero-lead{margin:24px auto 26px;font-size:14px;line-height:2.1;color:#527784}
 .hero-actions{display:flex;align-items:center;justify-content:center;gap:14px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:14px 24px;border:1px solid #0b7895;border-radius:11px;color:#fff;background:linear-gradient(130deg,#107d98,#0c6e90);box-shadow:0 9px 20px -14px #005577aa;font-size:13px;font-weight:600;line-height:1.5;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:14px 24px;border:1px solid #0b7895;border-radius:11px;color:#fff;background:linear-gradient(130deg,#107d98,#0c6e90);box-shadow:0 9px 20px -14px #005577aa;font-size:13px;font-weight:600;line-height:1.5}
 .btn .icon{width:19px;height:19px}
-.btn:hover{transform:translateY(-2px);background:#086984;border-color:#086984;box-shadow:0 12px 24px -14px #005577aa}
 .btn.secondary{background:#ffffffcf;color:#1e6e84;border-color:#bbdbe4;box-shadow:0 3px 8px #4a9cb308}
-.btn.secondary:hover{background:#fff;border-color:#78bccb}
 .hero-note{margin-top:14px;color:#55727e;font-size:11px}
 .hero-media-grid{position:relative;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:stretch;gap:24px;margin-top:44px}
 .preview-card{align-self:start;min-width:0;padding:14px;border:1px solid #d0e7ed;border-radius:22px;background:#ffffffd9;box-shadow:0 28px 64px -35px #126e887a,0 1px 0 white inset;backdrop-filter:blur(14px)}
@@ -88,12 +86,18 @@ h1,h2,h3{font-weight:700;overflow-wrap:anywhere}
 .community-copy .eyebrow{margin-bottom:6px;font-size:9px;color:#287183}
 .community-copy h2{color:#163f50;font-size:21px;line-height:1.5;letter-spacing:-.045em}
 .community-copy>p:last-child{margin-top:5px;font-size:11px;color:#486b77}
-.community-link{display:flex;align-items:center;gap:14px;min-height:70px;padding:14px 17px;border:1px solid #0c7893;border-radius:13px;color:white;background:linear-gradient(125deg,#107f99,#0b708e);box-shadow:0 10px 20px -12px #00607c9c;transition:background .2s,transform .2s}
+.community-link{display:flex;align-items:center;gap:14px;min-height:70px;padding:14px 17px;border:1px solid #0c7893;border-radius:13px;color:white;background:linear-gradient(125deg,#107f99,#0b708e);box-shadow:0 10px 20px -12px #00607c9c}
 .community-link>.icon:first-child{width:23px;height:23px}
 .community-link>span{font-size:13px;line-height:1.5;font-weight:600}
 .community-link small{display:block;margin-top:4px;font-size:11px;font-weight:400;color:#fff}
 .community-link .arrow{width:18px;height:18px;margin-left:auto}
-.community-link:hover{transform:translateY(-2px);background:#086b86}
+.btn,.community-link{transition:border-color 140ms ease,transform 160ms cubic-bezier(.2,.8,.2,1)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover,.community-link:hover{transform:translateY(-2px);border-color:#07536c}
+  .btn.secondary:hover{background:#fff;border-color:#78bccb}
+}
+.btn:active,.community-link:active{transform:translateY(1px);border-color:#0b627e;box-shadow:inset 0 1px 3px #164a592b;transition-duration:60ms}
+.menu-toggle:active{background:#edf9fb;border-color:#78bccb}
 /* Bespoke illustrations are conceptual, not a fabricated Mac screenshot. */
 .section{padding:96px 0}
 .direction{background:#fbfdfd}
@@ -198,10 +202,21 @@ html{scroll-padding-top:88px}.wrap{width:calc(100% - 40px)}.header-inner{min-hei
 @media(max-width:360px){
 .wrap{width:calc(100% - 32px)}.brand{gap:7px;font-size:18px}.brand img{width:31px;height:31px}.brand .brand-platform{padding-left:8px;font-size:9px}.js .nav{left:-16px;right:-16px;padding-inline:16px}.hero-actions{gap:8px}.hero-actions .btn{padding-inline:12px;font-size:10px}.hero-lead br{display:none}.hero-lead{max-width:270px}.mac-intro{grid-template-columns:79px minmax(0,1fr);gap:12px;padding-inline:15px}.app-emblem{width:79px}.app-emblem img{width:61px;height:61px}.emblem-ring{width:77px;height:77px}.intro-copy h2{font-size:16px}.intro-copy p{font-size:8px}.community-band{padding:18px;grid-template-columns:38px minmax(0,1fr);gap:14px 11px}.community-mark{width:38px;height:42px}.community-copy h2{font-size:14px}.community-copy>p:last-child{font-size:8px}.feature-card{padding:21px}.feature-card h3{font-size:18px}.feature-card>p{font-size:11px}.story-visual{padding-inline:13px}.story-copy h2{font-size:25px}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.btn:hover,.community-link:hover{transform:none}}
+@media(max-width:760px) and (prefers-reduced-motion:no-preference){
+  .js .nav.is-open{animation:mac-menu-open 160ms cubic-bezier(.2,.8,.2,1)}
+}
+@keyframes mac-menu-open{
+  from{opacity:.72;transform:translateY(-4px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .btn,.community-link{transform:none!important}
+}
 
 /* Keep meaningful copy comfortable to read on small screens. */
 @media(max-width:760px){
+  .js .nav{max-height:calc(100vh - 70px);max-height:calc(100dvh - 70px);overflow-y:auto}
   .hero-lead,.section-desc,.section-head>.section-desc,.feature-card>p,.story-copy .section-desc{font-size:13px}
   .hero-note,.intro-copy p,.community-copy>p:last-child,.closing-panel p:last-child{font-size:12px}
   .preview-head strong,.preview-head>span,.preview-zoom,.community-link small,.direction-note{font-size:11px}
