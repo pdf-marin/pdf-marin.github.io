@@ -10,15 +10,46 @@
     nav.classList.remove('is-open');
     menu.setAttribute('aria-expanded', 'false');
     menu.setAttribute('aria-label', 'メニューを開く');
+    menu.querySelector('use')?.setAttribute('href', '#i-menu');
   }
   menu.addEventListener('click', () => {
     const open = menu.getAttribute('aria-expanded') !== 'true';
     nav.classList.toggle('is-open', open);
     menu.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    menu.querySelector('use')?.setAttribute('href', open ? '#i-close' : '#i-menu');
   });
   nav.addEventListener('click', event => { if (event.target.closest('a')) closeMenu(); });
-  matchMedia('(max-width: 600px)').addEventListener('change', closeMenu);
+  const compactHeader = matchMedia('(max-width: 960px)');
+  const headerActions = menu.closest('.header-actions');
+  function syncHeaderOrder() {
+    if (!headerActions) return;
+    const focusedAction = headerActions.contains(document.activeElement) ? document.activeElement : null;
+    // Keep visual, reading and keyboard order aligned at both header layouts.
+    if (compactHeader.matches && headerActions.nextElementSibling !== nav) nav.before(headerActions);
+    else if (!compactHeader.matches && nav.nextElementSibling !== headerActions) nav.after(headerActions);
+    focusedAction?.focus({preventScroll: true});
+  }
+  syncHeaderOrder();
+  compactHeader.addEventListener('change', () => {
+    const focusWasInNav = nav.contains(document.activeElement);
+    const focusWasOnToggle = document.activeElement === menu;
+    closeMenu();
+    syncHeaderOrder();
+    if (compactHeader.matches && focusWasInNav) menu.focus({preventScroll: true});
+    else if (!compactHeader.matches && focusWasOnToggle) nav.querySelector('a')?.focus({preventScroll: true});
+  });
+  nav.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const target = document.getElementById(link.hash.slice(1));
+    if (!target) return;
+    // Native fragment navigation still scrolls; focus leaves the closed menu.
+    const temporary = !target.hasAttribute('tabindex');
+    if (temporary) target.setAttribute('tabindex', '-1');
+    target.focus({preventScroll: true});
+    if (temporary) target.addEventListener('blur', () => target.removeAttribute('tabindex'), {once: true});
+  });
   const header = menu.closest('.site-header');
   document.addEventListener('focusin', event => {
     if (menu.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) closeMenu();
@@ -32,6 +63,15 @@
     if (!event.target.closest('.site-header')) closeMenu();
   });
 
+  // Only collapse navigation after its controls are wired successfully.
+  document.body.classList.add('ja-nav-ready');
+  function updateHeaderHeight() {
+    header.style.setProperty('--ja-header-height', Math.ceil(header.getBoundingClientRect().height) + 'px');
+  }
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
+  if (typeof ResizeObserver === 'function') new ResizeObserver(updateHeaderHeight).observe(header);
+
   const dialog = $('#media-dialog');
   const video = $('#dialog-video');
   let mediaTrigger;
@@ -40,14 +80,24 @@
     dialog.showModal();
     document.body.style.overflow = 'hidden';
   }
-  $$('[data-video]').forEach(button => button.addEventListener('click', () => {
-    video.hidden = false;
-    video.poster = 'assets/shots/basics-poster.jpg';
-    video.src = 'assets/shots/basics.mp4';
-    $('#dialog-title').textContent = 'PDF MARIN — 輪メニューから始まる操作デモ（音声なし）';
-    showMedia(button);
-    video.play().catch(() => { /* Native controls remain available. */ });
-  }));
+  const demoLink = $('a[data-video]');
+  if (demoLink && typeof dialog?.showModal === 'function') {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = demoLink.className;
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.setAttribute('aria-controls', dialog.id);
+    button.append(...demoLink.childNodes);
+    button.addEventListener('click', () => {
+      video.hidden = false;
+      video.poster = 'assets/shots/basics-poster.jpg';
+      video.src = demoLink.href;
+      $('#dialog-title').textContent = 'PDF MARIN — 輪メニューから始まる操作デモ（音声なし）';
+      showMedia(button);
+      video.play().catch(() => { /* Native controls remain available. */ });
+    });
+    demoLink.replaceWith(button);
+  }
   $('.dialog-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => {
     const box = dialog.getBoundingClientRect();
@@ -60,12 +110,21 @@
   });
 
   if (!/Windows/.test(navigator.userAgent) || /Windows Phone/.test(navigator.userAgent)) $('#pcnote').hidden = false;
-  $('#copylink').addEventListener('click', async () => {
+  $('#copylink').addEventListener('click', async event => {
+    const button = event.currentTarget;
+    const status = $('#copydone');
+    button.disabled = true;
+    button.textContent = 'コピーしています…';
+    status.hidden = true;
     const url = 'https://pdf-marin.github.io/';
     try {
       await navigator.clipboard.writeText(url);
-      $('#copydone').hidden = false;
+      status.hidden = false;
     } catch { window.prompt('このリンクをコピーしてください。', url); }
+    finally {
+      button.disabled = false;
+      button.textContent = status.hidden ? 'このページのリンクをコピー' : 'もう一度リンクをコピー';
+    }
   });
   function validUrl(value) {
     try { const url = new URL(value); return url.protocol === 'https:'; } catch { return false; }

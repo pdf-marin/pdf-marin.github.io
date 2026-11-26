@@ -1,7 +1,7 @@
-/* Enhance the existing English examples on small screens; keep the source content. */
+/* Enhance the existing Japanese and English examples on small screens. */
 (() => {
   'use strict';
-  const section = document.querySelector('html[lang="en"] #excel-demo');
+  const section = document.querySelector('#excel-demo');
   if (!section || section.dataset.workflowBound) return;
   const steps = section.querySelector('.excel-steps');
   const stage = section.querySelector('.excel-images');
@@ -12,13 +12,22 @@
       panels.some(panel => !panel.querySelector('a[href] img'))) return;
   section.dataset.workflowBound = 'true';
 
+  const japanese = /^ja(?:-|$)/i.test(document.documentElement.lang);
+  const copy = japanese ? {
+    label: 'PDFからExcelへの変換手順',
+    hint: '手順を選ぶと画像が切り替わります。画像を選ぶと大きく表示できます。',
+  } : {
+    label: 'PDF to Excel workflow',
+    hint: 'Choose a step to compare. Select the image to enlarge.',
+  };
+
   const mobile = matchMedia('(max-width: 760px)');
   const original = items.map(item => [...item.childNodes]);
   const remember = (node, names) => names.map(name => [name, node.getAttribute(name)]);
   const restore = (node, attrs) => attrs.forEach(([name, value]) => {
     if (value === null) node.removeAttribute(name); else node.setAttribute(name, value);
   });
-  const stepAttrs = remember(steps, ['role', 'aria-label', 'aria-orientation']);
+  const stepAttrs = remember(steps, ['role', 'aria-label', 'aria-orientation', 'aria-describedby']);
   const itemAttrs = items.map(item => remember(item, ['role']));
   const panelAttrs = panels.map(panel => remember(panel,
     ['id', 'role', 'aria-labelledby', 'tabindex', 'hidden', 'inert']));
@@ -44,12 +53,14 @@
     return button;
   });
   const hint = document.createElement('p');
+  hint.id = 'excel-workflow-hint';
   hint.className = 'excel-workflow-hint';
-  hint.textContent = 'Choose a step to compare. Select the image to enlarge.';
+  hint.textContent = copy.hint;
   let selected = 0;
   let enabled = false;
 
   function select(index) {
+    const focusedPanel = panels.findIndex(panel => panel.contains(document.activeElement));
     selected = index;
     buttons.forEach((button, current) => {
       const active = current === index;
@@ -58,6 +69,10 @@
       panels[current].hidden = !active;
       panels[current].toggleAttribute('inert', !active);
     });
+    // A script or pointer switch must not leave focus inside a now-hidden panel.
+    if (focusedPanel !== -1 && focusedPanel !== index) {
+      buttons[index].focus({preventScroll: true});
+    }
   }
 
   function sync() {
@@ -67,8 +82,10 @@
       const focusedPanel = panels.findIndex(panel => panel.contains(focused));
       if (focusedPanel !== -1) selected = focusedPanel;
       steps.setAttribute('role', 'tablist');
-      steps.setAttribute('aria-label', 'PDF to Excel workflow');
+      steps.setAttribute('aria-label', copy.label);
       steps.setAttribute('aria-orientation', 'horizontal');
+      const describedBy = stepAttrs.find(([name]) => name === 'aria-describedby')[1];
+      steps.setAttribute('aria-describedby', [describedBy, hint.id].filter(Boolean).join(' '));
       items.forEach((item, index) => {
         item.setAttribute('role', 'presentation');
         buttons[index].replaceChildren(...original[index]);
@@ -82,8 +99,16 @@
       steps.after(hint);
       section.classList.add('excel-workflow-ready');
       select(selected);
+      // Keep focus when the focused source label is moved into its new tab.
+      const focusedItem = items.findIndex((item, index) =>
+        original[index].some(node => node === focused || node.contains?.(focused)));
+      if (focusedItem !== -1) {
+        select(focusedItem);
+        buttons[focusedItem].focus({preventScroll: true});
+      }
     } else {
       const focusedTab = buttons.indexOf(focused);
+      const focusedPanel = panels.indexOf(focused);
       section.classList.remove('excel-workflow-ready');
       hint.remove();
       restore(steps, stepAttrs);
@@ -92,7 +117,8 @@
         restore(item, itemAttrs[index]);
         restore(panels[index], panelAttrs[index]);
       });
-      if (focusedTab !== -1) panels[focusedTab].querySelector('a').focus({preventScroll: true});
+      const restoreIndex = focusedTab !== -1 ? focusedTab : focusedPanel;
+      if (restoreIndex !== -1) panels[restoreIndex].querySelector('a').focus({preventScroll: true});
     }
     enabled = mobile.matches;
   }

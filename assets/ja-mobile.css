@@ -1,0 +1,128 @@
+/* Japanese landing page: readable copy and controls at narrow viewport widths.
+   Keep the shared desktop appearance and English-specific enhancements intact. */
+html[lang="ja"] .header-inner { gap: 20px; }
+html[lang="ja"] .brand { flex-shrink: 0; }
+html[lang="ja"] :is(.product-frame > picture, .excel-images a > picture) { display: block; width: 100%; }
+html[lang="ja"] .header-actions { display: flex; align-items: center; gap: 10px; }
+html[lang="ja"] .refined .nav { gap: 20px; }
+html[lang="ja"] .nav > a { min-height: 44px; display: inline-flex; align-items: center; }
+html[lang="ja"] .language-switch {
+  display: flex; align-items: center; gap: 0; padding: 3px;
+  border: 1px solid #c9dfe3; border-radius: 12px; background: #fff;
+  font-size: 12px; white-space: nowrap;
+}
+html[lang="ja"] .language-switch > * {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 10px; border-radius: 8px;
+}
+html[lang="ja"] .language-switch a { text-decoration: none; }
+html[lang="ja"] .language-switch a:hover { background: #edf7f9; }
+html[lang="ja"] .language-switch [aria-current] { background: #e8f4f3; color: #155e63; }
+html[lang="ja"] .menu-toggle[aria-expanded="true"] { background: #e8f4f3; border-color: #76b3ba; }
+html[lang="ja"] :is(.menu-toggle, .language-switch a, #copylink):active { background: #dceeee; }
+html[lang="ja"] #copylink { min-height: 44px; padding: 8px; font: inherit; font-weight: 600; }
+html[lang="ja"] #copylink:disabled { cursor: wait; opacity: .65; }
+html[lang="ja"] :is(main, section)[id] { scroll-margin-top: 20px; }
+
+/* Disclose before the header becomes crowded, including landscape phones. */
+@media (max-width: 960px) {
+  html[lang="ja"] .refined .header-inner { height: auto; min-height: 76px; gap: 12px; flex-wrap: wrap; }
+  html[lang="ja"] .header-actions { margin-left: auto; gap: 8px; }
+  html[lang="ja"] .menu-toggle { flex: 0 0 44px; }
+  html[lang="ja"] .ja-nav-ready .menu-toggle { display: inline-flex; }
+  html[lang="ja"] .refined.ja-nav-ready .nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    padding: 12px max(18px, calc((100vw - 1230px) / 2));
+    background: #f8fcfe; border-bottom: 1px solid #c9dfe3;
+    box-shadow: 0 16px 24px -20px #245a7055; align-items: stretch; gap: 4px;
+    max-height: calc(100vh - var(--ja-header-height, 77px));
+    max-height: calc(100dvh - var(--ja-header-height, 77px));
+    overflow-y: auto; overscroll-behavior-y: contain;
+  }
+  html[lang="ja"] .refined.ja-nav-ready .nav.is-open { display: flex; flex-direction: column; }
+  html[lang="ja"] .refined .nav > a:not(.btn) {
+    min-height: 48px; padding: 10px 12px; font-size: 14px; border-radius: 8px;
+  }
+  html[lang="ja"] .nav > a:not(.btn):hover { background: #e8f4f3; }
+  html[lang="ja"] .refined .nav .btn { margin-top: 6px; justify-content: center; font-size: 14px; }
+  /* If this runtime fails or scripts are disabled, every link remains available. */
+  html[lang="ja"] body:not(.ja-nav-ready) .menu-toggle { display: none; }
+  html[lang="ja"] body:not(.ja-nav-ready) .header-inner { padding-block: 10px; }
+  html[lang="ja"] body:not(.ja-nav-ready) .nav {
+    display: flex; position: static; flex-direction: row; flex-wrap: wrap;
+    width: 100%; padding: 0; gap: 4px 10px; border: 0; background: transparent; box-shadow: none;
+  }
+}
+
+@media (max-width: 800px) {
+  html[lang="ja"] .refined :is(.hero-lead, .section-desc, .feature-card > p, .feature-card ul, .download-panel p) {
+    font-size: 15px; line-height: 1.9; overflow-wrap: anywhere;
+  }
+  html[lang="ja"] .refined :is(.hero-actions .btn, .download-actions .btn) {
+    min-height: 52px; font-size: 15px; white-space: normal; overflow-wrap: anywhere;
+  }
+  html[lang="ja"] .refined .hero-actions { flex-wrap: wrap; }
+  html[lang="ja"] .refined .hero-actions .btn { flex: 1 1 240px; }
+  html[lang="ja"] .refined .release-pill { font-size: 12px; min-height: 44px; }
+  html[lang="ja"] .refined :is(.product-label, .hero-assurance, .hero-meta, .hero-version, .showcase-topline, .showcase-bottom, .showcase-note, .more-capabilities) { font-size: 12px; }
+  html[lang="ja"] .refined .hero-version { line-height: 1.8; }
+  html[lang="ja"] .refined .hero-assurance { flex-wrap: wrap; gap: 8px 16px; }
+  html[lang="ja"] .refined :is(.card-link, .footer-links a, .updates-all, .text-link, .release-source) {
+    display: inline-flex; align-items: center; min-height: 44px; font-size: 14px;
+  }
+  html[lang="ja"] .refined .footer-links { gap: 4px 20px; }
+  html[lang="ja"] .refined .footer-bottom { font-size: 12px; }
+  html[lang="ja"] .refined :is(.field-label, .attachment-details > summary, .attachment-warning, .textarea-bottom, .form-footer p, .feedback-form > .survey-note, .pcnote, .filelist) { font-size: 14px; }
+  html[lang="ja"] .refined :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea),
+  html[lang="ja"] #public-ideas :is(input[type="text"], input[type="email"], input[type="file"], textarea, select) { font-size: 16px; }
+  html[lang="ja"] .refined :is(input[type="email"], input[type="text"], select) { min-height: 48px; min-width: 0; }
+  html[lang="ja"] .refined :is(input, select, textarea) { scroll-margin-block: 24px; }
+  html[lang="ja"] .refined input[type="file"] { max-width: 100%; }
+  html[lang="ja"] .refined input[type="file"]::file-selector-button { min-height: 44px; font: inherit; }
+  html[lang="ja"] .refined :is(.form-footer .btn, .demo-trigger, .filelist button) { min-height: 44px; font-size: 14px; }
+  html[lang="ja"] .refined :is(.attachment-details > summary, .release-archive > summary) { min-height: 44px; padding-block: 10px; }
+  html[lang="ja"] .refined .textarea-bottom { flex-wrap: wrap; gap: 8px 16px; }
+  html[lang="ja"] #character-count { margin-left: auto; white-space: nowrap; }
+  html[lang="ja"] #public-ideas :is(.ideas-sort button, .idea-actions > button, .public-comment-form > .btn, .public-refresh, .poll-card .poll-change, .poll-card .poll-vote, .filelist button) { min-height: 44px; font-size: 14px; }
+  html[lang="ja"] #public-ideas :is(.idea-comment-compose > summary, .poll-card .poll-privacy > summary) { min-height: 44px; padding-block: 10px; font-size: 14px; }
+  html[lang="ja"] .refined .release-notes { font-size: 14px; }
+  html[lang="ja"] .refinement-dialog { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; }
+  html[lang="ja"] .refinement-dialog video { max-height: calc(100vh - 100px); max-height: calc(100dvh - 100px); }
+  html[lang="ja"] .refinement-dialog .dialog-bar { padding: 10px 12px; gap: 12px; }
+  html[lang="ja"] .refinement-dialog .dialog-bar p { min-width: 0; font-size: 14px; line-height: 1.6; }
+  html[lang="ja"] .refinement-dialog .dialog-close { flex: 0 0 44px; width: 44px; height: 44px; }
+}
+
+@media (max-width: 600px) {
+  html[lang="ja"] .refined-hero h1 { font-size: clamp(32px, 9.5vw, 44px); letter-spacing: -.04em; }
+  html[lang="ja"] .refined .hero-lead { max-width: 34em; margin-inline: auto; text-align: left; }
+  html[lang="ja"] .refined .hero-lead br { display: none; }
+  html[lang="ja"] .refined .hero-actions { flex-direction: column; align-items: stretch; }
+  html[lang="ja"] .refined .hero-actions .btn { flex: auto; width: 100%; }
+  html[lang="ja"] .refined .feature-grid { grid-template-columns: 1fr; gap: 14px; }
+  html[lang="ja"] .refined .feature-card { padding: 24px; }
+  html[lang="ja"] .refined .feature-card h3 { font-size: 21px; margin-top: 16px; }
+  html[lang="ja"] .refined .feature-card > p { min-height: 0; }
+  html[lang="ja"] .refined .feature-card ul { margin-top: 18px; padding-top: 16px; }
+  html[lang="ja"] .refined .showcase-note { margin-right: auto; }
+  html[lang="ja"] .refined.support-one .hero-support-card h3 { font-size: 18px; }
+  html[lang="ja"] .refined.support-one .hero-support-card .support-button-copy strong { font-size: 15px; }
+  html[lang="ja"] .refined .download-actions > small { font-size: 12px; line-height: 1.8; }
+  html[lang="ja"] .refined .release-entry > summary { grid-template-columns: minmax(0, 1fr) auto; }
+  html[lang="ja"] .refined .release-toggle { grid-column: 2; grid-row: 2; }
+  html[lang="ja"] .refined .release-title { grid-column: 1; min-width: 0; }
+}
+
+@media (max-width: 480px) {
+  html[lang="ja"] .language-switch [aria-current] { display: none; }
+  html[lang="ja"] .language-switch { padding: 0; }
+  html[lang="ja"] .language-switch a { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[lang="ja"] { scroll-behavior: auto; }
+  html[lang="ja"] .refined *, html[lang="ja"] .refined *::before, html[lang="ja"] .refined *::after { animation: none !important; transition: none !important; }
+}
+@media (forced-colors: active) {
+  html[lang="ja"] .language-switch [aria-current] { border: 1px solid Highlight; }
+  html[lang="ja"] .menu-toggle[aria-expanded="true"] { border-color: Highlight; }
+}

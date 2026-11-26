@@ -1,9 +1,9 @@
 /* Mobile-only enhancement. Without JavaScript the original three figures remain. */
 @media (max-width: 760px) {
-  html[lang="en"] #excel-demo.excel-workflow-ready .section-head {
+  #excel-demo.excel-workflow-ready .section-head {
     display: block;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-steps {
+  #excel-demo.excel-workflow-ready .excel-steps {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
@@ -12,13 +12,13 @@
     padding: 0;
     list-style: none;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-steps > li {
+  #excel-demo.excel-workflow-ready .excel-steps > li {
     display: flex;
     min-width: 0;
     margin: 0;
     padding: 0;
   }
-  html[lang="en"] #excel-demo .excel-workflow-tab {
+  #excel-demo .excel-workflow-tab {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -34,13 +34,13 @@
     border-radius: 10px;
     background: #fff;
     color: #375f6e;
-    font: 600 12px/1.5 Inter, system-ui, sans-serif;
+    font: 600 12px/1.5 Inter, "Noto Sans JP", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
     text-align: center;
     overflow-wrap: anywhere;
     cursor: pointer;
     touch-action: manipulation;
   }
-  html[lang="en"] #excel-demo .excel-workflow-tab > b {
+  #excel-demo .excel-workflow-tab > b {
     display: grid;
     place-items: center;
     flex: 0 0 24px;
@@ -52,45 +52,45 @@
     color: #287b90;
     font-size: 12px;
   }
-  html[lang="en"] #excel-demo .excel-workflow-tab[aria-selected="true"] {
+  #excel-demo .excel-workflow-tab[aria-selected="true"] {
     border-color: #147b94;
     background: #e9f6f8;
     color: #125c71;
     box-shadow: inset 0 -3px #147b94;
   }
-  html[lang="en"] #excel-demo .excel-workflow-tab[aria-selected="true"] > b {
+  #excel-demo .excel-workflow-tab[aria-selected="true"] > b {
     background: #147b94;
     color: #fff;
   }
-  html[lang="en"] #excel-demo .excel-workflow-tab:focus-visible {
+  #excel-demo .excel-workflow-tab:focus-visible {
     outline: 3px solid #147b94;
     outline-offset: 3px;
   }
-  html[lang="en"] #excel-demo .excel-workflow-hint {
+  #excel-demo .excel-workflow-hint {
     margin: 12px 0 0;
     color: #4d6e79;
     font-size: 12px;
     line-height: 1.8;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-evidence {
+  #excel-demo.excel-workflow-ready .excel-evidence {
     min-width: 0;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-images {
+  #excel-demo.excel-workflow-ready .excel-images {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-arrow,
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-images > figure[hidden] {
+  #excel-demo.excel-workflow-ready .excel-arrow,
+  #excel-demo.excel-workflow-ready .excel-images > figure[hidden] {
     display: none !important;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-images > figure {
+  #excel-demo.excel-workflow-ready .excel-images > figure {
     min-width: 0;
     margin: 0;
   }
   /* Reserve the same caption and image space for every choice. The portrait PDF
      is the tallest original (1040 x 950); wider examples are contained, not cut. */
-  html[lang="en"] #excel-demo.excel-workflow-ready figcaption {
+  #excel-demo.excel-workflow-ready figcaption {
     display: flex;
     align-items: center;
     gap: 7px;
@@ -101,12 +101,13 @@
     font-size: 12px;
     line-height: 1.5;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready figcaption > span {
+  #excel-demo.excel-workflow-ready figcaption > span {
     flex-shrink: 0;
     margin: 0;
     font-size: 11px;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-images figure > a {
+  #excel-demo.excel-workflow-ready .excel-images figure > a {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,7 +118,9 @@
     padding: 0;
     background: #f8fcfd;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-images img {
+  #excel-demo.excel-workflow-ready .excel-images img {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
@@ -127,24 +130,24 @@
     border: 0;
     border-radius: 0;
   }
-  html[lang="en"] #excel-demo.excel-workflow-ready .excel-images > figure:focus-visible {
+  #excel-demo.excel-workflow-ready .excel-images > figure:focus-visible {
     outline: 3px solid #147b94;
     outline-offset: 4px;
     border-radius: 9px;
   }
 }
 @media (max-width: 760px) and (hover: hover) and (pointer: fine) {
-  html[lang="en"] #excel-demo .excel-workflow-tab:hover {
+  #excel-demo .excel-workflow-tab:hover {
     border-color: #147b94;
   }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
-  html[lang="en"] #excel-demo .excel-workflow-tab {
+  #excel-demo .excel-workflow-tab {
     transition: background-color 120ms, border-color 120ms;
   }
 }
 @media (forced-colors: active) {
-  html[lang="en"] #excel-demo .excel-workflow-tab[aria-selected="true"] {
+  #excel-demo .excel-workflow-tab[aria-selected="true"] {
     border-color: Highlight;
     outline: 2px solid Highlight;
     outline-offset: -4px;
